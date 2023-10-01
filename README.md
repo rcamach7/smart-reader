@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Stock Trade Simulator
 
-## Getting Started
+Trade and invest in a simulated stock market environment without risking any real money. Experience the thrill of trading, make strategic decisions, and hone your skills before diving into the real world.
 
-First, run the development server:
+## 🚀 Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+This project leverages a powerful combination of technologies and tools to ensure performance, security, and ease of development.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Core Technologies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **[Next.js](https://nextjs.org/)**: Our primary framework to build a performant and server-side rendered application.
+- **[React](https://reactjs.org/)**: The library we're using for building the user interface.
+- **[TypeScript](https://www.typescriptlang.org/)**: Bringing static typing to JavaScript, ensuring a more predictable codebase.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### UI/UX
 
-## Learn More
+- **[Material-UI](https://mui.com/)**: A comprehensive and customizable component library ensuring a consistent and modern user interface.
 
-To learn more about Next.js, take a look at the following resources:
+### Authentication & Security
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **[NextAuth.js](https://next-auth.js.org/)**: Provides a complete authentication solution, enabling users to sign in securely.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Database & ORM
 
-## Deploy on Vercel
+- **[MongoDB](https://www.mongodb.com/)**: Our chosen NoSQL database, perfect for flexible schemas and rapid development.
+- **[Mongoose](https://mongoosejs.com/)**: Helps manage relationships between data, provides schema validation, and translates between objects in code and their representation in MongoDB.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🎨 Features
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- **Simulated Trading**: Buy and sell stocks just like in the real stock market.
+- **Portfolio Management**: Keep track of your stocks and their performance over time.
+- **Market Analysis Tools**: Get insights on stock performances with integrated tools.
+- **Leaderboards**: Compete with friends and other traders on the platform.
+- **Secure Authentication**: Sign in confidently with state-of-the-art security measures.
+
+Made with ❤️ and cutting-edge technologies.
