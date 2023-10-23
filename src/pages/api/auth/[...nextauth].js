@@ -24,7 +24,7 @@ export const authOptions = {
         const user = { id: 1, name: 'J Smith', email: 'jsmith@example.com' };
 
         // If no error and we have user data, return it
-        if (res.ok && user) {
+        if (user) {
           return user;
         }
         // Return null if user data could not be retrieved
