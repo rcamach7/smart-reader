@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "simple-git-hooks": {
-    "pre-commit": "lint-staged --quiet --no-stash --concurrent true",
+    "pre-commit": "yarn lint-staged --quiet --no-stash --concurrent true",
     "commit-msg": "node ci/commit-msg.mjs $1"
   },
   "dependencies": {
