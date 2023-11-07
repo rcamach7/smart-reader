@@ -16,6 +16,7 @@
     "@auth/mongodb-adapter": "^2.0.2",
     "axios": "^1.5.1",
     "mongodb": "^6.2.0",
+    "mongoose": "^8.0.0",
     "next": "12.2.5",
     "next-auth": "^4.24.3",
     "react": "18.2.0",
@@ -27,7 +28,9 @@
     "eslint": "8.23.0",
     "eslint-config-next": "^12.2.5",
     "eslint-config-prettier": "^8.5.0",
+    "lint-staged": "^15.0.2",
     "picocolors": "^1.0.0",
+    "prettier": "^3.0.3",
     "simple-git-hooks": "^2.8.0",
     "typescript": "^4.8.2"
   }
