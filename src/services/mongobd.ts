@@ -1,7 +1,7 @@
 import { MongoClient } from 'mongodb';
 import mongoose from 'mongoose';
 
-function mongodb_connection_promise() {
+function mongodbConnectionPromise() {
   const uri = process.env.MONGODB_URI;
   if (!uri) {
     throw new Error('Please add your Mongo URI to .env.local');
@@ -60,4 +60,4 @@ async function connectToMongoDB() {
   return dbConnect;
 }
 
-export { mongodb_connection_promise, connectToMongoDB };
+export { mongodbConnectionPromise, connectToMongoDB };
