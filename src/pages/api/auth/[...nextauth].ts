@@ -2,6 +2,7 @@ import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { UserSchema } from '@/schemas/index';
 import { connectToMongoDB } from '@/services/mongobd';
+import * as bcrypt from 'bcrypt';
 
 interface UserCredentials {
   username: string;
@@ -17,13 +18,27 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials: UserCredentials) {
-        await connectToMongoDB();
+        try {
+          await connectToMongoDB();
 
-        const user = await UserSchema.findOne({
-          username: credentials.username,
-        });
+          const user = await UserSchema.findOne({
+            username: credentials.username,
+          });
 
-        return user ? user : null;
+          if (user) {
+            const match = await bcrypt.compare(
+              credentials.password,
+              user.password
+            );
+            if (match) {
+              const { password, ...userWithoutPassword } = user;
+              return userWithoutPassword;
+            }
+          }
+        } catch (error) {
+          console.error('Login error:', error);
+        }
+        return null;
       },
     }),
   ],
