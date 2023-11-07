@@ -16,7 +16,7 @@ const User = new Schema({
   },
 });
 
-const UserModel: any = models.User || model('User', User);
+const UserModel = models.User || model('User', User);
 
 export const initializeUserSchema = () => {
   UserModel;
