@@ -7,8 +7,19 @@ export default function Home() {
     password: '',
   });
 
-  function handleSubmit(e) {
-    axios.post('/register', credentials);
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post('api/register', credentials);
+
+      console.log(response);
+    } catch (error) {
+      console.error(
+        'An error occurred during registration:',
+        error.response ? error.response.data : error.message
+      );
+    }
   }
 
   function handleChange(e) {
@@ -25,7 +36,7 @@ export default function Home() {
   return (
     <div>
       <h1>Register</h1>
-      <form action="put" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           id="username"
