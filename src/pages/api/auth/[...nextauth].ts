@@ -24,15 +24,19 @@ export const authOptions: NextAuthOptions = {
           const user = await UserSchema.findOne({
             username: credentials.username,
           });
+          if (!user) return null;
 
           if (user) {
             const match = await bcrypt.compare(
               credentials.password,
               user.password
             );
+
             if (match) {
-              const { password, ...userWithoutPassword } = user;
-              return userWithoutPassword;
+              return {
+                id: user._id.toString(),
+                name: user.username,
+              };
             }
           }
         } catch (error) {
