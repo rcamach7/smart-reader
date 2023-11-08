@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useUser } from '@/context/UserContext';
 
 export default function Home() {
-  const { user } = useUser();
-  const [isSigningIn, setIsSigningIn] = useState(true); // initial state set to true for sign in
+  const { user, setUser } = useUser();
+  const [isSigningIn, setIsSigningIn] = useState(true);
 
   const [credentials, setCredentials] = useState({
     username: '',
@@ -14,7 +14,8 @@ export default function Home() {
   async function handleSignUpSubmit(e) {
     e.preventDefault();
     try {
-      const response = await axios.post('api/register', credentials);
+      const response = await axios.post('api/auth/register', credentials);
+      setUser(response.data.user);
       console.log(response);
     } catch (error) {
       console.error(
@@ -24,9 +25,29 @@ export default function Home() {
     }
   }
 
-  function handleSignInSubmit(e) {
+  async function handleSignInSubmit(e) {
     e.preventDefault();
-    // Sign in logic will be implemented here
+    try {
+      const res = await axios.post('api/auth/login', credentials);
+      setUser(res.data.user);
+    } catch (error) {
+      console.error(
+        'An error occurred during sign-in:',
+        error.response ? error.response.data : error.message
+      );
+    }
+  }
+
+  async function handleSignOut() {
+    try {
+      await axios.post('api/auth/logout');
+      setUser(null);
+    } catch (error) {
+      console.error(
+        'An error occurred during sign-out:',
+        error.response ? error.response.data : error.message
+      );
+    }
   }
 
   function handleChange(e) {
@@ -36,12 +57,13 @@ export default function Home() {
     });
   }
 
-  useEffect(() => {
-    console.log(credentials);
-  }, [credentials]);
-
   if (user) {
-    return <div>Welcome back, {user.username}</div>;
+    return (
+      <div>
+        <div>Welcome back, {user.username}</div>
+        <button onClick={handleSignOut}>Sign Out</button>
+      </div>
+    );
   }
 
   return (
@@ -55,17 +77,17 @@ export default function Home() {
       <form onSubmit={isSigningIn ? handleSignInSubmit : handleSignUpSubmit}>
         <input
           type="text"
-          name="username" // Changed from id to name for better form handling
+          name="username"
           placeholder="Username"
           value={credentials.username}
           onChange={handleChange}
         />
         <input
-          name="password" // Changed from id to name
+          name="password"
           type="password"
           placeholder="Password"
-          onChange={handleChange}
           value={credentials.password}
+          onChange={handleChange}
         />
         <input type="submit" value={isSigningIn ? 'Sign In' : 'Sign Up'} />
       </form>

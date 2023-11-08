@@ -26,7 +26,8 @@ export default async function handler(
 
       try {
         const user = await UserSchema.findById(decoded._id);
-        const { password, ...userWithoutPassword } = user;
+        const userObject = user.toObject();
+        const { password, ...userWithoutPassword } = userObject;
 
         return res.status(200).json({ user: userWithoutPassword });
       } catch (error) {
@@ -37,10 +38,8 @@ export default async function handler(
         return res.status(400).json({ message: 'User not found' });
       }
 
-      return res.status(201).json({ message: 'Account has been created' });
-
     default:
-      res.setHeader('Allow', ['POST']);
+      res.setHeader('Allow', ['GET']);
       res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }

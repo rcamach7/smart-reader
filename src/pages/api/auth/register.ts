@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { UserSchema } from '@/schemas/index';
 import { connectToMongoDB } from '@/services/mongobd';
 import * as bcrypt from 'bcrypt';
+import { setJwtToken } from '@/utils/token';
 
 export default async function handler(
   req: NextApiRequest,
@@ -16,7 +17,6 @@ export default async function handler(
         password: req.body.password,
       };
 
-      // Verify username isn't already taken
       const existingUser = await UserSchema.findOne({
         username: credentials.username,
       });
@@ -24,15 +24,30 @@ export default async function handler(
         return res.status(400).json({ message: 'Username already taken' });
       }
 
-      // Hash password and create new user
       const hashedPassword = await bcrypt.hash(credentials.password, 10);
       const user = new UserSchema({
         username: credentials.username,
         password: hashedPassword,
       });
-      await user.save();
+      try {
+        const savedUser = await user.save();
+        const userObject = savedUser.toObject();
+        const { password, ...userWithoutPassword } = userObject;
 
-      return res.status(201).json({ message: 'Account has been created' });
+        await setJwtToken(
+          { _id: savedUser._id, username: savedUser.username },
+          res
+        );
+
+        return res.status(201).json({
+          message: 'Account has been created',
+          user: userWithoutPassword,
+        });
+      } catch (error) {
+        return res
+          .status(400)
+          .json({ message: 'Error creating user and setting token' });
+      }
 
     default:
       res.setHeader('Allow', ['POST']);

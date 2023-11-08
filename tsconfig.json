@@ -18,7 +18,8 @@
     "paths": {
       "@/schemas/*": ["src/schemas/*"],
       "@/services/*": ["src/services/*"],
-      "@/context/*": ["src/context/*"]
+      "@/context/*": ["src/context/*"],
+      "@/utils/*": ["src/utils/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

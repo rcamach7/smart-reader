@@ -54,6 +54,10 @@ export function UserProvider({ children }: UserProviderProps) {
     loadUser();
   }, []);
 
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
+
   return (
     <UserContext.Provider value={{ user, setUser }}>
       {children}
