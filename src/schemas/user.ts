@@ -14,6 +14,8 @@ const User = new Schema({
     minLength: 5,
     maxLength: 255,
   },
+  shelves: [{ type: Schema.Types.ObjectId, ref: 'Shelf' }],
+  savedBooks: [{ type: Schema.Types.ObjectId, ref: 'Book' }],
 });
 
 const UserModel = models.User || model('User', User);
