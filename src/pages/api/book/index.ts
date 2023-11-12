@@ -50,11 +50,6 @@ export default async function handler(
       try {
         await connectToMongoDB();
 
-        const replicate = await BookSchema.findOne({ title });
-        if (replicate) {
-          return res.status(400).json({ message: 'Book title already exists' });
-        }
-
         const newBook = new BookSchema({
           title,
           subTitle,
@@ -73,13 +68,13 @@ export default async function handler(
         const bookObject = book.toObject();
 
         return res
-          .status(200)
+          .status(201)
           .json({ message: 'Book created successfully', book: bookObject });
       } catch (error) {
         console.log(error);
         return res
           .status(500)
-          .json({ message: 'Internal error creating and saving book.' });
+          .json({ message: 'Unable to create new book. Possible duplicate.' });
       }
 
     default:
