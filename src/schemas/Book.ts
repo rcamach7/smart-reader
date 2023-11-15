@@ -17,7 +17,7 @@ const BookSchema = new Schema({
     type: String,
     validate: {
       validator: function (v) {
-        return /^(97(8|9))?\d{9}(\d|X)$/.test(v); // Simple ISBN validation
+        return /^(97(8|9))?\d{9}(\d|X)$/.test(v);
       },
       message: (props) => `${props.value} is not a valid ISBN!`,
     },
@@ -26,7 +26,7 @@ const BookSchema = new Schema({
     type: String,
     validate: {
       validator: function (v) {
-        return /^(97(8|9))?\d{12}$/.test(v); // Simple ISBN-13 validation
+        return /^(97(8|9))?\d{12}$/.test(v);
       },
       message: (props) => `${props.value} is not a valid ISBN-13!`,
     },
