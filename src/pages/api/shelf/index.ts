@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'jsonwebtoken';
 import { parse } from 'cookie';
+import { ShelfSchema } from '@/schemas/index';
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,9 +12,9 @@ export default async function handler(
     return res.status(401).json({ message: 'Unauthenticated' });
   }
 
-  let decoded;
+  let decodedAuthToken;
   try {
-    decoded = jwt.verify(token, process.env.JWT_SECRET);
+    decodedAuthToken = jwt.verify(token, process.env.JWT_SECRET);
   } catch (error) {
     res.setHeader(
       'Set-Cookie',
@@ -27,13 +28,30 @@ export default async function handler(
   switch (req.method) {
     case 'POST':
       const { name, description, isPublic } = req.body;
-      if (!name) {
+      if (!name || !description) {
         return res.status(400).json({ message: 'Missing Required Fields' });
       }
 
-      console.log(name, description, isPublic);
+      try {
+        const newShelf = new ShelfSchema({
+          name,
+          description,
+          public: isPublic ? isPublic : false,
+          creator: decodedAuthToken._id,
+          books: [],
+          likes: [],
+        });
+        const shelf = await newShelf.save();
+        const shelfObject = shelf.toObject();
 
-      return res.status(201).end();
+        return res
+          .status(201)
+          .json({ message: 'Shelf created successfully', shelf: shelfObject });
+      } catch (error) {
+        return res
+          .status(500)
+          .json({ message: 'Error occurred while creating shelf', error });
+      }
 
     default:
       res.setHeader('Allow', ['POST']);
