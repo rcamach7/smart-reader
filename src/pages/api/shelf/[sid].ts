@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { ShelfSchema, UserSchema } from '@/schemas/index';
 import { connectToMongoDB } from '@/services/mongobd';
-import { parse } from 'cookie';
-import jwt from 'jsonwebtoken';
+import { decodeAuthToken } from '@/utils/token';
 
 interface UpdateFields {
   name?: string;
@@ -17,18 +16,11 @@ export default async function handler(
   const { sid } = req.query;
   if (!sid) return res.status(400).json({ message: 'Missing shelf id' });
 
-  const { token } = parse(req.headers.cookie || '');
   let decodedAuthToken;
   try {
-    decodedAuthToken = jwt.verify(token, process.env.JWT_SECRET);
+    decodedAuthToken = await decodeAuthToken(req);
   } catch (error) {
-    res.setHeader(
-      'Set-Cookie',
-      'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; httpOnly;'
-    );
-    return res
-      .status(401)
-      .json({ message: 'Invalid token, please login again.' });
+    return res.status(400).json({ message: 'User not authenticated', error });
   }
 
   switch (req.method) {

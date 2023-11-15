@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { connectToMongoDB } from '@/services/mongobd';
 import { BookSchema } from '@/schemas/index';
+import { decodeAuthToken } from '@/utils/token';
 
 interface ApiResponse {
   title: string;
@@ -24,6 +25,13 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  let decodedAuthToken;
+  try {
+    decodedAuthToken = await decodeAuthToken(req);
+  } catch (error) {
+    return res.status(400).json({ message: 'User not authenticated', error });
+  }
+
   switch (req.method) {
     case 'POST':
       const {

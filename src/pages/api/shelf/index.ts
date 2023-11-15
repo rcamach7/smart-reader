@@ -1,29 +1,17 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import jwt from 'jsonwebtoken';
-import { parse } from 'cookie';
 import { ShelfSchema, UserSchema } from '@/schemas/index';
 import { connectToMongoDB } from '@/services/mongobd';
+import { decodeAuthToken } from '@/utils/token';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { token } = parse(req.headers.cookie || '');
-  if (!token) {
-    return res.status(401).json({ message: 'Unauthenticated' });
-  }
-
   let decodedAuthToken;
   try {
-    decodedAuthToken = jwt.verify(token, process.env.JWT_SECRET);
+    decodedAuthToken = await decodeAuthToken(req);
   } catch (error) {
-    res.setHeader(
-      'Set-Cookie',
-      'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; httpOnly;'
-    );
-    return res
-      .status(401)
-      .json({ message: 'Invalid token, please login again.' });
+    return res.status(400).json({ message: 'User not authenticated', error });
   }
 
   switch (req.method) {

@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { GenreSchema } from '@/schemas/index';
 import { connectToMongoDB } from '@/services/mongobd';
+import { decodeAuthToken } from '@/utils/token';
 
 export default async function handler(
   req: NextApiRequest,
@@ -8,6 +9,13 @@ export default async function handler(
 ) {
   const { gid } = req.query;
   if (!gid) return res.status(400).json({ message: 'Missing genre id' });
+
+  let decodedAuthToken;
+  try {
+    decodedAuthToken = await decodeAuthToken(req);
+  } catch (error) {
+    return res.status(400).json({ message: 'User not authenticated', error });
+  }
 
   switch (req.method) {
     case 'GET':
