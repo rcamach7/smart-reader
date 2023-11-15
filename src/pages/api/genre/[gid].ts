@@ -26,7 +26,7 @@ export default async function handler(
           .json({ message: 'Error retrieving genre', error });
       }
 
-    case 'POST':
+    case 'PUT':
       const { bookId } = req.body;
       if (!bookId)
         return res.status(400).json({
@@ -51,7 +51,7 @@ export default async function handler(
       }
 
     default:
-      res.setHeader('Allow', ['GET', 'POST']);
+      res.setHeader('Allow', ['GET', 'PUT']);
       res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
