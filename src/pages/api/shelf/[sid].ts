@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { ShelfSchema } from '@/schemas/index';
+import { ShelfSchema, UserSchema } from '@/schemas/index';
 import { connectToMongoDB } from '@/services/mongobd';
 import { parse } from 'cookie';
 import jwt from 'jsonwebtoken';
@@ -104,9 +104,18 @@ export default async function handler(
             .json({ message: 'Only creator can delete this shelf.' });
         }
 
+        const updatedUser = await UserSchema.findByIdAndUpdate(
+          decodedAuthToken._id,
+          { $pull: { shelves: sid } },
+          { new: true }
+        ).populate('shelves');
+
         await ShelfSchema.findByIdAndDelete(sid);
 
-        return res.status(200).json({ message: 'Shelf has been deleted' });
+        return res.status(200).json({
+          message: 'Shelf has been deleted',
+          shelves: updatedUser.shelves,
+        });
       } catch (error) {
         console.log(error);
         return res
