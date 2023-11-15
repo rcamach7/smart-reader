@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'jsonwebtoken';
 import { parse } from 'cookie';
-import { ShelfSchema, UserSchema } from '@/schemas/index';
+import { GenreSchema } from '@/schemas/index';
 import { connectToMongoDB } from '@/services/mongobd';
 
 export default async function handler(
@@ -28,48 +28,30 @@ export default async function handler(
 
   switch (req.method) {
     case 'POST':
-      const { name, description, isPublic } = req.body;
-      if (!name || !description) {
+      const { name, description } = req.body;
+      if (!name) {
         return res.status(400).json({ message: 'Missing Required Fields' });
       }
 
       try {
         await connectToMongoDB();
 
-        const newShelf = new ShelfSchema({
+        const newGenre = new GenreSchema({
           name,
           description,
-          public: isPublic ? isPublic : false,
-          creator: decodedAuthToken._id,
           books: [],
-          likes: [],
         });
-        const shelf = await newShelf.save();
-        const shelfObject = shelf.toObject();
-
-        let updatedUser;
-        try {
-          updatedUser = await UserSchema.findByIdAndUpdate(
-            decodedAuthToken._id,
-            { $push: { shelves: shelf._id } },
-            { new: true }
-          ).populate('shelves');
-        } catch (userUpdateError) {
-          return res.status(500).json({
-            message: 'Error occurred while updating user',
-            error: userUpdateError,
-          });
-        }
+        const genre = await newGenre.save();
+        const genreObject = genre.toObject();
 
         return res.status(201).json({
-          message: 'Shelf created successfully',
-          shelf: shelfObject,
-          shelves: updatedUser.toObject().shelves,
+          message: 'Genre created successfully',
+          genre: genreObject,
         });
       } catch (error) {
         return res
           .status(500)
-          .json({ message: 'Error occurred while creating shelf', error });
+          .json({ message: 'Error occurred while creating genre', error });
       }
 
     default:
