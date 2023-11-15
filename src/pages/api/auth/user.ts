@@ -1,23 +1,17 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { UserSchema } from '@/schemas/index';
 import { connectToMongoDB } from '@/services/mongobd';
-import jwt from 'jsonwebtoken';
-import { parse } from 'cookie';
+import { decodeAuthToken } from '@/utils/token';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { token } = parse(req.headers.cookie || '');
-  if (!token) {
-    return res.status(401).json({ message: 'No token provided' });
-  }
-
-  let decoded;
+  let decodedAuthToken;
   try {
-    decoded = jwt.verify(token, process.env.JWT_SECRET);
+    decodedAuthToken = await decodeAuthToken(req);
   } catch (error) {
-    return res.status(401).json({ message: 'Invalid token' });
+    return res.status(400).json({ message: 'User not authenticated', error });
   }
 
   switch (req.method) {
@@ -25,8 +19,8 @@ export default async function handler(
       await connectToMongoDB();
 
       try {
-        const user = await UserSchema.findById(decoded._id).populate([
-          'books',
+        const user = await UserSchema.findById(decodedAuthToken._id).populate([
+          'shelves',
           'savedBooks',
         ]);
         const userObject = user.toObject();
@@ -38,7 +32,9 @@ export default async function handler(
           'Set-Cookie',
           'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; httpOnly;'
         );
-        return res.status(400).json({ message: 'User not found' });
+        return res
+          .status(400)
+          .json({ message: 'Error occurred while retrieving user' });
       }
 
     default:
