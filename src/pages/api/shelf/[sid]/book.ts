@@ -1,14 +1,21 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { connectToMongoDB } from '@/services/mongobd';
 import { ShelfSchema } from '@/schemas/index';
+import { decodeAuthToken } from '@/utils/token';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  let decodedAuthToken;
+  try {
+    decodedAuthToken = await decodeAuthToken(req);
+  } catch (error) {
+    return res.status(400).json({ message: 'User not authenticated', error });
+  }
+
   const { sid } = req.query;
   const { bookId } = req.body;
-
   if (
     !sid ||
     typeof sid !== 'string' ||
@@ -21,11 +28,26 @@ export default async function handler(
   }
 
   try {
+    await connectToMongoDB();
+    const shelf = await ShelfSchema.findById(sid).populate('creator');
+
+    if (shelf.creator !== decodedAuthToken._id) {
+      return res
+        .status(400)
+        .json({ message: 'Only creator may modify this shelf.' });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: 'Internal error retrieving shelf.',
+      error,
+    });
+  }
+
+  try {
     switch (req.method) {
       case 'PUT':
         try {
-          await connectToMongoDB();
-
           const updatedShelf = await ShelfSchema.findByIdAndUpdate(
             sid,
             {
@@ -48,8 +70,6 @@ export default async function handler(
 
       case 'DELETE':
         try {
-          await connectToMongoDB();
-
           const updatedShelf = await ShelfSchema.findByIdAndUpdate(
             sid,
             {
