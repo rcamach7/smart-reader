@@ -21,7 +21,7 @@ export default async function handler(
       await connectToMongoDB();
       const user = await UserSchema.findOne({
         username: credentials.username,
-      });
+      }).populate(['shelves', 'savedBooks']);
       if (!user) {
         return res.status(400).json({ message: 'User not found' });
       }

@@ -25,7 +25,10 @@ export default async function handler(
       await connectToMongoDB();
 
       try {
-        const user = await UserSchema.findById(decoded._id);
+        const user = await UserSchema.findById(decoded._id).populate([
+          'books',
+          'savedBooks',
+        ]);
         const userObject = user.toObject();
         const { password, ...userWithoutPassword } = userObject;
 
