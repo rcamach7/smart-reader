@@ -14,7 +14,7 @@ export default function Home() {
   async function handleSignUpSubmit(e) {
     e.preventDefault();
     try {
-      const response = await axios.post('api/auth/register', credentials);
+      const response = await axios.post('/api/auth/register', credentials);
       setUser(response.data.user);
       console.log(response);
     } catch (error) {
@@ -28,7 +28,7 @@ export default function Home() {
   async function handleSignInSubmit(e) {
     e.preventDefault();
     try {
-      const res = await axios.post('api/auth/login', credentials);
+      const res = await axios.post('/api/auth/login', credentials);
       setUser(res.data.user);
     } catch (error) {
       console.error(
@@ -40,7 +40,7 @@ export default function Home() {
 
   async function handleSignOut() {
     try {
-      await axios.post('api/auth/logout');
+      await axios.post('/api/auth/logout');
       setUser(null);
     } catch (error) {
       console.error(

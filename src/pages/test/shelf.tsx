@@ -25,6 +25,7 @@ function ShelfForm() {
       console.log(response.data);
     } catch (error) {
       console.error('Error creating shelf:', error);
+      console.log(error.response);
     }
   };
 

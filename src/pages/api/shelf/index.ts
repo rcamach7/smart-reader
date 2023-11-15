@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import jwt from 'jsonwebtoken';
 import { parse } from 'cookie';
-import { ShelfSchema } from '@/schemas/index';
+import { ShelfSchema, UserSchema } from '@/schemas/index';
 
 export default async function handler(
   req: NextApiRequest,
@@ -44,9 +44,25 @@ export default async function handler(
         const shelf = await newShelf.save();
         const shelfObject = shelf.toObject();
 
-        return res
-          .status(201)
-          .json({ message: 'Shelf created successfully', shelf: shelfObject });
+        let updatedUser;
+        try {
+          updatedUser = await UserSchema.findByIdAndUpdate(
+            decodedAuthToken._id,
+            { $push: { shelves: shelf._id } },
+            { new: true }
+          ).populate('shelves');
+        } catch (userUpdateError) {
+          return res.status(500).json({
+            message: 'Error occurred while updating user',
+            error: userUpdateError,
+          });
+        }
+
+        return res.status(201).json({
+          message: 'Shelf created successfully',
+          shelf: shelfObject,
+          shelves: updatedUser.toObject().shelves,
+        });
       } catch (error) {
         return res
           .status(500)
