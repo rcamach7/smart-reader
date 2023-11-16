@@ -61,7 +61,7 @@ export default async function handler(
         await connectToMongoDB();
 
         const shelf = await ShelfSchema.findById(sid);
-        if (shelf.creator !== decodedAuthToken._id) {
+        if (shelf.creator.toString() !== decodedAuthToken._id) {
           return res
             .status(400)
             .json({ message: 'Only creator can update this shelf.' });
@@ -90,7 +90,7 @@ export default async function handler(
         if (!shelf)
           return res.status(400).json({ message: 'Unable to find shelf' });
 
-        if (shelf.creator !== decodedAuthToken._id) {
+        if (shelf.creator.toString() !== decodedAuthToken._id) {
           return res
             .status(400)
             .json({ message: 'Only creator can delete this shelf.' });

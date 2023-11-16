@@ -37,10 +37,39 @@ function ShelfForm() {
     }
   };
 
+  const handleDeleteShelf = async (_id: string) => {
+    try {
+      const res = await axios.delete('/api/shelf/' + _id);
+      setUser({
+        ...user,
+        shelves: res.data.shelves,
+      });
+      console.log(res);
+    } catch (error) {
+      console.error(error.response.data);
+    }
+  };
+
   return (
     <>
       {user ? (
         <>
+          <p>My Current Shelves:</p>
+          {user.shelves.map(({ _id, name }) => (
+            <div key={_id}>
+              <p style={{ display: 'inline' }}>{`${name} : ${_id}`}</p>
+              <button
+                onClick={() => {
+                  handleDeleteShelf(_id);
+                }}
+                style={{ display: 'inline', marginLeft: 5 }}
+              >
+                Delete Shelf
+              </button>
+            </div>
+          ))}
+
+          <br />
           <p>Create New Shelf Below</p>
           <form onSubmit={handleSubmit}>
             <input

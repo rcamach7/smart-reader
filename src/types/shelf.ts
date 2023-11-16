@@ -2,6 +2,7 @@ import Book from './book';
 import User from './user';
 
 type Shelf = {
+  _id: string;
   name: string;
   description: string;
   public: boolean;
