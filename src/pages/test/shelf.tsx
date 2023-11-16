@@ -40,31 +40,34 @@ function ShelfForm() {
   return (
     <>
       {user ? (
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="name"
-            value={shelfData.name}
-            onChange={handleChange}
-            placeholder="Shelf Name"
-          />
-          <textarea
-            name="description"
-            value={shelfData.description}
-            onChange={handleChange}
-            placeholder="Description"
-          />
-          <label>
-            Public
+        <>
+          <p>Create New Shelf Below</p>
+          <form onSubmit={handleSubmit}>
             <input
-              type="checkbox"
-              name="isPublic"
-              checked={shelfData.isPublic}
+              type="text"
+              name="name"
+              value={shelfData.name}
               onChange={handleChange}
+              placeholder="Shelf Name"
             />
-          </label>
-          <button type="submit">Create Shelf</button>
-        </form>
+            <textarea
+              name="description"
+              value={shelfData.description}
+              onChange={handleChange}
+              placeholder="Description"
+            />
+            <label>
+              Public
+              <input
+                type="checkbox"
+                name="isPublic"
+                checked={shelfData.isPublic}
+                onChange={handleChange}
+              />
+            </label>
+            <button type="submit">Create Shelf</button>
+          </form>
+        </>
       ) : (
         <h1>Please sign in to create a shelf</h1>
       )}

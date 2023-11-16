@@ -31,7 +31,7 @@ const BookSchema = new Schema({
       message: (props) => `${props.value} is not a valid ISBN-13!`,
     },
   },
-  genre: [{ type: Schema.Types.ObjectId, ref: 'Genre' }],
+  genres: [String],
 });
 
 BookSchema.index({ title: 1, authors: 1, isbn: 1 });
