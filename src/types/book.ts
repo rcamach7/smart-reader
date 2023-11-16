@@ -1,17 +1,19 @@
-export type Book = {
+type Book = {
   title: string;
   subTitle?: string;
   authors: string[];
   publisher?: string;
   publicationDate?: Date;
   edition?: string;
-  pageCount: number;
-  genre: string;
   description: string;
-  coverImage: {
-    small: string;
-    normal: string;
+  pageCount: number;
+  coverImageLinks?: {
+    small?: string;
+    normal?: string;
   };
-  isbn: string;
-  language: string;
+  isbn?: string;
+  isbn13?: string;
+  genres: string[];
 };
+
+export default Book;

@@ -6,17 +6,11 @@ import React, {
   useEffect,
 } from 'react';
 import axios from 'axios';
-
-interface User {
-  _id: string;
-  username: string;
-  shelves: [];
-  savedBooks: [];
-}
+import { UserType } from '@/types/index';
 
 interface UserContextType {
-  user: User | null;
-  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  user: UserType | null;
+  setUser: React.Dispatch<React.SetStateAction<UserType | null>>;
   loadUser?: () => void;
 }
 
@@ -35,7 +29,7 @@ interface UserProviderProps {
 }
 
 export function UserProvider({ children }: UserProviderProps) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserType | null>(null);
 
   async function fetchUser() {
     try {
@@ -48,7 +42,7 @@ export function UserProvider({ children }: UserProviderProps) {
   }
 
   async function loadUser() {
-    const userData: User = await fetchUser();
+    const userData: UserType = await fetchUser();
     setUser(userData);
   }
 

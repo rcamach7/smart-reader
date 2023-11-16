@@ -1,12 +1,11 @@
-import { Shelve } from './shelve';
-import { Book } from './book';
+import Shelf from './shelf';
+import Book from './book';
 
-export type User = {
-  name: string;
-  email: string;
-  avatar?: string;
-  library: Shelve[];
-  favorites: Book[];
-  read: Book[];
-  reading: Book[];
+type User = {
+  _id: string;
+  username: string;
+  shelves: Shelf[];
+  savedBooks: Book[];
 };
+
+export default User;
