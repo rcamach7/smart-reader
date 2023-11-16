@@ -41,7 +41,12 @@ export default async function handler(
             decodedAuthToken._id,
             { $push: { shelves: shelf._id } },
             { new: true }
-          ).populate('shelves');
+          ).populate({
+            path: 'shelves',
+            populate: {
+              path: 'creator',
+            },
+          });
         } catch (userUpdateError) {
           return res.status(500).json({
             message: 'Error occurred while updating user',

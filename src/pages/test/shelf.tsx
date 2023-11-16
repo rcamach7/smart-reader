@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useUser } from '@/context/UserContext';
 
 function ShelfForm() {
+  const { user, setUser } = useUser();
+
   const [shelfData, setShelfData] = useState({
     name: '',
     description: '',
@@ -22,6 +25,11 @@ function ShelfForm() {
       const response = await axios.post('/api/shelf', shelfData, {
         withCredentials: true,
       });
+
+      setUser({
+        ...user,
+        shelves: response.data.shelves,
+      });
       console.log(response.data);
     } catch (error) {
       console.error('Error creating shelf:', error);
@@ -30,31 +38,37 @@ function ShelfForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        name="name"
-        value={shelfData.name}
-        onChange={handleChange}
-        placeholder="Shelf Name"
-      />
-      <textarea
-        name="description"
-        value={shelfData.description}
-        onChange={handleChange}
-        placeholder="Description"
-      />
-      <label>
-        Public
-        <input
-          type="checkbox"
-          name="isPublic"
-          checked={shelfData.isPublic}
-          onChange={handleChange}
-        />
-      </label>
-      <button type="submit">Create Shelf</button>
-    </form>
+    <>
+      {user ? (
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="name"
+            value={shelfData.name}
+            onChange={handleChange}
+            placeholder="Shelf Name"
+          />
+          <textarea
+            name="description"
+            value={shelfData.description}
+            onChange={handleChange}
+            placeholder="Description"
+          />
+          <label>
+            Public
+            <input
+              type="checkbox"
+              name="isPublic"
+              checked={shelfData.isPublic}
+              onChange={handleChange}
+            />
+          </label>
+          <button type="submit">Create Shelf</button>
+        </form>
+      ) : (
+        <h1>Please sign in to create a shelf</h1>
+      )}
+    </>
   );
 }
 

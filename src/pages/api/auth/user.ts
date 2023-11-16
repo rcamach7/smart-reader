@@ -20,8 +20,16 @@ export default async function handler(
 
       try {
         const user = await UserSchema.findById(decodedAuthToken._id).populate([
-          'shelves',
-          'savedBooks',
+          {
+            path: 'shelves',
+            populate: {
+              path: 'creator',
+              select: '-password -savedBooks -shelves',
+            },
+          },
+          {
+            path: 'savedBooks',
+          },
         ]);
         const userObject = user.toObject();
         const { password, ...userWithoutPassword } = userObject;

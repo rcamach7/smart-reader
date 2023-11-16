@@ -10,6 +10,8 @@ import axios from 'axios';
 interface User {
   _id: string;
   username: string;
+  shelves: [];
+  savedBooks: [];
 }
 
 interface UserContextType {
