@@ -28,9 +28,9 @@ export default async function handler(
 
           let liked = false;
           for (let i = 0; i < shelf.likes.length; i++) {
-            if (shelf.likes[i] === decodedAuthToken._id) {
+            if (shelf.likes[i].toString() === decodedAuthToken._id) {
               liked = true;
-              return;
+              break;
             }
           }
 
@@ -51,7 +51,7 @@ export default async function handler(
             message: `${
               liked ? 'Removed like from shelf.' : 'Added like to shelf'
             }`,
-            likes: updatedShelf.toObject().likes,
+            shelf: updatedShelf.toObject(),
           });
         } catch (error) {
           console.log(error);

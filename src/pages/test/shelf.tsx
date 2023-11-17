@@ -50,14 +50,34 @@ function ShelfForm() {
     }
   };
 
+  const handleLikeShelf = async (_id: string) => {
+    try {
+      const res = await axios.post('/api/shelf/' + _id + '/like');
+
+      if (res.data.shelf) {
+        setUser((prevUser) => {
+          return {
+            ...prevUser,
+            shelves: prevUser.shelves.map((shelf) =>
+              shelf._id === _id ? res.data.shelf : shelf
+            ),
+          };
+        });
+      }
+    } catch (error) {
+      console.error(error.response.data);
+    }
+  };
+
   return (
     <>
       {user ? (
         <>
           <p>My Current Shelves:</p>
-          {user.shelves.map(({ _id, name }) => (
+          {user.shelves.map(({ _id, name, likes }) => (
             <div key={_id}>
-              <p style={{ display: 'inline' }}>{`${name} : ${_id}`}</p>
+              <p style={{ display: 'inline' }}>{`${name}: ${_id}`}</p>
+              <p style={{ display: 'inline' }}> Likes: {likes.length}</p>
               <button
                 onClick={() => {
                   handleDeleteShelf(_id);
@@ -65,6 +85,14 @@ function ShelfForm() {
                 style={{ display: 'inline', marginLeft: 5 }}
               >
                 Delete Shelf
+              </button>
+              <button
+                onClick={() => {
+                  handleLikeShelf(_id);
+                }}
+                style={{ display: 'inline', marginLeft: 5 }}
+              >
+                Toggle Like
               </button>
             </div>
           ))}
