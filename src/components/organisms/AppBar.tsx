@@ -9,12 +9,9 @@ import {
   InputBase,
   MenuItem,
   Menu,
+  Avatar,
 } from '@mui/material';
-import {
-  Menu as MenuIcon,
-  Search as SearchIcon,
-  AccountCircle,
-} from '@mui/icons-material';
+import { Menu as MenuIcon, Search as SearchIcon } from '@mui/icons-material';
 import { useUser } from '@/context/UserContext';
 import Link from 'next/link';
 
@@ -123,6 +120,7 @@ export default function PrimarySearchAppBar() {
   const hamburgerMenuId = 'primary-hamburger-menu';
   const renderHamburgerMenu = (
     <Menu
+      anchorEl={hamburgerAnchorEl}
       anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
       id={hamburgerMenuId}
       keepMounted
@@ -179,7 +177,10 @@ export default function PrimarySearchAppBar() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle />
+              <Avatar
+                alt={user ? user.username : 'Guest'}
+                src={user ? `/profile/${user.profileImage}` : null}
+              />
             </IconButton>
           </Box>
         </Toolbar>
