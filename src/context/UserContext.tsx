@@ -12,6 +12,7 @@ interface UserContextType {
   user: UserType | null;
   setUser: React.Dispatch<React.SetStateAction<UserType | null>>;
   loadUser?: () => void;
+  logout: () => Promise<void>;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -46,16 +47,21 @@ export function UserProvider({ children }: UserProviderProps) {
     setUser(userData);
   }
 
+  async function logout() {
+    try {
+      await axios.post('/api/auth/logout');
+      setUser(null);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     loadUser();
   }, []);
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
-
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, logout }}>
       {children}
     </UserContext.Provider>
   );

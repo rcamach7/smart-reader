@@ -58,7 +58,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function PrimarySearchAppBar() {
-  const { user } = useUser();
+  const { user, logout } = useUser();
 
   const [hamburgerAnchorEl, setHamburgerAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -83,6 +83,11 @@ export default function PrimarySearchAppBar() {
     setAnchorEl(null);
   };
 
+  const handleLogout = async () => {
+    await logout();
+    handleMenuClose();
+  };
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -102,9 +107,15 @@ export default function PrimarySearchAppBar() {
     >
       {user && <MenuItem onClick={handleMenuClose}>My Account</MenuItem>}
       {user ? (
-        <MenuItem onClick={handleMenuClose}>Log Out</MenuItem>
+        <MenuItem onClick={handleLogout}>Log Out</MenuItem>
       ) : (
-        <MenuItem onClick={handleMenuClose}>Log In</MenuItem>
+        <MenuItem onClick={handleMenuClose}>
+          <Typography textAlign="center">
+            <Link href="/test/status">
+              <a style={{ textDecoration: 'none' }}>Sign In</a>
+            </Link>
+          </Typography>
+        </MenuItem>
       )}
     </Menu>
   );
