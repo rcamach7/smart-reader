@@ -54,6 +54,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+const hamburgerMenuItems = [
+  { title: 'Home', link: '/', authRequired: false },
+  { title: 'My Shelves', link: '/', authRequired: true },
+  { title: 'My Books', link: '/', authRequired: true },
+  { title: 'Public Shelves', link: '/', authRequired: false },
+  { title: 'About', link: '/', authRequired: false },
+];
+
 export default function PrimarySearchAppBar() {
   const { user, logout } = useUser();
 
@@ -128,9 +136,22 @@ export default function PrimarySearchAppBar() {
       open={isHamburgerMenuOpen}
       onClose={handleHamburgerMenuClose}
     >
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <p>Hello World</p>
-      </MenuItem>
+      {hamburgerMenuItems.map((menuItem) => {
+        if (!user && menuItem.authRequired) {
+          return null;
+        }
+        return (
+          <MenuItem onClick={handleHamburgerMenuClose}>
+            <Typography textAlign="center">
+              <Link href={menuItem.link}>
+                <a style={{ textDecoration: 'none', color: 'inherit' }}>
+                  {menuItem.title}
+                </a>
+              </Link>
+            </Typography>
+          </MenuItem>
+        );
+      })}
     </Menu>
   );
 
