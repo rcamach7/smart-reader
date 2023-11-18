@@ -15,7 +15,11 @@ export default async function handler(
       const credentials = {
         username: req.body.username,
         password: req.body.password,
+        profileImage: req.body.profileImage
+          ? req.body.profileImage
+          : 'profile_img_1.png',
       };
+      console.log(credentials);
 
       const existingUser = await UserSchema.findOne({
         username: credentials.username,
@@ -28,6 +32,7 @@ export default async function handler(
       const user = new UserSchema({
         username: credentials.username,
         password: hashedPassword,
+        profileImage: credentials.profileImage,
       });
       try {
         const savedUser = await user.save();

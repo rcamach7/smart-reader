@@ -14,6 +14,11 @@ const User = new Schema({
     minLength: 5,
     maxLength: 255,
   },
+  profileImage: {
+    type: String,
+    default: 'profile_img_1.png',
+    enum: ['profile_img_1.png', 'profile_img_2.png', 'profile_img_3.png'],
+  },
   shelves: [{ type: Schema.Types.ObjectId, ref: 'Shelf' }],
   savedBooks: [{ type: Schema.Types.ObjectId, ref: 'Book' }],
 });

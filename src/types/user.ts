@@ -6,6 +6,7 @@ type User = {
   username: string;
   shelves: Shelf[];
   savedBooks: Book[];
+  profileImage: string;
 };
 
 export default User;
