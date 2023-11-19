@@ -116,7 +116,7 @@ export default function PrimarySearchAppBar() {
       ) : (
         <MenuItem onClick={handleMenuClose}>
           <Typography textAlign="center">
-            <Link href="/test/status">
+            <Link href="/login">
               <a style={{ textDecoration: 'none' }}>Sign In</a>
             </Link>
           </Typography>
@@ -141,7 +141,7 @@ export default function PrimarySearchAppBar() {
           return null;
         }
         return (
-          <MenuItem onClick={handleHamburgerMenuClose}>
+          <MenuItem onClick={handleHamburgerMenuClose} key={menuItem.title}>
             <Typography textAlign="center">
               <Link href={menuItem.link}>
                 <a style={{ textDecoration: 'none', color: 'inherit' }}>
