@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useUser } from '@/context/UserContext';
-import { Box, TextField, Typography } from '@mui/material';
+import { Box, TextField, Typography, Button } from '@mui/material';
 import useAvailableHeight from '@/hooks/useAvailableHeight';
 
 export default function Login() {
@@ -13,7 +13,10 @@ export default function Login() {
   const availableHeight = useAvailableHeight();
 
   const renderSignInForm = (
-    <Box component="form">
+    <Box
+      sx={{ display: 'flex', flexDirection: 'column', gap: 1, pt: 2 }}
+      component="form"
+    >
       <TextField
         required
         id="outlined-required"
@@ -26,6 +29,9 @@ export default function Login() {
         label="Password"
         variant="outlined"
       />
+      <Button variant="outlined" type="submit">
+        Login
+      </Button>
     </Box>
   );
 
@@ -44,7 +50,6 @@ export default function Login() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        border: '1px solid black',
         height: availableHeight,
         pb: 10,
       }}

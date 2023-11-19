@@ -3,7 +3,7 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     background: {
-      default: '#f6ffff',
+      default: '#dce8f4',
     },
     primary: {
       main: '#6fa6b6',
@@ -11,6 +11,7 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: [
+      'Georgia',
       '-apple-system',
       'BlinkMacSystemFont',
       '"Segoe UI"',
