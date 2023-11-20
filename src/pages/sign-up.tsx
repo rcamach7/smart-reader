@@ -62,6 +62,51 @@ export default function Login() {
     if (e) {
       e.preventDefault();
     }
+
+    if (credentials.username.length < 4) {
+      setErrors({
+        fieldId: 'username',
+        helperText: 'Must be at least 4 character',
+      });
+      return;
+    } else if (credentials.password.length < 4) {
+      setErrors({
+        fieldId: 'password',
+        helperText: 'Must be at least 4 character',
+      });
+      return;
+    } else if (credentials.confirmPassword.length < 4) {
+      setErrors({
+        fieldId: 'confirmPassword',
+        helperText: 'Must be at least 4 character',
+      });
+      return;
+    }
+
+    if (credentials.password !== credentials.confirmPassword) {
+      setErrors({
+        fieldId: 'confirmPassword',
+        helperText: 'Passwords do not match',
+      });
+      return;
+    }
+
+    setIsPageLoading(true);
+    try {
+      const response = await axios.post('/api/auth/register', credentials);
+      setUser(response.data.user);
+    } catch (error) {
+      const { field, helperText } = error.response.data;
+      if (field && helperText) {
+        setErrors({ fieldId: field, helperText });
+      }
+
+      console.error(
+        helperText ? helperText : 'Error occurred creating an account',
+        error.response ? error.response : error
+      );
+    }
+    setIsPageLoading(true);
   };
 
   useEffect(() => {
@@ -100,9 +145,10 @@ export default function Login() {
         >
           <Typography sx={{ pb: 1 }}>Select Profile Image:</Typography>
           <Stack direction="row" spacing={2}>
-            {profileImageOptions.map((option) => {
+            {profileImageOptions.map((option, i) => {
               return (
                 <Avatar
+                  key={i}
                   alt={option}
                   src={`/profile/${option}`}
                   onClick={() => {
@@ -112,9 +158,9 @@ export default function Login() {
                     border:
                       credentials.profileImage === option
                         ? 'solid 3px #6fa6b6'
-                        : '',
-                    width: credentials.profileImage === option ? 65 : 50,
-                    height: credentials.profileImage === option ? 65 : 50,
+                        : null,
+                    width: credentials.profileImage === option ? 70 : 50,
+                    height: credentials.profileImage === option ? 70 : 50,
                   }}
                 />
               );
