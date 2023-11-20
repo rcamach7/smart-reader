@@ -4,7 +4,7 @@ import { PageLoading } from '@/components/atoms';
 
 export const LoadingContext = createContext({
   setIsPageLoading: (values: boolean) => {},
-  isPageLoading: true,
+  isPageLoading: false,
 });
 
 export const useLoadingContext = () => {
@@ -17,7 +17,7 @@ export const useLoadingContext = () => {
 };
 
 export const LoadingProvider = ({ children }) => {
-  const [isPageLoading, setIsPageLoading] = useState(true);
+  const [isPageLoading, setIsPageLoading] = useState(false);
 
   return (
     <LoadingContext.Provider value={{ setIsPageLoading, isPageLoading }}>

@@ -5,6 +5,7 @@ import { Box, TextField, Typography, Button } from '@mui/material';
 import useAvailableHeight from '@/hooks/useAvailableHeight';
 import Link from 'next/link';
 import axios from 'axios';
+import { useLoadingContext } from '@/context/LoadingContext';
 
 export default function Login() {
   const { user, setUser } = useUser();
@@ -15,6 +16,7 @@ export default function Login() {
     password: '',
   });
   const [errors, setErrors] = useState({ fieldId: null, helperText: null });
+  const { setIsPageLoading } = useLoadingContext();
 
   const handleCredentialsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCredentials((prevState) => {
@@ -42,6 +44,7 @@ export default function Login() {
       return;
     }
 
+    setIsPageLoading(true);
     try {
       const res = await axios.post('/api/auth/login', credentials);
       setUser(res.data.user);
@@ -51,9 +54,8 @@ export default function Login() {
         error.response ? error.response.data : error.message
       );
     }
-
+    setIsPageLoading(false);
     setErrors({ fieldId: null, helperText: '' });
-    alert('signed in');
   };
 
   useEffect(() => {
