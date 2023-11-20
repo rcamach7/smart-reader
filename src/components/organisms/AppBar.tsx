@@ -101,12 +101,6 @@ export default function PrimarySearchAppBar() {
       onClickFunction: handleMenuClose,
     },
     {
-      title: 'Logout',
-      link: null,
-      authRequired: true,
-      onClickFunction: handleLogout,
-    },
-    {
       title: 'Sign In',
       link: 'sign-in',
       authRequired: false,
@@ -141,6 +135,9 @@ export default function PrimarySearchAppBar() {
         if (!user && item.authRequired) {
           return;
         }
+        if (user && !item.authRequired) {
+          return;
+        }
         return (
           <Link
             href={item.link}
@@ -151,6 +148,7 @@ export default function PrimarySearchAppBar() {
           </Link>
         );
       })}
+      {user ? <MenuItem onClick={handleLogout}>Logout</MenuItem> : null}
     </Menu>
   );
 
