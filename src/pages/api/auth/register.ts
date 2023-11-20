@@ -19,13 +19,16 @@ export default async function handler(
           ? req.body.profileImage
           : 'profile_img_1.png',
       };
-      console.log(credentials);
 
       const existingUser = await UserSchema.findOne({
         username: credentials.username,
       });
       if (existingUser) {
-        return res.status(400).json({ message: 'Username already taken' });
+        return res.status(400).json({
+          message: 'Username already taken',
+          fieldId: 'username',
+          helperText: 'Username already taken',
+        });
       }
 
       const hashedPassword = await bcrypt.hash(credentials.password, 10);
@@ -49,9 +52,12 @@ export default async function handler(
           user: userWithoutPassword,
         });
       } catch (error) {
-        return res
-          .status(400)
-          .json({ message: 'Error creating user and setting token' });
+        return res.status(400).json({
+          message: 'Error creating user and setting token',
+          fieldId: 'error',
+          helperText: 'Internal error creating and setting token',
+          error,
+        });
       }
 
     default:

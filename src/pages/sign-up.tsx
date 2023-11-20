@@ -32,7 +32,10 @@ export default function Login() {
     confirmPassword: '',
     profileImage: 'profile_img_2.png',
   });
-  const [errors, setErrors] = useState({ fieldId: null, helperText: null });
+  const [errors, setErrors] = useState({
+    fieldId: '',
+    helperText: '',
+  });
   const { setIsPageLoading } = useLoadingContext();
 
   const handleCredentialsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -96,9 +99,9 @@ export default function Login() {
       const response = await axios.post('/api/auth/register', credentials);
       setUser(response.data.user);
     } catch (error) {
-      const { field, helperText } = error.response.data;
-      if (field && helperText) {
-        setErrors({ fieldId: field, helperText });
+      const { fieldId, helperText } = error.response.data;
+      if (fieldId && helperText) {
+        setErrors({ fieldId, helperText });
       }
 
       console.error(
@@ -106,7 +109,7 @@ export default function Login() {
         error.response ? error.response : error
       );
     }
-    setIsPageLoading(true);
+    setIsPageLoading(false);
   };
 
   useEffect(() => {
@@ -114,10 +117,6 @@ export default function Login() {
       router.push('/');
     }
   }, [user]);
-
-  useEffect(() => {
-    console.log(credentials);
-  }, [credentials]);
 
   return (
     <Box
@@ -201,6 +200,11 @@ export default function Login() {
             errors.fieldId === 'confirmPassword' ? errors.helperText : ''
           }
         />
+        {errors.fieldId === 'error' ? (
+          <Typography color="error" textAlign="center">
+            {errors.helperText}
+          </Typography>
+        ) : null}
         <Button variant="contained" type="submit">
           Create Account
         </Button>

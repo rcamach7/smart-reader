@@ -17,7 +17,7 @@ export default function Login() {
     username: '',
     password: '',
   });
-  const [errors, setErrors] = useState({ fieldId: null, helperText: null });
+  const [errors, setErrors] = useState({ fieldId: '', helperText: '' });
   const { setIsPageLoading } = useLoadingContext();
 
   const handleCredentialsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,9 +56,9 @@ export default function Login() {
       const res = await axios.post('/api/auth/login', credentials);
       setUser(res.data.user);
     } catch (error) {
-      const { field, helperText } = error.response.data;
-      if (field && helperText) {
-        setErrors({ fieldId: field, helperText });
+      const { fieldId, helperText } = error.response.data;
+      if (fieldId && helperText) {
+        setErrors({ fieldId, helperText });
       }
 
       console.error(
@@ -81,9 +81,9 @@ export default function Login() {
       const res = await axios.post('/api/auth/login', demoCredentials);
       setUser(res.data.user);
     } catch (error) {
-      const { field, helperText } = error.response.data;
-      if (field && helperText) {
-        setErrors({ fieldId: field, helperText });
+      const { fieldId, helperText } = error.response.data;
+      if (fieldId && helperText) {
+        setErrors({ fieldId, helperText });
       }
 
       console.error(
@@ -138,6 +138,11 @@ export default function Login() {
           error={errors.fieldId === 'password' ? true : false}
           helperText={errors.fieldId === 'password' ? errors.helperText : ''}
         />
+        {errors.fieldId === 'error' ? (
+          <Typography color="error" textAlign="center">
+            {errors.helperText}
+          </Typography>
+        ) : null}
         <Button variant="contained" type="submit">
           Login
         </Button>

@@ -25,7 +25,7 @@ export default async function handler(
       if (!user) {
         return res
           .status(400)
-          .json({ field: 'username', helperText: 'Username not found' });
+          .json({ fieldId: 'username', helperText: 'Username not found' });
       }
 
       const doesPasswordMatch = await bcrypt.compare(
@@ -34,7 +34,7 @@ export default async function handler(
       );
       if (!doesPasswordMatch) {
         return res.status(400).json({
-          field: 'password',
+          fieldId: 'password',
           helperText: 'Incorrect Password',
         });
       }

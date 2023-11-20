@@ -4,14 +4,14 @@ const User = new Schema({
   username: {
     type: String,
     required: true,
-    minLength: 5,
+    minLength: 4,
     maxLength: 255,
     unique: true,
   },
   password: {
     type: String,
     required: true,
-    minLength: 5,
+    minLength: 4,
     maxLength: 255,
   },
   profileImage: {
