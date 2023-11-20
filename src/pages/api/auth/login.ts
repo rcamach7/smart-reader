@@ -23,7 +23,9 @@ export default async function handler(
         username: credentials.username,
       }).populate(['shelves', 'savedBooks']);
       if (!user) {
-        return res.status(400).json({ message: 'User not found' });
+        return res
+          .status(400)
+          .json({ field: 'username', helperText: 'Username not found' });
       }
 
       const doesPasswordMatch = await bcrypt.compare(
@@ -31,7 +33,10 @@ export default async function handler(
         user.password
       );
       if (!doesPasswordMatch) {
-        return res.status(400).json({ message: 'Incorrect Password' });
+        return res.status(400).json({
+          field: 'password',
+          helperText: 'Incorrect Password',
+        });
       }
 
       try {

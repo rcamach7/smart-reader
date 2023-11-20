@@ -1,11 +1,13 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useUser } from '@/context/UserContext';
-import { Box, TextField, Typography, Button } from '@mui/material';
-import useAvailableHeight from '@/hooks/useAvailableHeight';
 import Link from 'next/link';
-import axios from 'axios';
+
+import { useUser } from '@/context/UserContext';
 import { useLoadingContext } from '@/context/LoadingContext';
+import useAvailableHeight from '@/hooks/useAvailableHeight';
+
+import { Box, TextField, Typography, Button } from '@mui/material';
 
 export default function Login() {
   const { user, setUser } = useUser();
@@ -22,13 +24,18 @@ export default function Login() {
     setCredentials((prevState) => {
       return {
         ...prevState,
-        [e.target.id]: e.target.value,
+        [e.target.id]:
+          e.target.value === 'username'
+            ? e.target.value.toLowerCase()
+            : e.target.value,
       };
     });
   };
 
-  const handleSignIn = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
+  const handleSignIn = async (e?: React.ChangeEvent<HTMLInputElement>) => {
+    if (e) {
+      e.preventDefault();
+    }
 
     if (credentials.username.length < 4) {
       setErrors({
@@ -49,13 +56,42 @@ export default function Login() {
       const res = await axios.post('/api/auth/login', credentials);
       setUser(res.data.user);
     } catch (error) {
+      const { field, helperText } = error.response.data;
+      if (field && helperText) {
+        setErrors({ fieldId: field, helperText });
+      }
+
       console.error(
-        'An error occurred during sign-in:',
-        error.response ? error.response.data : error.message
+        helperText ? helperText : 'Error occurred logging in',
+        error.response ? error.response : error
       );
     }
     setIsPageLoading(false);
-    setErrors({ fieldId: null, helperText: '' });
+  };
+
+  const handleDemoAccount = async () => {
+    const demoCredentials = {
+      username: 'ironwolf',
+      password: 'ironwolf',
+    };
+    setCredentials(demoCredentials);
+
+    setIsPageLoading(true);
+    try {
+      const res = await axios.post('/api/auth/login', demoCredentials);
+      setUser(res.data.user);
+    } catch (error) {
+      const { field, helperText } = error.response.data;
+      if (field && helperText) {
+        setErrors({ fieldId: field, helperText });
+      }
+
+      console.error(
+        helperText ? helperText : 'Error occurred logging in',
+        error.response ? error.response : error
+      );
+    }
+    setIsPageLoading(false);
   };
 
   useEffect(() => {
@@ -118,6 +154,7 @@ export default function Login() {
             textAlign="center"
             fontSize={14}
             sx={{ textDecoration: 'underline' }}
+            onClick={handleDemoAccount}
           >
             Use demo account
           </Typography>
