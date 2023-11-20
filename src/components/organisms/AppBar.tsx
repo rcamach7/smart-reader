@@ -1,5 +1,6 @@
+// React and Next.js Imports
 import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
+import Link from 'next/link';
 import {
   AppBar,
   Box,
@@ -11,9 +12,11 @@ import {
   Menu,
   Avatar,
 } from '@mui/material';
+import { styled, alpha } from '@mui/material/styles';
 import { Menu as MenuIcon, Search as SearchIcon } from '@mui/icons-material';
+
 import { useUser } from '@/context/UserContext';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -64,6 +67,7 @@ const hamburgerMenuItems = [
 
 export default function PrimarySearchAppBar() {
   const { user, logout } = useUser();
+  const router = useRouter();
 
   const [hamburgerAnchorEl, setHamburgerAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -215,22 +219,24 @@ export default function PrimarySearchAppBar() {
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: 'flex' }}>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <Avatar
-                alt={user ? user.username : 'Guest'}
-                src={user ? `/profile/${user.profileImage}` : null}
-              />
-            </IconButton>
-          </Box>
+          {router.asPath !== '/account' ? (
+            <Box sx={{ display: 'flex' }}>
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <Avatar
+                  alt={user ? user.username : 'Guest'}
+                  src={user ? `/profile/${user.profileImage}` : null}
+                />
+              </IconButton>
+            </Box>
+          ) : null}
         </Toolbar>
       </AppBar>
       {renderMenu}
