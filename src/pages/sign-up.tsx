@@ -30,7 +30,7 @@ export default function Login() {
     username: '',
     password: '',
     confirmPassword: '',
-    profileImage: '',
+    profileImage: 'profile_img_2.png',
   });
   const [errors, setErrors] = useState({ fieldId: null, helperText: null });
   const { setIsPageLoading } = useLoadingContext();
@@ -43,6 +43,15 @@ export default function Login() {
           e.target.value === 'username'
             ? e.target.value.toLowerCase()
             : e.target.value,
+      };
+    });
+  };
+
+  const handleProfileImageSelection = (option: string) => {
+    setCredentials((prevState) => {
+      return {
+        ...prevState,
+        profileImage: option,
       };
     });
   };
@@ -61,6 +70,10 @@ export default function Login() {
     }
   }, [user]);
 
+  useEffect(() => {
+    console.log(credentials);
+  }, [credentials]);
+
   return (
     <Box
       sx={{
@@ -78,11 +91,36 @@ export default function Login() {
         component="form"
         onSubmit={handleCreateAccount}
       >
-        <Stack direction="row" spacing={2}>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-          <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
-          <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
-        </Stack>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Typography sx={{ pb: 1 }}>Select Profile Image:</Typography>
+          <Stack direction="row" spacing={2}>
+            {profileImageOptions.map((option) => {
+              return (
+                <Avatar
+                  alt={option}
+                  src={`/profile/${option}`}
+                  onClick={() => {
+                    handleProfileImageSelection(option);
+                  }}
+                  style={{
+                    border:
+                      credentials.profileImage === option
+                        ? 'solid 3px #6fa6b6'
+                        : '',
+                    width: credentials.profileImage === option ? 65 : 50,
+                    height: credentials.profileImage === option ? 65 : 50,
+                  }}
+                />
+              );
+            })}
+          </Stack>
+        </Box>
         <TextField
           required
           id="username"
