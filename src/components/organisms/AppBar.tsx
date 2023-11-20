@@ -93,6 +93,33 @@ export default function PrimarySearchAppBar() {
     handleMenuClose();
   };
 
+  const accountMenuItems = [
+    {
+      title: 'My Account',
+      link: 'account',
+      authRequired: true,
+      onClickFunction: handleMenuClose,
+    },
+    {
+      title: 'Logout',
+      link: null,
+      authRequired: true,
+      onClickFunction: handleLogout,
+    },
+    {
+      title: 'Sign In',
+      link: 'sign-in',
+      authRequired: false,
+      onClickFunction: handleMenuClose,
+    },
+    {
+      title: 'Create Account',
+      link: 'sign-up',
+      authRequired: false,
+      onClickFunction: handleMenuClose,
+    },
+  ];
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -110,18 +137,20 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      {user && <MenuItem onClick={handleMenuClose}>My Account</MenuItem>}
-      {user ? (
-        <MenuItem onClick={handleLogout}>Log Out</MenuItem>
-      ) : (
-        <MenuItem onClick={handleMenuClose}>
-          <Typography textAlign="center">
-            <Link href="/login">
-              <a style={{ textDecoration: 'none' }}>Sign In</a>
-            </Link>
-          </Typography>
-        </MenuItem>
-      )}
+      {accountMenuItems.map((item, i) => {
+        if (!user && item.authRequired) {
+          return;
+        }
+        return (
+          <Link
+            href={item.link}
+            style={{ textDecoration: 'none', color: 'inherit' }}
+            key={i}
+          >
+            <MenuItem onClick={item.onClickFunction}>{item.title}</MenuItem>
+          </Link>
+        );
+      })}
     </Menu>
   );
 
