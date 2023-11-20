@@ -112,6 +112,36 @@ export default function Login() {
     setIsPageLoading(false);
   };
 
+  const handleDemoAccount = async () => {
+    const demoCredentials = {
+      username: 'ironwolf',
+      password: 'ironwolf',
+    };
+    setCredentials((prevState) => {
+      return {
+        ...prevState,
+        ...demoCredentials,
+      };
+    });
+
+    setIsPageLoading(true);
+    try {
+      const res = await axios.post('/api/auth/login', demoCredentials);
+      setUser(res.data.user);
+    } catch (error) {
+      const { fieldId, helperText } = error.response.data;
+      if (fieldId && helperText) {
+        setErrors({ fieldId, helperText });
+      }
+
+      console.error(
+        helperText ? helperText : 'Error occurred logging in',
+        error.response ? error.response : error
+      );
+    }
+    setIsPageLoading(false);
+  };
+
   useEffect(() => {
     if (user) {
       router.push('/');
@@ -214,6 +244,17 @@ export default function Login() {
               Already have an account? Sign In
             </Typography>
           </Link>
+          <Typography textAlign="center" fontSize={14}>
+            or
+          </Typography>
+          <Typography
+            textAlign="center"
+            fontSize={14}
+            sx={{ textDecoration: 'underline' }}
+            onClick={handleDemoAccount}
+          >
+            Use demo account
+          </Typography>
         </Box>
       </Box>
     </Box>
