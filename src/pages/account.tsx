@@ -3,6 +3,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import PasswordIcon from '@mui/icons-material/Password';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import LogoutIcon from '@mui/icons-material/Logout';
+import Link from 'next/link';
 
 import useAvailableHeight from '@/hooks/useAvailableHeight';
 import useResponsiveSize from '@/hooks/useResponsiveSize';
@@ -35,7 +36,7 @@ export default function Account() {
     }
   }, [user, isUserLoading]);
 
-  if (isUserLoading) {
+  if (isUserLoading || !user) {
     return null;
   }
   return (
@@ -94,27 +95,33 @@ export default function Account() {
         justifyContent="center"
         sx={{ py: 2 }}
       >
-        <Button
-          size={currentScreenSize}
-          color="secondary"
-          sx={{ textDecoration: 'underline' }}
-        >
-          My Favorited Books
-        </Button>
-        <Button
-          size={currentScreenSize}
-          color="secondary"
-          sx={{ textDecoration: 'underline' }}
-        >
-          My Shelves
-        </Button>
-        <Button
-          size={currentScreenSize}
-          color="secondary"
-          sx={{ textDecoration: 'underline' }}
-        >
-          My Books
-        </Button>
+        <Link href="/my-favorites">
+          <Button
+            size={currentScreenSize}
+            color="secondary"
+            sx={{ textDecoration: 'underline' }}
+          >
+            My Favorited Books
+          </Button>
+        </Link>
+        <Link href="my-shelves">
+          <Button
+            size={currentScreenSize}
+            color="secondary"
+            sx={{ textDecoration: 'underline' }}
+          >
+            My Shelves
+          </Button>
+        </Link>
+        <Link href="my-books">
+          <Button
+            size={currentScreenSize}
+            color="secondary"
+            sx={{ textDecoration: 'underline' }}
+          >
+            My Books
+          </Button>
+        </Link>
       </Stack>
       <Stack
         spacing={{ xs: 2, sm: 2.5, lg: 3 }}
