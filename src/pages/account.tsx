@@ -1,11 +1,16 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Stack, Button } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import PasswordIcon from '@mui/icons-material/Password';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
 import useAvailableHeight from '@/hooks/useAvailableHeight';
+import useResponsiveSize from '@/hooks/useResponsiveSize';
 import { useUser } from '@/context/UserContext';
 
 export default function Account() {
   const { user, setUser } = useUser();
   const availableHeight = useAvailableHeight();
+  const currentScreenSize = useResponsiveSize();
 
   if (!user) {
     return null;
@@ -52,13 +57,66 @@ export default function Account() {
             }}
           />
         </Box>
-        <Typography
-          variant="h3"
-          sx={{ border: 1, m: 2, p: 1, borderRadius: '1%' }}
-        >
+        <Typography variant="h3" sx={{ p: 1 }}>
           {user.username}
         </Typography>
       </Box>
+
+      <Stack
+        spacing={{ xs: 1, sm: 2 }}
+        direction="row"
+        useFlexGap
+        flexWrap="wrap"
+        alignItems="center"
+        justifyContent="center"
+        sx={{ py: 2 }}
+      >
+        <Button
+          size={currentScreenSize}
+          color="secondary"
+          sx={{ textDecoration: 'underline' }}
+        >
+          My Favorited Books
+        </Button>
+        <Button
+          size={currentScreenSize}
+          color="secondary"
+          sx={{ textDecoration: 'underline' }}
+        >
+          My Shelves
+        </Button>
+        <Button
+          size={currentScreenSize}
+          color="secondary"
+          sx={{ textDecoration: 'underline' }}
+        >
+          My Books
+        </Button>
+      </Stack>
+      <Stack spacing={1}>
+        <Button
+          size={currentScreenSize}
+          variant="outlined"
+          startIcon={<AccountBoxIcon />}
+        >
+          Edit Profile Picture
+        </Button>
+        <Button
+          size={currentScreenSize}
+          variant="outlined"
+          startIcon={<PasswordIcon />}
+        >
+          Edit Password
+        </Button>
+        <Button
+          size={currentScreenSize}
+          variant="outlined"
+          color="error"
+          startIcon={<DeleteIcon />}
+        >
+          Delete Account
+        </Button>
+      </Stack>
     </Box>
   );
 }
