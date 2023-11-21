@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 import useAvailableHeight from '@/hooks/useAvailableHeight';
 import { useUser } from '@/context/UserContext';
@@ -16,31 +16,48 @@ export default function Account() {
         height: availableHeight,
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
         alignItems: 'center',
       }}
     >
       <Box
         sx={{
           display: 'flex',
-          justifyContent: 'center',
+          flexDirection: 'column',
           alignItems: 'center',
-          borderRadius: '50%',
-          overflow: 'hidden',
-          width: '100px',
-          height: '100px',
-          boxShadow: '20px 20px 20px rgba(0, 0, 0, 0.3)',
+          pb: '20px',
+          backgroundColor: '#d3e3f0',
+          width: '100%',
+          pt: 2,
         }}
       >
-        <img
-          src={`/profile/${user.profileImage}`}
-          alt="User Profile"
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: '50%',
+            overflow: 'hidden',
+            width: '100px',
+            height: '100px',
+            boxShadow: '20px 20px 20px rgba(0, 0, 0, 0.3)',
           }}
-        />
+        >
+          <img
+            src={`/profile/${user.profileImage}`}
+            alt="User Profile"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+            }}
+          />
+        </Box>
+        <Typography
+          variant="h3"
+          sx={{ border: 1, m: 2, p: 1, borderRadius: '1%' }}
+        >
+          {user.username}
+        </Typography>
       </Box>
     </Box>
   );
