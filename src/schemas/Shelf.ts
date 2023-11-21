@@ -7,6 +7,7 @@ const Shelf = new Schema({
   creator: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   books: [{ type: Schema.Types.ObjectId, ref: 'Book' }],
   likes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  created: { type: Date, default: Date.now },
 });
 
 const ShelfModel = models.Shelf || model('Shelf', Shelf);

@@ -9,6 +9,7 @@ type Shelf = {
   creator: User;
   books: Book[];
   likes: User[];
+  created: Date;
 };
 
 export default Shelf;
