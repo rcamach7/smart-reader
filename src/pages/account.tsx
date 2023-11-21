@@ -7,13 +7,35 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import useAvailableHeight from '@/hooks/useAvailableHeight';
 import useResponsiveSize from '@/hooks/useResponsiveSize';
 import { useUser } from '@/context/UserContext';
+import { useLoadingContext } from '@/context/LoadingContext';
+
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 export default function Account() {
-  const { user, setUser } = useUser();
+  const { user, logout, isUserLoading } = useUser();
+  const router = useRouter();
+  const { setIsPageLoading } = useLoadingContext();
   const availableHeight = useAvailableHeight();
   const currentScreenSize = useResponsiveSize();
 
-  if (!user) {
+  const handleLogout = async () => {
+    await logout();
+  };
+
+  useEffect(() => {
+    if (!user && !isUserLoading) {
+      router.push('/');
+    }
+
+    if (isUserLoading) {
+      setIsPageLoading(true);
+    } else {
+      setIsPageLoading(false);
+    }
+  }, [user, isUserLoading]);
+
+  if (isUserLoading) {
     return null;
   }
   return (
@@ -116,6 +138,7 @@ export default function Account() {
           startIcon={<LogoutIcon />}
           size={currentScreenSize}
           variant="outlined"
+          onClick={handleLogout}
         >
           Sign Out
         </Button>

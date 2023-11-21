@@ -13,6 +13,7 @@ interface UserContextType {
   setUser: React.Dispatch<React.SetStateAction<UserType | null>>;
   loadUser?: () => void;
   logout: () => Promise<void>;
+  isUserLoading: boolean;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -31,13 +32,17 @@ interface UserProviderProps {
 
 export function UserProvider({ children }: UserProviderProps) {
   const [user, setUser] = useState<UserType | null>(null);
+  const [isUserLoading, setIsUserLoading] = useState(true);
 
   async function fetchUser() {
+    setIsUserLoading(true);
     try {
       const res = await axios.get('/api/auth/user');
+      setIsUserLoading(false);
       return res.data.user;
     } catch (error) {
       console.log(error);
+      setIsUserLoading(false);
       return null;
     }
   }
@@ -61,7 +66,7 @@ export function UserProvider({ children }: UserProviderProps) {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, setUser, logout }}>
+    <UserContext.Provider value={{ user, setUser, logout, isUserLoading }}>
       {children}
     </UserContext.Provider>
   );
