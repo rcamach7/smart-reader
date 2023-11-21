@@ -45,8 +45,49 @@ export default async function handler(
           .json({ message: 'Error occurred while retrieving user' });
       }
 
+    case 'DELETE':
+      try {
+        await connectToMongoDB();
+        const user = await UserSchema.findById(decodedAuthToken._id).populate(
+          'shelves'
+        );
+        if (user.type === 'demo') {
+          return res
+            .status(400)
+            .json({ message: 'Demo accounts may not be deleted' });
+        }
+
+        const myShelves = user.shelves.filter(
+          (shelf) =>
+            shelf.creator.toString() === decodedAuthToken._id.toString()
+        );
+        const usersWithMyShelves = await UserSchema.find({
+          shelves: { $in: myShelves.map((shelf) => shelf._id) },
+        });
+        await Promise.all(
+          usersWithMyShelves.map(async (otherUser) => {
+            otherUser.shelves = otherUser.shelves.filter(
+              (shelfId) =>
+                !myShelves.some((myShelf) => myShelf._id.equals(shelfId))
+            );
+            await otherUser.save();
+          })
+        );
+
+        await Promise.all(myShelves.map((shelf) => shelf.remove()));
+        await user.remove();
+
+        return res
+          .status(200)
+          .json({ message: 'User and shelves successfully deleted' });
+      } catch (error) {
+        return res
+          .status(500)
+          .json({ error, message: 'Error processing delete request' });
+      }
+
     default:
-      res.setHeader('Allow', ['GET']);
+      res.setHeader('Allow', ['GET', 'DELETE']);
       res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
