@@ -159,6 +159,7 @@ export default function Account() {
           size={currentScreenSize}
           variant="outlined"
           startIcon={<AccountBoxIcon />}
+          disabled
         >
           Edit Profile Picture
         </Button>
@@ -166,6 +167,7 @@ export default function Account() {
           size={currentScreenSize}
           variant="outlined"
           startIcon={<PasswordIcon />}
+          disabled
         >
           Edit Password
         </Button>
