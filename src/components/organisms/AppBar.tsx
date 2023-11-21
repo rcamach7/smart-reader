@@ -16,6 +16,7 @@ import {
   Menu as MenuIcon,
   Search as SearchIcon,
   Home as HomeIcon,
+  Person as PersonIcon,
 } from '@mui/icons-material';
 
 import { useUser } from '@/context/UserContext';
@@ -217,7 +218,7 @@ export default function PrimarySearchAppBar() {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Search…"
+              placeholder="Search books…"
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
@@ -233,10 +234,7 @@ export default function PrimarySearchAppBar() {
                 onClick={handleProfileMenuOpen}
                 color="inherit"
               >
-                <Avatar
-                  alt={user ? user.username : 'Guest'}
-                  src={user ? `/profile/${user.profileImage}` : null}
-                />
+                <PersonIcon />
               </IconButton>
             </Box>
           ) : (
