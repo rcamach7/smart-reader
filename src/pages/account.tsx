@@ -10,6 +10,7 @@ import useAvailableHeight from '@/hooks/useAvailableHeight';
 import useResponsiveSize from '@/hooks/useResponsiveSize';
 import { useUser } from '@/context/UserContext';
 import { useLoadingContext } from '@/context/LoadingContext';
+import { useFeedbackContext } from '@/context/FeedbackContext';
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -25,6 +26,7 @@ export default function Account() {
     confirmDeleteAccountModal: false,
   });
   const { setIsPageLoading } = useLoadingContext();
+  const { addAlertMessage } = useFeedbackContext();
   const availableHeight = useAvailableHeight();
   const currentScreenSize = useResponsiveSize();
 
@@ -38,7 +40,12 @@ export default function Account() {
       await axios.delete('/api/auth/user');
       setUser(null);
     } catch (error) {
-      console.log(error);
+      const err = error.response.data.message
+        ? error.response.data.message
+        : 'Error occurred while deleting account';
+
+      addAlertMessage({ severity: 'error', text: err });
+      console.log(err);
     }
     setModalOpenState((MOS) => {
       return { ...MOS, confirmDeleteAccountModal: false };
