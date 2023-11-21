@@ -13,7 +13,11 @@ import {
   Avatar,
 } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
-import { Menu as MenuIcon, Search as SearchIcon } from '@mui/icons-material';
+import {
+  Menu as MenuIcon,
+  Search as SearchIcon,
+  Home as HomeIcon,
+} from '@mui/icons-material';
 
 import { useUser } from '@/context/UserContext';
 import { useRouter } from 'next/router';
@@ -236,7 +240,16 @@ export default function PrimarySearchAppBar() {
                 />
               </IconButton>
             </Box>
-          ) : null}
+          ) : (
+            <IconButton
+              aria-label="home"
+              onClick={() => {
+                router.push('/');
+              }}
+            >
+              <HomeIcon fontSize="inherit" />
+            </IconButton>
+          )}
         </Toolbar>
       </AppBar>
       {renderMenu}

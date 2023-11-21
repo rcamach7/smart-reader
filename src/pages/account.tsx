@@ -57,7 +57,7 @@ export default function Account() {
             }}
           />
         </Box>
-        <Typography variant="h3" sx={{ p: 1 }}>
+        <Typography variant="h3" sx={{ p: 1, fontFamily: 'Verdana' }}>
           {user.username}
         </Typography>
       </Box>
