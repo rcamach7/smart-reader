@@ -2,6 +2,7 @@ import { Box, Typography, Stack, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PasswordIcon from '@mui/icons-material/Password';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 import useAvailableHeight from '@/hooks/useAvailableHeight';
 import useResponsiveSize from '@/hooks/useResponsiveSize';
@@ -93,7 +94,10 @@ export default function Account() {
           My Books
         </Button>
       </Stack>
-      <Stack spacing={1}>
+      <Stack
+        spacing={{ xs: 2, sm: 2.5, lg: 3 }}
+        sx={{ flex: '1', pt: { xs: 2, sm: 3, md: 4 } }}
+      >
         <Button
           size={currentScreenSize}
           variant="outlined"
@@ -107,6 +111,13 @@ export default function Account() {
           startIcon={<PasswordIcon />}
         >
           Edit Password
+        </Button>
+        <Button
+          startIcon={<LogoutIcon />}
+          size={currentScreenSize}
+          variant="outlined"
+        >
+          Sign Out
         </Button>
         <Button
           size={currentScreenSize}
