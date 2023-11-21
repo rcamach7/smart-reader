@@ -4,24 +4,46 @@ import PasswordIcon from '@mui/icons-material/Password';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Link from 'next/link';
+import { ConfirmModal } from '@/components/atoms';
 
 import useAvailableHeight from '@/hooks/useAvailableHeight';
 import useResponsiveSize from '@/hooks/useResponsiveSize';
 import { useUser } from '@/context/UserContext';
 import { useLoadingContext } from '@/context/LoadingContext';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import axios from 'axios';
 
 export default function Account() {
-  const { user, logout, isUserLoading } = useUser();
+  const { user, logout, isUserLoading, setUser } = useUser();
   const router = useRouter();
+
+  const [modalOpenState, setModalOpenState] = useState({
+    updateProfileImageModal: false,
+    editPasswordModal: false,
+    confirmDeleteAccountModal: false,
+  });
   const { setIsPageLoading } = useLoadingContext();
   const availableHeight = useAvailableHeight();
   const currentScreenSize = useResponsiveSize();
 
   const handleLogout = async () => {
     await logout();
+  };
+
+  const handleDeleteAccount = async () => {
+    setIsPageLoading(true);
+    try {
+      await axios.delete('/api/auth/user');
+      setUser(null);
+    } catch (error) {
+      console.log(error);
+    }
+    setModalOpenState((MOS) => {
+      return { ...MOS, confirmDeleteAccountModal: false };
+    });
+    setIsPageLoading(false);
   };
 
   useEffect(() => {
@@ -83,6 +105,12 @@ export default function Account() {
         </Box>
         <Typography variant="h3" sx={{ p: 1, fontFamily: 'Verdana' }}>
           {user.username}
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{ fontSize: 12, fontFamily: 'Verdana' }}
+        >
+          {user.type} user
         </Typography>
       </Box>
 
@@ -154,10 +182,32 @@ export default function Account() {
           variant="outlined"
           color="error"
           startIcon={<DeleteIcon />}
+          onClick={() => {
+            setModalOpenState((MOS) => {
+              return {
+                ...MOS,
+                confirmDeleteAccountModal: !MOS.confirmDeleteAccountModal,
+              };
+            });
+          }}
         >
           Delete Account
         </Button>
       </Stack>
+      <ConfirmModal
+        open={modalOpenState.confirmDeleteAccountModal}
+        toggle={() => {
+          setModalOpenState((MOS) => {
+            return {
+              ...MOS,
+              confirmDeleteAccountModal: !MOS.confirmDeleteAccountModal,
+            };
+          });
+        }}
+        confirmFunc={handleDeleteAccount}
+        description="Warning! This action cannot be reversed, and all associates shelves will be deleted."
+        title="Confirm Account Deletion"
+      />
     </Box>
   );
 }

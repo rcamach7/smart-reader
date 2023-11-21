@@ -77,6 +77,11 @@ export default async function handler(
         await Promise.all(myShelves.map((shelf) => shelf.remove()));
         await user.remove();
 
+        res.setHeader(
+          'Set-Cookie',
+          'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; httpOnly;'
+        );
+        res.status(200).json({ message: 'Logged out successfully' });
         return res
           .status(200)
           .json({ message: 'User and shelves successfully deleted' });
