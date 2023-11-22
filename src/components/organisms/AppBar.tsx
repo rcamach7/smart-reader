@@ -253,8 +253,9 @@ export default function PrimarySearchAppBar() {
                 if (e.key === 'Enter') {
                   router.push({
                     pathname: '/search',
-                    query: { query: searchText },
+                    query: { query: searchText, type: searchType },
                   });
+                  setSearchText('');
                 }
               }}
             />
