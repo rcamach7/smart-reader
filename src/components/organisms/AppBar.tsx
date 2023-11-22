@@ -73,6 +73,8 @@ export default function PrimarySearchAppBar() {
   const { user, logout } = useUser();
   const router = useRouter();
 
+  const [searchText, setSearchText] = React.useState('');
+
   const [hamburgerAnchorEl, setHamburgerAnchorEl] =
     React.useState<null | HTMLElement>(null);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -223,6 +225,15 @@ export default function PrimarySearchAppBar() {
             <StyledInputBase
               placeholder="Search books…"
               inputProps={{ 'aria-label': 'search' }}
+              value={searchText}
+              onChange={(e) => {
+                setSearchText(e.target.value);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  alert(searchText);
+                }
+              }}
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
