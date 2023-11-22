@@ -10,6 +10,9 @@ import {
   MenuItem,
   Menu,
   Avatar,
+  ToggleButton,
+  ToggleButtonGroup,
+  Switch,
 } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import {
@@ -23,17 +26,19 @@ import { useUser } from '@/context/UserContext';
 import { useRouter } from 'next/router';
 
 const Search = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
   '&:hover': {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
-  marginRight: theme.spacing(2),
+  marginRight: theme.spacing(0),
   marginLeft: 0,
   width: '100%',
   [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
+    marginLeft: theme.spacing(1.5),
     width: 'auto',
   },
 }));
@@ -74,6 +79,7 @@ export default function PrimarySearchAppBar() {
   const router = useRouter();
 
   const [searchText, setSearchText] = React.useState('');
+  const [searchType, setSearchType] = React.useState('books');
 
   const [hamburgerAnchorEl, setHamburgerAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -101,6 +107,20 @@ export default function PrimarySearchAppBar() {
   const handleLogout = async () => {
     await logout();
     handleMenuClose();
+  };
+
+  const searchTypeChange = (
+    event: React.MouseEvent<HTMLElement>,
+    newAlignment: string
+  ) => {
+    if (!newAlignment) {
+      return;
+    }
+    setSearchType(newAlignment);
+  };
+
+  const handleToggleChange = (event) => {
+    setSearchType(event.target.checked ? 'shelves' : 'books');
   };
 
   const accountMenuItems = [
@@ -223,7 +243,7 @@ export default function PrimarySearchAppBar() {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Search books…"
+              placeholder={`Search ${searchType}`}
               inputProps={{ 'aria-label': 'search' }}
               value={searchText}
               onChange={(e) => {
@@ -231,8 +251,66 @@ export default function PrimarySearchAppBar() {
               }}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
-                  alert(searchText);
+                  router.push({
+                    pathname: '/search',
+                    query: { query: searchText },
+                  });
                 }
+              }}
+            />
+            <ToggleButtonGroup
+              color="primary"
+              sx={{
+                display: { xs: 'none', sm: 'inline' },
+                height: '100%',
+                pr: 0.5,
+              }}
+              value={searchType}
+              exclusive
+              aria-label="search-type"
+              onChange={searchTypeChange}
+              size="small"
+            >
+              <ToggleButton
+                value="books"
+                sx={{
+                  borderColor: '#6fa6b6',
+                  '&.Mui-selected': {
+                    color: 'white',
+                  },
+                  '&:not(.Mui-selected)': {
+                    color: 'grey',
+                  },
+                  fontSize: 10,
+                  padding: 0.5,
+                }}
+              >
+                Books
+              </ToggleButton>
+              <ToggleButton
+                value="shelves"
+                sx={{
+                  borderColor: '#6fa6b6',
+                  '&.Mui-selected': {
+                    color: 'white',
+                  },
+                  '&:not(.Mui-selected)': {
+                    color: 'grey',
+                  },
+                  fontSize: 10,
+                  padding: 0.5,
+                  pr: 0.5,
+                }}
+              >
+                Shelves
+              </ToggleButton>
+            </ToggleButtonGroup>
+            <Switch
+              size="small"
+              checked={searchType === 'shelves'}
+              onChange={handleToggleChange}
+              sx={{
+                display: { xs: 'inline', sm: 'none', marginLeft: 'auto' },
               }}
             />
           </Search>
