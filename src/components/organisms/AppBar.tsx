@@ -238,83 +238,85 @@ export default function PrimarySearchAppBar() {
           >
             BookSphere
           </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder={`Search ${searchType}`}
-              inputProps={{ 'aria-label': 'search' }}
-              value={searchText}
-              onChange={(e) => {
-                setSearchText(e.target.value);
-              }}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  router.push({
-                    pathname: '/search',
-                    query: { query: searchText, type: searchType },
-                  });
-                  setSearchText('');
-                }
-              }}
-            />
-            <ToggleButtonGroup
-              color="primary"
-              sx={{
-                display: { xs: 'none', sm: 'inline' },
-                height: '100%',
-                pr: 0.5,
-              }}
-              value={searchType}
-              exclusive
-              aria-label="search-type"
-              onChange={searchTypeChange}
-              size="small"
-            >
-              <ToggleButton
-                value="books"
-                sx={{
-                  borderColor: '#6fa6b6',
-                  '&.Mui-selected': {
-                    color: 'white',
-                  },
-                  '&:not(.Mui-selected)': {
-                    color: 'grey',
-                  },
-                  fontSize: 10,
-                  padding: 0.5,
+          {router.pathname !== '/search' ? (
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder={`Search ${searchType}`}
+                inputProps={{ 'aria-label': 'search' }}
+                value={searchText}
+                onChange={(e) => {
+                  setSearchText(e.target.value);
                 }}
-              >
-                Books
-              </ToggleButton>
-              <ToggleButton
-                value="shelves"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    router.push({
+                      pathname: '/search',
+                      query: { query: searchText, type: searchType },
+                    });
+                    setSearchText('');
+                  }
+                }}
+              />
+              <ToggleButtonGroup
+                color="primary"
                 sx={{
-                  borderColor: '#6fa6b6',
-                  '&.Mui-selected': {
-                    color: 'white',
-                  },
-                  '&:not(.Mui-selected)': {
-                    color: 'grey',
-                  },
-                  fontSize: 10,
-                  padding: 0.5,
+                  display: { xs: 'none', sm: 'inline' },
+                  height: '100%',
                   pr: 0.5,
                 }}
+                value={searchType}
+                exclusive
+                aria-label="search-type"
+                onChange={searchTypeChange}
+                size="small"
               >
-                Shelves
-              </ToggleButton>
-            </ToggleButtonGroup>
-            <Switch
-              size="small"
-              checked={searchType === 'shelves'}
-              onChange={handleToggleChange}
-              sx={{
-                display: { xs: 'inline', sm: 'none', marginLeft: 'auto' },
-              }}
-            />
-          </Search>
+                <ToggleButton
+                  value="books"
+                  sx={{
+                    borderColor: '#6fa6b6',
+                    '&.Mui-selected': {
+                      color: 'white',
+                    },
+                    '&:not(.Mui-selected)': {
+                      color: 'grey',
+                    },
+                    fontSize: 10,
+                    padding: 0.5,
+                  }}
+                >
+                  Books
+                </ToggleButton>
+                <ToggleButton
+                  value="shelves"
+                  sx={{
+                    borderColor: '#6fa6b6',
+                    '&.Mui-selected': {
+                      color: 'white',
+                    },
+                    '&:not(.Mui-selected)': {
+                      color: 'grey',
+                    },
+                    fontSize: 10,
+                    padding: 0.5,
+                    pr: 0.5,
+                  }}
+                >
+                  Shelves
+                </ToggleButton>
+              </ToggleButtonGroup>
+              <Switch
+                size="small"
+                checked={searchType === 'shelves'}
+                onChange={handleToggleChange}
+                sx={{
+                  display: { xs: 'inline', sm: 'none', marginLeft: 'auto' },
+                }}
+              />
+            </Search>
+          ) : null}
           <Box sx={{ flexGrow: 1 }} />
           {router.asPath !== '/account' ? (
             <Box sx={{ display: 'flex' }}>
