@@ -63,10 +63,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const hamburgerMenuItems = [
   { title: 'Home', link: '/', authRequired: false },
-  { title: 'My Shelves', link: '/', authRequired: true },
-  { title: 'My Books', link: '/', authRequired: true },
-  { title: 'Public Shelves', link: '/', authRequired: false },
-  { title: 'About', link: '/', authRequired: false },
+  { title: 'My Shelves', link: '/my-shelves', authRequired: true },
+  { title: 'My Books', link: 'my-books/', authRequired: true },
+  { title: 'Public Shelves', link: '/shelves', authRequired: false },
+  { title: 'About', link: '/about', authRequired: false },
 ];
 
 export default function PrimarySearchAppBar() {
@@ -174,6 +174,9 @@ export default function PrimarySearchAppBar() {
       {hamburgerMenuItems.map((menuItem) => {
         if (!user && menuItem.authRequired) {
           return null;
+        }
+        if (router.asPath === '/' && menuItem.link === '/') {
+          return;
         }
         return (
           <MenuItem onClick={handleHamburgerMenuClose} key={menuItem.title}>
