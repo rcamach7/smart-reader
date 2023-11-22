@@ -8,7 +8,7 @@ type Book = {
   publisher?: string;
   publicationDate?: Date;
   edition?: string;
-  description: string;
+  description?: string;
   language?: string;
   isbn?: string;
   isbn13?: string;

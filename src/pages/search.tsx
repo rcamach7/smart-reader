@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import axios from 'axios';
 
 import {
   Box,
@@ -14,16 +15,49 @@ import {
 } from '@mui/icons-material';
 
 import useAvailableHeight from '@/hooks/useAvailableHeight';
+import Book from '@/types/book';
+import { useFeedbackContext } from '@/context/FeedbackContext';
+import { useLoadingContext } from '@/context/LoadingContext';
 
 export default function SearchBooksPage() {
-  const availableHeight = useAvailableHeight();
   const router = useRouter();
-  const { query, type } = router.query;
+  const { type } = router.query;
+  const query = typeof router.query === 'string' ? router.query : '';
+
+  const availableHeight = useAvailableHeight();
+  const { addAlertMessage } = useFeedbackContext();
+  const { setIsPageLoading } = useLoadingContext();
 
   const [search, setSearch] = useState({
     query: query ? query : '',
     type: type ? type : 'books',
   });
+  const [bookSearchResults, setBookSearchResults] = useState<Book[]>([]);
+
+  const handleSearchBooks = async () => {
+    if (search.query.length <= 3) {
+      addAlertMessage({ text: 'Query too short', severity: 'warning' });
+      return;
+    }
+
+    setIsPageLoading(true);
+    try {
+      const encodedQuery = encodeURIComponent(search.query);
+      const response = await axios.get(
+        `/api/book/search?query=${encodedQuery}&type=query`
+      );
+      setBookSearchResults(response.data.books);
+    } catch (error) {
+      addAlertMessage({
+        text: error.response.data.message
+          ? error.response.data.message
+          : 'Error searching for books',
+        severity: 'error',
+      });
+      console.log(error);
+    }
+    setIsPageLoading(false);
+  };
 
   const searchTypeChange = (
     event: React.MouseEvent<HTMLElement>,
@@ -136,8 +170,25 @@ export default function SearchBooksPage() {
               };
             });
           }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              handleSearchBooks();
+            }
+          }}
         />
         <KeyboardVoiceIcon sx={{ ml: 'auto' }} />
+      </Box>
+
+      <Box sx={{ p: 1, mt: 1, border: 'solid black 1px' }}>
+        Search Results Container
+        {bookSearchResults.map((book, i) => {
+          return (
+            <Box key={i}>
+              <p>{book.title}</p>
+              <p>{book.isbn}</p>
+            </Box>
+          );
+        })}
       </Box>
     </Box>
   );

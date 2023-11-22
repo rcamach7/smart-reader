@@ -45,7 +45,10 @@ export default class GoogleBooksAPI {
   }
 
   async findBooksByQuery(query: string, maxResults?: number) {
-    const endpoint = `${GoogleBooksAPI._URL}/volumes?q=${query}&maxResults=${
+    const encodedQuery = encodeURIComponent(query);
+    const endpoint = `${
+      GoogleBooksAPI._URL
+    }/volumes?q=${encodedQuery}&maxResults=${
       maxResults ? maxResults : 50
     }&key=${this._apiKey}`;
 

@@ -193,7 +193,7 @@ export default function PrimarySearchAppBar() {
       open={isHamburgerMenuOpen}
       onClose={handleHamburgerMenuClose}
     >
-      {hamburgerMenuItems.map((menuItem) => {
+      {hamburgerMenuItems.map((menuItem, i) => {
         if (!user && menuItem.authRequired) {
           return null;
         }
@@ -201,7 +201,7 @@ export default function PrimarySearchAppBar() {
           return;
         }
         return (
-          <Link href={menuItem.link}>
+          <Link key={i} href={menuItem.link}>
             <MenuItem onClick={handleHamburgerMenuClose} key={menuItem.title}>
               <Typography textAlign="center">
                 <a style={{ textDecoration: 'none', color: 'inherit' }}>
