@@ -57,7 +57,7 @@ export default function SearchBooksPage() {
           alignItems: 'center',
           overflow: 'hidden',
           width: 'clamp(350px, 80vw, 600px)',
-          height: { xs: 100, sm: 150 },
+          height: { xs: 100, sm: 125 },
           position: 'relative',
           borderRadius: '15px',
         }}
@@ -88,6 +88,7 @@ export default function SearchBooksPage() {
               color: 'white',
               fontFamily: 'Verdana',
               textShadow: '4px 4px 8px rgba(0, 0, 0, 0.6)',
+              fontSize: { xs: 40, md: 45 },
             }}
           >
             Explore
