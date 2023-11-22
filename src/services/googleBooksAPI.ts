@@ -6,7 +6,6 @@ type Identifier = {
 };
 
 type GoogleBook = {
-  kind: string;
   id: string;
   selfLink: string;
   volumeInfo: {
@@ -15,7 +14,6 @@ type GoogleBook = {
     publisher: string;
     publishedDate: Date;
     industryIdentifiers: Identifier[];
-    readingModes: { text: boolean; image: boolean };
     printType: string;
     categories: string[];
     imageLinks: {
@@ -53,10 +51,12 @@ export default class GoogleBooksAPI {
 
     try {
       const response: QueryResponse = await axios.get(endpoint);
-      return response.data;
+
+      const books = response.data.items.map(this.mapGoogleBookToInternalFormat);
+      return books;
     } catch (error) {
-      console.error('Failed to fetch top headlines:', error);
-      throw new Error('Failed to fetch top headlines.');
+      console.error('Failed to fetch by query', error);
+      throw new Error('Failed to fetch by query');
     }
   }
 
@@ -69,5 +69,42 @@ export default class GoogleBooksAPI {
       console.log(error);
       throw new Error('Failed to fetch by ISBN');
     }
+  }
+
+  private mapGoogleBookToInternalFormat({ id, selfLink, volumeInfo }) {
+    const {
+      previewLink,
+      infoLink,
+      title,
+      authors,
+      categories,
+      imageLinks,
+      industryIdentifiers,
+      language,
+      printType,
+      publishedDate,
+      publisher,
+    } = volumeInfo;
+    const isbn = industryIdentifiers?.find((id) => id.type === 'ISBN_10')
+      ?.identifier;
+    const isbn13 = industryIdentifiers?.find((id) => id.type === 'ISBN_13')
+      ?.identifier;
+
+    return {
+      googleId: id,
+      googleSelfLink: selfLink,
+      previewLink,
+      title,
+      infoLink,
+      authors,
+      categories,
+      imageLinks,
+      language,
+      printType,
+      publishedDate,
+      publisher,
+      isbn,
+      isbn13,
+    };
   }
 }

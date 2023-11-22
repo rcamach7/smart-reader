@@ -20,15 +20,17 @@ export default async function handler(
         try {
           const booksAPI = new GoogleBooksAPI(process.env.GOOGLE_BOOKS_API_KEY);
           if (type === 'query') {
-            const response = await booksAPI.findBooksByQuery(query, 2);
-            console.log(response.items[0].volumeInfo.industryIdentifiers);
-            return res.status(200).json(response);
+            const books = await booksAPI.findBooksByQuery(query, 20);
+            return res.status(200).json({ books });
+          } else {
+            return res
+              .status(400)
+              .json({ message: 'Search type not yet implemented' });
           }
         } catch (error) {
           console.log(error);
           return res.status(500).json({ message: 'error', error });
         }
-        break;
 
       default:
         res.setHeader('Allow', ['GET']);
