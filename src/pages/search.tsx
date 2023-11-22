@@ -1,7 +1,13 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-import { Box, InputBase } from '@mui/material';
+import {
+  Box,
+  InputBase,
+  Typography,
+  ToggleButton,
+  ToggleButtonGroup,
+} from '@mui/material';
 import {
   Search as SearchIcon,
   KeyboardVoice as KeyboardVoiceIcon,
@@ -19,15 +25,88 @@ export default function SearchBooksPage() {
     type: type ? type : 'books',
   });
 
+  const searchTypeChange = (
+    event: React.MouseEvent<HTMLElement>,
+    newAlignment: string
+  ) => {
+    if (!newAlignment) {
+      return;
+    }
+    setSearch((S) => {
+      return {
+        ...S,
+        type: newAlignment,
+      };
+    });
+  };
+
   return (
     <Box
       sx={{
         height: availableHeight,
         display: 'flex',
-        justifyContent: 'center',
+        flexDirection: 'column',
+        alignItems: 'center',
         pt: 2,
       }}
     >
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          overflow: 'hidden',
+          width: 'clamp(350px, 80vw, 600px)',
+          height: { xs: 100, sm: 150 },
+          position: 'relative',
+          borderRadius: '15px',
+        }}
+      >
+        <img
+          src="/search/books.png"
+          alt="books in shelf"
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+          }}
+        />
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            position: 'absolute',
+            bottom: '25%',
+            maxWidth: 250,
+          }}
+        >
+          <Typography
+            textAlign="center"
+            variant="h4"
+            sx={{
+              color: 'white',
+              fontFamily: 'Verdana',
+              textShadow: '4px 4px 8px rgba(0, 0, 0, 0.6)',
+            }}
+          >
+            Explore
+          </Typography>
+        </Box>
+      </Box>
+      <ToggleButtonGroup
+        color="primary"
+        value={search.type}
+        aria-label="search-type"
+        onChange={searchTypeChange}
+        exclusive
+        size="small"
+        sx={{ my: 1 }}
+      >
+        <ToggleButton value="books">books</ToggleButton>
+        <ToggleButton value="shelves">shelves</ToggleButton>
+      </ToggleButtonGroup>
+
       <Box
         sx={{
           display: 'flex',
