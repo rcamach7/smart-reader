@@ -67,6 +67,24 @@ export default function Home() {
           </Box>
         </Box>
       </Box>
+
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          backgroundColor: '#d3e3f0',
+          p: { xs: 0.5, md: 1 },
+        }}
+      >
+        <Typography
+          textAlign="center"
+          sx={{ fontSize: { sm: 16, md: 19 }, maxWidth: 600 }}
+        >
+          Discover BookSphere: Bookmark books, create shelves, and share with
+          friends. Plus, get AI-powered answers to all your book-related
+          questions!
+        </Typography>
+      </Box>
     </Box>
   );
 }

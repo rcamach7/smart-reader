@@ -211,7 +211,7 @@ export default function PrimarySearchAppBar() {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            Smart Reader
+            BookSphere
           </Typography>
           <Search>
             <SearchIconWrapper>
@@ -234,7 +234,14 @@ export default function PrimarySearchAppBar() {
                 onClick={handleProfileMenuOpen}
                 color="inherit"
               >
-                <PersonIcon />
+                {user ? (
+                  <Avatar
+                    alt={user.username}
+                    src={`/profile/${user.profileImage}`}
+                  />
+                ) : (
+                  <PersonIcon />
+                )}
               </IconButton>
             </Box>
           ) : (
