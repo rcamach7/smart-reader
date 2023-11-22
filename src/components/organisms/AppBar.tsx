@@ -201,15 +201,15 @@ export default function PrimarySearchAppBar() {
           return;
         }
         return (
-          <MenuItem onClick={handleHamburgerMenuClose} key={menuItem.title}>
-            <Typography textAlign="center">
-              <Link href={menuItem.link}>
+          <Link href={menuItem.link}>
+            <MenuItem onClick={handleHamburgerMenuClose} key={menuItem.title}>
+              <Typography textAlign="center">
                 <a style={{ textDecoration: 'none', color: 'inherit' }}>
                   {menuItem.title}
                 </a>
-              </Link>
-            </Typography>
-          </MenuItem>
+              </Typography>
+            </MenuItem>
+          </Link>
         );
       })}
     </Menu>
