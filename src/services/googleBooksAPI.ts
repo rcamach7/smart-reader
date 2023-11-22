@@ -13,7 +13,7 @@ type GoogleBook = {
     title: string;
     authors: string[];
     publisher: string;
-    publishedDate: string;
+    publishedDate: Date;
     industryIdentifiers: Identifier[];
     readingModes: { text: boolean; image: boolean };
     printType: string;

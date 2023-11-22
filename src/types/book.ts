@@ -1,19 +1,23 @@
 type Book = {
+  googleId?: string;
+  googleSelfLink?: string;
+  previewLink?: string;
+  infoLink?: string;
   title: string;
-  subTitle?: string;
   authors: string[];
   publisher?: string;
   publicationDate?: Date;
   edition?: string;
   description: string;
-  pageCount: number;
-  coverImageLinks?: {
-    small?: string;
-    normal?: string;
-  };
+  language?: string;
   isbn?: string;
   isbn13?: string;
-  genres: string[];
+  imageLinks?: {
+    smallThumbnail?: string;
+    thumbnail?: string;
+  };
+  categories?: string[];
+  printType?: string;
 };
 
 export default Book;
