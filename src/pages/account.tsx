@@ -136,7 +136,7 @@ export default function Account() {
             color="secondary"
             sx={{ textDecoration: 'underline' }}
           >
-            My Favorited Books
+            My Books
           </Button>
         </Link>
         <Link href="my-shelves">
@@ -146,15 +146,6 @@ export default function Account() {
             sx={{ textDecoration: 'underline' }}
           >
             My Shelves
-          </Button>
-        </Link>
-        <Link href="my-books">
-          <Button
-            size={currentScreenSize}
-            color="secondary"
-            sx={{ textDecoration: 'underline' }}
-          >
-            My Books
           </Button>
         </Link>
       </Stack>
