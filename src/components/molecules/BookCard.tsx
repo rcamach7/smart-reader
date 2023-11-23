@@ -13,6 +13,8 @@ import { Favorite as FavoriteIcon } from '@mui/icons-material';
 import { shortenString } from '@/utils/helpers';
 import Book from '@/types/book';
 
+import Link from 'next/link';
+
 interface Props {
   book: Book;
 }
@@ -27,16 +29,18 @@ export default function BookCard({ book }: Props) {
         flexDirection: 'column',
       }}
     >
-      <CardActionArea>
-        <CardMedia
-          sx={{
-            paddingTop: '120%',
-            backgroundSize: 'contain',
-          }}
-          image={book.imageLinks?.smallThumbnail}
-          title={book.title}
-        />
-      </CardActionArea>
+      <Link href={`/book/${book.googleId}`}>
+        <CardActionArea>
+          <CardMedia
+            sx={{
+              paddingTop: '120%',
+              backgroundSize: 'contain',
+            }}
+            image={book.imageLinks?.smallThumbnail}
+            title={book.title}
+          />
+        </CardActionArea>
+      </Link>
       <CardContent
         sx={{
           p: 0,
