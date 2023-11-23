@@ -8,25 +8,17 @@ import {
   Typography,
   ToggleButton,
   ToggleButtonGroup,
-  Card,
-  CardMedia,
-  CardContent,
-  CardActions,
-  Button,
-  IconButton,
-  CardActionArea,
 } from '@mui/material';
 import {
   Search as SearchIcon,
   KeyboardVoice as KeyboardVoiceIcon,
-  Favorite as FavoriteIcon,
 } from '@mui/icons-material';
+import { BookCard } from '@/components/molecules';
 
 import useAvailableHeight from '@/hooks/useAvailableHeight';
 import Book from '@/types/book';
 import { useFeedbackContext } from '@/context/FeedbackContext';
 import { useLoadingContext } from '@/context/LoadingContext';
-import { shortenString } from '@/utils/helpers';
 
 export default function SearchBooksPage() {
   const router = useRouter();
@@ -199,66 +191,7 @@ export default function SearchBooksPage() {
         }}
       >
         {bookSearchResults.map((book, i) => {
-          return (
-            <Card
-              key={i}
-              sx={{
-                width: 133,
-                pt: 0.5,
-                display: 'flex',
-                flexDirection: 'column',
-              }}
-            >
-              <CardActionArea>
-                <CardMedia
-                  sx={{
-                    paddingTop: '120%',
-                    backgroundSize: 'contain',
-                  }}
-                  image={book.imageLinks?.smallThumbnail}
-                  title={book.title}
-                />
-              </CardActionArea>
-              <CardContent
-                sx={{
-                  p: 0,
-                  mb: 0,
-                  flex: 1,
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                <Typography
-                  variant="body1"
-                  component="div"
-                  textAlign="center"
-                  sx={{
-                    display: { xs: 'none', sm: 'block' },
-                    p: 0,
-                    px: 0.5,
-                    fontSize: 14,
-                  }}
-                >
-                  {shortenString(book.title, 30)}
-                </Typography>
-              </CardContent>
-              <CardActions
-                sx={{
-                  p: 0,
-                  mt: 0,
-                  display: 'flex',
-                  justifyContent: 'center',
-                }}
-              >
-                <IconButton size="small" aria-label="favorite" sx={{ px: 0.5 }}>
-                  <FavoriteIcon sx={{ fontSize: 14 }} />
-                </IconButton>
-                <Button size="small" sx={{ px: 0.5, ml: '0px !important' }}>
-                  Add To Shelf
-                </Button>
-              </CardActions>
-            </Card>
-          );
+          return <BookCard key={i} book={book} />;
         })}
       </Box>
     </Box>
