@@ -63,6 +63,17 @@ export default class GoogleBooksAPI {
     }
   }
 
+  async findBookById(id: string) {
+    const endpoint = `${GoogleBooksAPI._URL}/volumes/${id}?key=${this._apiKey}`;
+    try {
+      const response = await axios.get(endpoint);
+      return this.mapGoogleBookToInternalFormat(response.data);
+    } catch (error) {
+      console.error('Failed to fetch by ID', error);
+      throw new Error('Failed to fetch by ID');
+    }
+  }
+
   async findBookByISBN(query: string) {
     const endpoint = `${GoogleBooksAPI._URL}/volumes?q=isbn:${query}&key=${this._apiKey}`;
     try {

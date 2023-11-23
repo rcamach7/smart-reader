@@ -1,12 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { BookSchema } from '@/schemas/index';
+
+import GoogleBooksAPI from '@/services/googleBooksAPI';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { bookid } = req.query;
-  const googleId = bookid as string;
+  const { bid } = req.query;
+  const googleId = bid as string;
   if (!googleId) {
     return res.status(400).json({ message: 'Book ID Missing' });
   }
@@ -14,7 +15,12 @@ export default async function handler(
   try {
     switch (req.method) {
       case 'GET':
+        const googleBooksApi = new GoogleBooksAPI(
+          process.env.GOOGLE_BOOKS_API_KEY
+        );
         try {
+          const book = await googleBooksApi.findBookById(googleId);
+          return res.status(200).json({ book });
         } catch (error) {
           console.log(error);
           return res.status(500).json({
@@ -24,7 +30,7 @@ export default async function handler(
         }
 
       default:
-        res.setHeader('Allow', ['PUT', 'DELETE']);
+        res.setHeader('Allow', ['GET']);
         res.status(405).end(`Method ${req.method} Not Allowed`);
     }
   } catch (error) {
