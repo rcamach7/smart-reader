@@ -2,18 +2,13 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import axios from 'axios';
 
-import {
-  Box,
-  InputBase,
-  Typography,
-  ToggleButton,
-  ToggleButtonGroup,
-} from '@mui/material';
+import { Box, InputBase, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import {
   Search as SearchIcon,
   KeyboardVoice as KeyboardVoiceIcon,
 } from '@mui/icons-material';
 import { BookCard } from '@/components/molecules';
+import { SearchPageHeader } from '@/components/atoms';
 
 import useAvailableHeight from '@/hooks/useAvailableHeight';
 import Book from '@/types/book';
@@ -85,51 +80,7 @@ export default function SearchBooksPage() {
         pt: 2,
       }}
     >
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          overflow: 'hidden',
-          width: 'clamp(350px, 80vw, 600px)',
-          height: { xs: 100, sm: 125 },
-          position: 'relative',
-          borderRadius: '15px',
-        }}
-      >
-        <img
-          src="/search/books.png"
-          alt="books in shelf"
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-          }}
-        />
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            position: 'absolute',
-            bottom: '25%',
-            maxWidth: 250,
-          }}
-        >
-          <Typography
-            textAlign="center"
-            variant="h4"
-            sx={{
-              color: 'white',
-              fontFamily: 'Verdana',
-              textShadow: '4px 4px 8px rgba(0, 0, 0, 0.6)',
-              fontSize: { xs: 40, md: 45 },
-            }}
-          >
-            Explore
-          </Typography>
-        </Box>
-      </Box>
+      <SearchPageHeader />
       <ToggleButtonGroup
         color="primary"
         value={search.type}
