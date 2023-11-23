@@ -14,6 +14,7 @@ import {
   CardActions,
   Button,
   IconButton,
+  CardActionArea,
 } from '@mui/material';
 import {
   Search as SearchIcon,
@@ -25,6 +26,7 @@ import useAvailableHeight from '@/hooks/useAvailableHeight';
 import Book from '@/types/book';
 import { useFeedbackContext } from '@/context/FeedbackContext';
 import { useLoadingContext } from '@/context/LoadingContext';
+import { shortenString } from '@/utils/helpers';
 
 export default function SearchBooksPage() {
   const router = useRouter();
@@ -207,14 +209,16 @@ export default function SearchBooksPage() {
                 flexDirection: 'column',
               }}
             >
-              <CardMedia
-                sx={{
-                  paddingTop: '120%',
-                  backgroundSize: 'contain',
-                }}
-                image={book.imageLinks?.smallThumbnail}
-                title={book.title}
-              />
+              <CardActionArea>
+                <CardMedia
+                  sx={{
+                    paddingTop: '120%',
+                    backgroundSize: 'contain',
+                  }}
+                  image={book.imageLinks?.smallThumbnail}
+                  title={book.title}
+                />
+              </CardActionArea>
               <CardContent
                 sx={{
                   p: 0,
@@ -230,11 +234,12 @@ export default function SearchBooksPage() {
                   textAlign="center"
                   sx={{
                     display: { xs: 'none', sm: 'block' },
-                    p: 0.5,
+                    p: 0,
+                    px: 0.5,
                     fontSize: 14,
                   }}
                 >
-                  {book.title}
+                  {shortenString(book.title, 30)}
                 </Typography>
               </CardContent>
               <CardActions
@@ -245,10 +250,10 @@ export default function SearchBooksPage() {
                   justifyContent: 'center',
                 }}
               >
-                <IconButton size="small" aria-label="favorite" sx={{ p: 1 }}>
+                <IconButton size="small" aria-label="favorite" sx={{ px: 0.5 }}>
                   <FavoriteIcon sx={{ fontSize: 14 }} />
                 </IconButton>
-                <Button size="small" sx={{ p: 0.5, ml: '0px !important' }}>
+                <Button size="small" sx={{ px: 0.5, ml: '0px !important' }}>
                   Add To Shelf
                 </Button>
               </CardActions>
