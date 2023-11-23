@@ -20,7 +20,7 @@ export default async function handler(
         try {
           const booksAPI = new GoogleBooksAPI(process.env.GOOGLE_BOOKS_API_KEY);
           if (type === 'query') {
-            const books = await booksAPI.findBooksByQuery(query, 20);
+            const books = await booksAPI.findBooksByQuery(query, 30);
             return res.status(200).json({ books });
           } else {
             return res
