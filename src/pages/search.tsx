@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import {
@@ -15,7 +15,6 @@ import {
   KeyboardVoice as KeyboardVoiceIcon,
 } from '@mui/icons-material';
 import { BookCard } from '@/components/molecules';
-import { SearchPageHeader } from '@/components/atoms';
 
 import useAvailableHeight from '@/hooks/useAvailableHeight';
 import Book from '@/types/book';
@@ -24,15 +23,15 @@ import { useLoadingContext } from '@/context/LoadingContext';
 
 export default function SearchBooksPage() {
   const router = useRouter();
-  const { type } = router.query;
-  const query = typeof router.query === 'string' ? router.query : '';
+  const { type, query } = router.query;
+  const initialQuery = typeof query === 'string' ? query : '';
 
   const availableHeight = useAvailableHeight();
   const { addAlertMessage } = useFeedbackContext();
   const { setIsPageLoading } = useLoadingContext();
 
   const [search, setSearch] = useState({
-    query: query ? query : '',
+    query: initialQuery ? initialQuery : '',
     type: type ? type : 'books',
   });
   const [bookSearchResults, setBookSearchResults] = useState<Book[]>([]);
@@ -49,6 +48,17 @@ export default function SearchBooksPage() {
 
   const handleBookPageChange = (event, value) => {
     setCurrentBookPage(value);
+  };
+
+  const handleInputSearch = () => {
+    if (search.type === 'books') {
+      handleSearchBooks();
+    } else {
+      addAlertMessage({
+        text: 'Shelf searching not yet available',
+        severity: 'warning',
+      });
+    }
   };
 
   const handleSearchBooks = async () => {
@@ -91,6 +101,12 @@ export default function SearchBooksPage() {
     });
   };
 
+  useEffect(() => {
+    if (search.query.length) {
+      handleInputSearch();
+    }
+  }, []);
+
   return (
     <Box
       sx={{
@@ -101,7 +117,6 @@ export default function SearchBooksPage() {
         pt: 2,
       }}
     >
-      {/* <SearchPageHeader /> */}
       <Box
         sx={{
           display: 'flex',
@@ -163,7 +178,7 @@ export default function SearchBooksPage() {
           }}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
-              handleSearchBooks();
+              handleInputSearch();
             }
           }}
         />
