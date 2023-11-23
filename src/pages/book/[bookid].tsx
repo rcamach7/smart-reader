@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 import { useLoadingContext } from '@/context/LoadingContext';
 import { useFeedbackContext } from '@/context/FeedbackContext';
@@ -14,8 +15,18 @@ export default function CategoryPage() {
   } = useRouter();
   const googleId = bid as string;
 
-  if (googleId) {
+  const [book, setBook] = useState(null);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    if (googleId) {
+    }
+  }, []);
+
+  if (book) {
     return <>{googleId}</>;
+  } else if (error) {
+    return <>An unexpected error occurred</>;
   } else {
     return (
       <>
