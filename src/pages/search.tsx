@@ -8,6 +8,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Pagination,
+  Typography,
 } from '@mui/material';
 import {
   Search as SearchIcon,
@@ -100,20 +101,37 @@ export default function SearchBooksPage() {
         pt: 2,
       }}
     >
-      <SearchPageHeader />
-      <ToggleButtonGroup
-        color="primary"
-        value={search.type}
-        aria-label="search-type"
-        onChange={searchTypeChange}
-        exclusive
-        size="small"
-        sx={{ my: 1 }}
+      {/* <SearchPageHeader /> */}
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          mt: 1,
+        }}
       >
-        <ToggleButton value="books">books</ToggleButton>
-        <ToggleButton value="shelves">shelves</ToggleButton>
-      </ToggleButtonGroup>
-
+        <Typography
+          variant="body1"
+          sx={{ pr: 1, fontFamily: 'Verdana', fontSize: 14 }}
+        >
+          I am searching for
+        </Typography>
+        <ToggleButtonGroup
+          color="primary"
+          value={search.type}
+          aria-label="search-type"
+          onChange={searchTypeChange}
+          exclusive
+          size="small"
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <ToggleButton value="books">books</ToggleButton>
+          <ToggleButton value="shelves">shelves</ToggleButton>
+        </ToggleButtonGroup>
+      </Box>
       <Box
         sx={{
           display: 'flex',
@@ -123,6 +141,7 @@ export default function SearchBooksPage() {
           border: 'solid black 2px',
           borderRadius: '20px',
           px: 1,
+          mt: 1,
         }}
       >
         <SearchIcon />
@@ -173,8 +192,7 @@ export default function SearchBooksPage() {
             return <BookCard key={i} book={book} />;
           })}
         </Box>
-
-        {bookSearchResults.length && (
+        {bookSearchResults.length ? (
           <Pagination
             count={totalBookPages}
             page={currentBookPage}
@@ -182,7 +200,7 @@ export default function SearchBooksPage() {
             sx={{ mt: 'auto', pb: 3 }}
             color="primary"
           />
-        )}
+        ) : null}
       </Box>
     </Box>
   );
