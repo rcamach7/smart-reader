@@ -9,7 +9,7 @@ export default function SearchPageHeader() {
         alignItems: 'center',
         overflow: 'hidden',
         width: 'clamp(350px, 80vw, 600px)',
-        height: { xs: 100, sm: 125 },
+        height: { xs: 75, sm: 100 },
         position: 'relative',
         borderRadius: '15px',
       }}

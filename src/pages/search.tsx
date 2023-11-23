@@ -2,7 +2,13 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import axios from 'axios';
 
-import { Box, InputBase, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import {
+  Box,
+  InputBase,
+  ToggleButton,
+  ToggleButtonGroup,
+  Pagination,
+} from '@mui/material';
 import {
   Search as SearchIcon,
   KeyboardVoice as KeyboardVoiceIcon,
@@ -29,6 +35,20 @@ export default function SearchBooksPage() {
     type: type ? type : 'books',
   });
   const [bookSearchResults, setBookSearchResults] = useState<Book[]>([]);
+
+  const [currentBookPage, setCurrentBookPage] = useState(1);
+  const itemsPerPage = 15;
+  const totalBookPages = Math.ceil(bookSearchResults.length / itemsPerPage);
+  const indexOfLastBook = currentBookPage * itemsPerPage;
+  const indexOfFirstBook = indexOfLastBook - itemsPerPage;
+  const currentBooks = bookSearchResults.slice(
+    indexOfFirstBook,
+    indexOfLastBook
+  );
+
+  const handleBookPageChange = (event, value) => {
+    setCurrentBookPage(value);
+  };
 
   const handleSearchBooks = async () => {
     if (search.query.length <= 3) {
@@ -133,17 +153,36 @@ export default function SearchBooksPage() {
 
       <Box
         sx={{
-          p: 1,
-          mt: 1,
+          flex: 1,
           display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'center',
-          gap: 2,
+          flexDirection: 'column',
+          alignItems: 'center',
         }}
       >
-        {bookSearchResults.map((book, i) => {
-          return <BookCard key={i} book={book} />;
-        })}
+        <Box
+          sx={{
+            p: 1,
+            mt: 1,
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            gap: 2,
+          }}
+        >
+          {currentBooks.map((book, i) => {
+            return <BookCard key={i} book={book} />;
+          })}
+        </Box>
+
+        {bookSearchResults.length && (
+          <Pagination
+            count={totalBookPages}
+            page={currentBookPage}
+            onChange={handleBookPageChange}
+            sx={{ mt: 'auto', pb: 3 }}
+            color="primary"
+          />
+        )}
       </Box>
     </Box>
   );
