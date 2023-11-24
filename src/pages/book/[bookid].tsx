@@ -4,9 +4,11 @@ import axios from 'axios';
 
 import { useLoadingContext } from '@/context/LoadingContext';
 import { useFeedbackContext } from '@/context/FeedbackContext';
+import Book from '@/types/book';
+import useAvailableHeight from '@/hooks/useAvailableHeight';
 
 import { PageLoading } from '@/components/atoms';
-import Book from '@/types/book';
+import { Box } from '@mui/material';
 
 export default function CategoryPage() {
   const { setIsPageLoading, isPageLoading } = useLoadingContext();
@@ -36,11 +38,9 @@ export default function CategoryPage() {
 
   if (book) {
     return (
-      <>
-        <p>{book.title}</p>
-        <p>{book.categories}</p>
-        <img src={book.imageLinks?.thumbnail} alt="" />
-      </>
+      <Box sx={{ height: useAvailableHeight }}>
+        <img src={book.imageLinks?.thumbnail} alt={book.title} />
+      </Box>
     );
   } else if (error) {
     return <>An unexpected error occurred</>;
