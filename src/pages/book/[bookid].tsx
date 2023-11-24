@@ -8,7 +8,11 @@ import Book from '@/types/book';
 import useAvailableHeight from '@/hooks/useAvailableHeight';
 
 import { PageLoading } from '@/components/atoms';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Button, IconButton } from '@mui/material';
+import {
+  FavoriteBorder as FavoriteIcon,
+  Add as AddIcon,
+} from '@mui/icons-material';
 
 export default function CategoryPage() {
   const { setIsPageLoading, isPageLoading } = useLoadingContext();
@@ -79,7 +83,7 @@ export default function CategoryPage() {
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                pt: 0.5,
+                justifyContent: 'center',
                 maxWidth: 400,
               }}
             >
@@ -99,6 +103,27 @@ export default function CategoryPage() {
               >
                 by {book.authors}
               </Typography>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  gap: 1,
+                  pt: { xs: 1, sm: 2, md: 3 },
+                }}
+              >
+                <Button variant="outlined">
+                  <FavoriteIcon />
+                  <Typography sx={{ display: { xs: 'none', sm: 'block' } }}>
+                    Favorite
+                  </Typography>
+                </Button>
+                <Button variant="outlined">
+                  <AddIcon />
+                  <Typography sx={{ display: { xs: 'none', sm: 'block' } }}>
+                    Add To Shelf
+                  </Typography>
+                </Button>
+              </Box>
             </Box>
           </Box>
         </Box>
