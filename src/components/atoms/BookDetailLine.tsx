@@ -20,7 +20,7 @@ export default function BookDetailLine({ objKey, value }: Props) {
     }
   }
   const dynamicFontSize = {
-    fontSize: { xs: '1rem', sm: '1.1rem', md: '1.15rem' },
+    fontSize: { xs: '1rem', sm: '1.1rem' },
   };
 
   return (

@@ -37,7 +37,7 @@ export default function BookPageHeader({ book }: Props) {
               width: '100%',
               height: '100%',
               objectFit: 'fill',
-              boxShadow: '20px 20px 20px rgba(0, 0, 0, 0.3)',
+              boxShadow: '20px 10px 20px rgba(0, 0, 0, 0.3)',
             }}
           />
         </Box>

@@ -10,7 +10,7 @@ import useAvailableHeight from '@/hooks/useAvailableHeight';
 
 import { PageLoading, BookDetailLine } from '@/components/atoms';
 import { BookPageHeader } from '@/components/molecules';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Button } from '@mui/material';
 
 export default function CategoryPage() {
   const { setIsPageLoading, isPageLoading } = useLoadingContext();
@@ -80,6 +80,19 @@ export default function CategoryPage() {
         }}
       >
         <BookPageHeader book={book} />
+        <Box
+          sx={{
+            textAlign: 'center',
+            p: 1,
+            backgroundColor: '#d3e3f0',
+            width: '100%',
+          }}
+        >
+          <Typography>
+            Get an AI-powered check to see if this book is your next great read!
+          </Typography>
+          <Button variant="outlined">Is This Book for Me?</Button>
+        </Box>
         <Box
           sx={{
             p: 1,
