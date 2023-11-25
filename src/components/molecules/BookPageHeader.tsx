@@ -13,6 +13,7 @@ export default function BookPageHeader({ book }: Props) {
   return (
     <Box
       sx={{
+        width: '100%',
         display: 'flex',
         p: 3,
         backgroundColor: '#d3e3f0',

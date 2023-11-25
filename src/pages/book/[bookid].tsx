@@ -76,10 +76,20 @@ export default function CategoryPage() {
           height: useAvailableHeight,
           display: 'flex',
           flexDirection: 'column',
+          alignItems: 'center',
         }}
       >
         <BookPageHeader book={book} />
-        <Box>
+        <Box
+          sx={{
+            p: 1,
+            width: 'clamp(350px, 95vw, 700px)',
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: 0.5,
+            justifyContent: 'center',
+          }}
+        >
           {bookMetaDataKeys.map((key, i) => {
             if (!book[key]) {
               return null;
