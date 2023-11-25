@@ -1,15 +1,16 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { styled } from '@mui/material/styles';
 
 import { useLoadingContext } from '@/context/LoadingContext';
 import { useFeedbackContext } from '@/context/FeedbackContext';
 import Book from '@/types/book';
 import useAvailableHeight from '@/hooks/useAvailableHeight';
 
-import { PageLoading } from '@/components/atoms';
+import { PageLoading, BookDetailLine } from '@/components/atoms';
 import { BookPageHeader } from '@/components/molecules';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 export default function CategoryPage() {
   const { setIsPageLoading, isPageLoading } = useLoadingContext();
@@ -37,6 +38,37 @@ export default function CategoryPage() {
     }
   }, [googleId]);
 
+  const StyledTypography = styled(Typography)({
+    display: 'flex',
+    alignItems: 'center',
+    '&::before': {
+      content: '""',
+      flex: 1,
+      borderBottom: '1px solid black',
+      marginRight: '8px',
+    },
+    '&::after': {
+      content: '""',
+      flex: 1,
+      borderBottom: '1px solid black',
+      marginLeft: '8px',
+    },
+  });
+
+  useEffect(() => {
+    console.log(book);
+  }, [book]);
+
+  const bookMetaDataKeys = [
+    'categories',
+    'publisher',
+    'publishedDate',
+    'printType',
+    'language',
+    'isbn',
+    'isbn13',
+  ];
+
   if (book) {
     return (
       <Box
@@ -47,6 +79,17 @@ export default function CategoryPage() {
         }}
       >
         <BookPageHeader book={book} />
+        <Box>
+          {bookMetaDataKeys.map((key, i) => {
+            if (!book[key]) {
+              return null;
+            } else {
+              const val =
+                key === 'categories' ? book[key].join(', ') : book[key];
+              return <BookDetailLine key={i} objKey={key} value={val} />;
+            }
+          })}
+        </Box>
       </Box>
     );
   } else if (error) {

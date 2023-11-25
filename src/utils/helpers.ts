@@ -1,6 +1,7 @@
-export function shortenString(str: string, max: number) {
+export function shortenString(str: string, max: number, etcString?: string) {
   if (str.length <= max) {
     return str.trim();
   }
-  return str.substring(0, max).trim() + '...';
+  const etc = etcString ? etcString : '...';
+  return str.substring(0, max).trim() + etc;
 }
