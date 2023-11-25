@@ -10,6 +10,7 @@ import useAvailableHeight from '@/hooks/useAvailableHeight';
 
 import { PageLoading, BookDetailLine } from '@/components/atoms';
 import { BookPageHeader } from '@/components/molecules';
+import { FabButton } from '@/components/atoms';
 import { Box, Typography, Button } from '@mui/material';
 
 export default function CategoryPage() {
@@ -113,6 +114,7 @@ export default function CategoryPage() {
             }
           })}
         </Box>
+        <FabButton />
       </Box>
     );
   } else if (error) {
