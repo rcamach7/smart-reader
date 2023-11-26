@@ -1,4 +1,4 @@
-import { Button, Typography } from '@mui/material';
+import { Button, Typography, IconButton } from '@mui/material';
 import {
   Favorite as FavoriteIcon,
   FavoriteBorder as FavoriteBorderIcon,
@@ -13,9 +13,10 @@ import { BookType } from '@/types/index';
 
 interface Props {
   book: BookType;
+  type?: 'card';
 }
 
-export default function FavoriteBookButton({ book }: Props) {
+export default function FavoriteBookButton({ book, type }: Props) {
   const { user, setUser } = useUser();
   const { addAlertMessage } = useFeedbackContext();
   const { setIsPageLoading } = useLoadingContext();
@@ -58,17 +59,34 @@ export default function FavoriteBookButton({ book }: Props) {
     return false;
   };
 
-  return (
-    <Button variant="outlined" onClick={handleFavoriteToggle}>
-      {isFavorited() ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-      <Typography
-        sx={{
-          display: { xs: 'none', sm: 'block' },
-          fontSize: { xs: '.8rem', sm: '.9rem' },
-        }}
+  if (type === 'card') {
+    return (
+      <IconButton
+        size="small"
+        aria-label="favorite"
+        sx={{ px: 0.5 }}
+        onClick={handleFavoriteToggle}
       >
-        {isFavorited() ? 'Remove Favorited' : 'Add To Favorites'}
-      </Typography>
-    </Button>
-  );
+        {isFavorited() ? (
+          <FavoriteIcon sx={{ fontSize: 14 }} />
+        ) : (
+          <FavoriteBorderIcon sx={{ fontSize: 14 }} />
+        )}
+      </IconButton>
+    );
+  } else {
+    return (
+      <Button variant="outlined" onClick={handleFavoriteToggle}>
+        {isFavorited() ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+        <Typography
+          sx={{
+            display: { xs: 'none', sm: 'block' },
+            fontSize: { xs: '.8rem', sm: '.9rem' },
+          }}
+        >
+          {isFavorited() ? 'Remove Favorited' : 'Add To Favorites'}
+        </Typography>
+      </Button>
+    );
+  }
 }

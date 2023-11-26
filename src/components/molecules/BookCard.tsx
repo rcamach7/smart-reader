@@ -5,10 +5,9 @@ import {
   CardContent,
   CardActions,
   Button,
-  IconButton,
   CardActionArea,
 } from '@mui/material';
-import { Favorite as FavoriteIcon } from '@mui/icons-material';
+import { FavoriteBookButton } from '@/components/atoms';
 
 import { shortenString } from '@/utils/helpers';
 import Book from '@/types/book';
@@ -72,9 +71,7 @@ export default function BookCard({ book }: Props) {
           justifyContent: 'center',
         }}
       >
-        <IconButton size="small" aria-label="favorite" sx={{ px: 0.5 }}>
-          <FavoriteIcon sx={{ fontSize: 14 }} />
-        </IconButton>
+        <FavoriteBookButton book={book} type="card" />
         <Button size="small" sx={{ px: 0.5, ml: '0px !important' }}>
           Add To Shelf
         </Button>
