@@ -130,22 +130,31 @@ export default function Account() {
         justifyContent="center"
         sx={{ py: 2 }}
       >
-        <Link href="/my-favorites">
+        <Link href="/my-library">
           <Button
             size={currentScreenSize}
             color="secondary"
             sx={{ textDecoration: 'underline' }}
           >
-            My Books
+            My Library
           </Button>
         </Link>
-        <Link href="my-shelves">
+        <Link href="/search">
           <Button
             size={currentScreenSize}
             color="secondary"
             sx={{ textDecoration: 'underline' }}
           >
-            My Shelves
+            Search For Books
+          </Button>
+        </Link>
+        <Link href="/shelves">
+          <Button
+            size={currentScreenSize}
+            color="secondary"
+            sx={{ textDecoration: 'underline' }}
+          >
+            View Public Shelves
           </Button>
         </Link>
       </Stack>

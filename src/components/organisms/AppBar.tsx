@@ -66,15 +66,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const hamburgerMenuItems = [
-  { title: 'Home', link: '/', authRequired: false },
-  { title: 'Search', link: '/search', authRequired: false },
-  { title: 'My Shelves', link: '/my-shelves', authRequired: true },
-  { title: 'My Books', link: 'my-books/', authRequired: true },
-  { title: 'Public Shelves', link: '/shelves', authRequired: false },
-  { title: 'About', link: '/about', authRequired: false },
-];
-
 export default function PrimarySearchAppBar() {
   const { user, logout } = useUser();
   const router = useRouter();
@@ -124,10 +115,23 @@ export default function PrimarySearchAppBar() {
     setSearchType(event.target.checked ? 'shelves' : 'books');
   };
 
+  const hamburgerMenuItems = [
+    { title: 'Home', link: '/', authRequired: false },
+    { title: 'Search', link: '/search', authRequired: false },
+    { title: 'My Library', link: '/my-shelves', authRequired: true },
+    { title: 'Public Shelves', link: '/shelves', authRequired: false },
+  ];
+
   const accountMenuItems = [
     {
       title: 'My Account',
       link: '/account',
+      authRequired: true,
+      onClickFunction: handleMenuClose,
+    },
+    {
+      title: 'My Library',
+      link: '/my-library',
       authRequired: true,
       onClickFunction: handleMenuClose,
     },
