@@ -1,10 +1,33 @@
 import useAvailableHeight from '@/hooks/useAvailableHeight';
+import { useUser } from '@/context/UserContext';
+import { useLoadingContext } from '@/context/LoadingContext';
 
 import { Box, Button, Typography } from '@mui/material';
 
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+
 export default function MyLibrary() {
   const availableHeight = useAvailableHeight();
+  const router = useRouter();
+  const { user, isUserLoading } = useUser();
+  const { setIsPageLoading } = useLoadingContext();
 
+  useEffect(() => {
+    if (!user && !isUserLoading) {
+      router.push('/');
+    }
+
+    if (isUserLoading) {
+      setIsPageLoading(true);
+    } else {
+      setIsPageLoading(false);
+    }
+  }, [user, isUserLoading]);
+
+  if (isUserLoading || !user) {
+    return null;
+  }
   return (
     <Box
       sx={{
