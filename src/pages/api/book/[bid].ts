@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import GoogleBooksAPI from '@/services/googleBooksAPI';
+import { BookSchema } from '@/schemas/index';
 
 export default async function handler(
   req: NextApiRequest,
@@ -19,7 +20,11 @@ export default async function handler(
           process.env.GOOGLE_BOOKS_API_KEY
         );
         try {
-          const book = await googleBooksApi.findBookById(googleId);
+          let book = await BookSchema.findOne({ googleId });
+          if (!book) {
+            book = await googleBooksApi.findBookById(googleId);
+          }
+
           return res.status(200).json({ book });
         } catch (error) {
           console.log(error);

@@ -39,27 +39,6 @@ export default function CategoryPage() {
     }
   }, [googleId]);
 
-  const StyledTypography = styled(Typography)({
-    display: 'flex',
-    alignItems: 'center',
-    '&::before': {
-      content: '""',
-      flex: 1,
-      borderBottom: '1px solid black',
-      marginRight: '8px',
-    },
-    '&::after': {
-      content: '""',
-      flex: 1,
-      borderBottom: '1px solid black',
-      marginLeft: '8px',
-    },
-  });
-
-  useEffect(() => {
-    console.log(book);
-  }, [book]);
-
   const bookMetaDataKeys = [
     'categories',
     'publisher',
@@ -84,7 +63,7 @@ export default function CategoryPage() {
         <Box
           sx={{
             textAlign: 'center',
-            p: 1,
+            pb: 1,
             backgroundColor: '#d3e3f0',
             width: '100%',
           }}
