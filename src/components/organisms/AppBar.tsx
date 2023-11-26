@@ -127,19 +127,19 @@ export default function PrimarySearchAppBar() {
   const accountMenuItems = [
     {
       title: 'My Account',
-      link: 'account',
+      link: '/account',
       authRequired: true,
       onClickFunction: handleMenuClose,
     },
     {
       title: 'Sign In',
-      link: 'sign-in',
+      link: '/sign-in',
       authRequired: false,
       onClickFunction: handleMenuClose,
     },
     {
       title: 'Create Account',
-      link: 'sign-up',
+      link: '/sign-up',
       authRequired: false,
       onClickFunction: handleMenuClose,
     },
