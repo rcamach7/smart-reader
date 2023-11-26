@@ -16,9 +16,10 @@ import Link from 'next/link';
 
 interface Props {
   book: Book;
+  type?: 'transparent';
 }
 
-export default function BookCard({ book }: Props) {
+export default function BookCard({ book, type }: Props) {
   return (
     <Card
       sx={{
@@ -26,6 +27,7 @@ export default function BookCard({ book }: Props) {
         pt: 0.5,
         display: 'flex',
         flexDirection: 'column',
+        backgroundColor: type === 'transparent' ? 'transparent' : 'default',
       }}
     >
       <Link href={`/book/${book.googleId}`}>
