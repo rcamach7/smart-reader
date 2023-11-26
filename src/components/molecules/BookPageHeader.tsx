@@ -69,7 +69,7 @@ export default function BookPageHeader({ book }: Props) {
               pt: { xs: 1, sm: 2, md: 3 },
             }}
           >
-            <FavoriteBookButton googleId={book.googleId} />
+            <FavoriteBookButton book={book} />
             <Button variant="outlined">
               <AddIcon />
               <Typography sx={{ display: { xs: 'none', sm: 'block' } }}>
