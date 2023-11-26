@@ -4,3 +4,4 @@ export { default as Alert } from './Alert';
 export { default as SearchPageHeader } from './SearchPageHeader';
 export { default as BookDetailLine } from './BookDetailLine';
 export { default as FabButton } from './FabButton';
+export { default as FavoriteBookButton } from './FavoriteBookButton';

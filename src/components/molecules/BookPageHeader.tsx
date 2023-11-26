@@ -1,9 +1,7 @@
 import { Box, Typography, Button } from '@mui/material';
-import {
-  FavoriteBorder as FavoriteIcon,
-  Add as AddIcon,
-} from '@mui/icons-material';
+import { Add as AddIcon } from '@mui/icons-material';
 import { BookType } from '@/types/index';
+import { FavoriteBookButton } from '@/components/atoms';
 
 interface Props {
   book: BookType;
@@ -20,9 +18,7 @@ export default function BookPageHeader({ book }: Props) {
         justifyContent: 'center',
       }}
     >
-      {/* Content Container */}
       <Box sx={{ display: 'flex' }}>
-        {/* Image Container */}
         <Box
           sx={{
             width: 'clamp(100px, 25vw, 125px)',
@@ -41,7 +37,6 @@ export default function BookPageHeader({ book }: Props) {
             }}
           />
         </Box>
-        {/* Text Container */}
         <Box
           sx={{
             display: 'flex',
@@ -74,12 +69,7 @@ export default function BookPageHeader({ book }: Props) {
               pt: { xs: 1, sm: 2, md: 3 },
             }}
           >
-            <Button variant="outlined">
-              <FavoriteIcon />
-              <Typography sx={{ display: { xs: 'none', sm: 'block' } }}>
-                Favorite
-              </Typography>
-            </Button>
+            <FavoriteBookButton googleId={book.googleId} />
             <Button variant="outlined">
               <AddIcon />
               <Typography sx={{ display: { xs: 'none', sm: 'block' } }}>

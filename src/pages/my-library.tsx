@@ -3,6 +3,7 @@ import { useUser } from '@/context/UserContext';
 import { useLoadingContext } from '@/context/LoadingContext';
 
 import { Box, Button, Typography } from '@mui/material';
+import { BookCard } from '@/components/molecules';
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -52,7 +53,11 @@ export default function MyLibrary() {
           buttonText="Search For More"
           handleButtonClick={() => {}}
         />
-        <Box></Box>
+        <Box>
+          {user.savedBooks.map((book) => {
+            return <BookCard book={book} />;
+          })}
+        </Box>
       </Box>
     </Box>
   );
