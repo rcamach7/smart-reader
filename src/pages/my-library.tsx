@@ -6,6 +6,7 @@ import { Box, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import {
   FavoriteBooksContainer,
   MyShelvesContainer,
+  CreateShelfModal,
 } from '@/components/molecules';
 
 import { useEffect, useState } from 'react';
@@ -19,6 +20,7 @@ export default function MyLibrary() {
   const { user, isUserLoading } = useUser();
   const { setIsPageLoading } = useLoadingContext();
   const [viewMode, setViewMode] = useState<ViewMode>('favorites');
+  const [showCreateShelfModal, setShowCreateShelfModal] = useState(false);
 
   const handleViewModeChange = (
     event: React.MouseEvent<HTMLElement>,
@@ -88,6 +90,15 @@ export default function MyLibrary() {
           <MyShelvesContainer shelves={user.shelves} />
         )}
       </Box>
+
+      <CreateShelfModal
+        open={showCreateShelfModal}
+        toggle={() => {
+          setShowCreateShelfModal((SCSM) => {
+            return !SCSM;
+          });
+        }}
+      />
     </Box>
   );
 }
