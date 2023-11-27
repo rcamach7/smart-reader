@@ -27,8 +27,8 @@ export default function FavoriteBooksContainer({ user }: Props) {
           justifyContent: 'center',
         }}
       >
-        {user.savedBooks.map((book) => {
-          return <BookCard book={book} type="transparent" />;
+        {user.savedBooks.map((book, i) => {
+          return <BookCard key={i} book={book} type="transparent" />;
         })}
       </Box>
     </Box>
