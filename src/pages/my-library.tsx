@@ -3,8 +3,10 @@ import { useUser } from '@/context/UserContext';
 import { useLoadingContext } from '@/context/LoadingContext';
 
 import { Box, ToggleButton, ToggleButtonGroup } from '@mui/material';
-import { BookCard } from '@/components/molecules';
-import { SectionHeader } from '@/components/atoms';
+import {
+  FavoriteBooksContainer,
+  MyShelvesContainer,
+} from '@/components/molecules';
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -43,40 +45,6 @@ export default function MyLibrary() {
     return null;
   }
 
-  const renderFavoritedBooks = (
-    <Box>
-      <SectionHeader
-        title="My Favorited Books"
-        buttonText="Search For More"
-        buttonType="link"
-        link="/search"
-        handleButtonClick={() => {}}
-      />
-      <Box
-        sx={{
-          p: 1,
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: 1,
-          justifyContent: 'center',
-        }}
-      >
-        {user.savedBooks.map((book) => {
-          return <BookCard book={book} type="transparent" />;
-        })}
-      </Box>
-    </Box>
-  );
-
-  const renderShelves = (
-    <Box>
-      <SectionHeader
-        title="My Shelves"
-        buttonText="Create New"
-        handleButtonClick={() => {}}
-      />
-    </Box>
-  );
   return (
     <Box
       sx={{
@@ -114,7 +82,11 @@ export default function MyLibrary() {
             </ToggleButton>
           </ToggleButtonGroup>
         </Box>
-        {viewMode === 'favorites' ? renderFavoritedBooks : renderShelves}
+        {viewMode === 'favorites' ? (
+          <FavoriteBooksContainer user={user} />
+        ) : (
+          <MyShelvesContainer shelves={user.shelves} />
+        )}
       </Box>
     </Box>
   );
