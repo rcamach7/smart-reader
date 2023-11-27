@@ -50,7 +50,15 @@ export default function MyLibrary() {
         buttonText="Search For More"
         handleButtonClick={() => {}}
       />
-      <Box sx={{ p: 1 }}>
+      <Box
+        sx={{
+          p: 1,
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: 1,
+          justifyContent: 'center',
+        }}
+      >
         {user.savedBooks.map((book) => {
           return <BookCard book={book} type="transparent" />;
         })}
@@ -62,7 +70,7 @@ export default function MyLibrary() {
     <Box>
       <SectionHeader
         title="My Shelves"
-        buttonText="Create One"
+        buttonText="Create New"
         handleButtonClick={() => {}}
       />
     </Box>
@@ -82,7 +90,13 @@ export default function MyLibrary() {
           width: 'clamp(320px, 100vw, 900px)',
         }}
       >
-        <Box sx={{ display: 'flex', justifyContent: 'center', py: 1 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            py: { xs: 1, md: 2 },
+          }}
+        >
           <ToggleButtonGroup
             color="primary"
             value={viewMode}
