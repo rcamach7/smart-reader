@@ -39,7 +39,7 @@ export default function SectionHeader({
           </Button>
         </Link>
       ) : (
-        <Button variant="outlined" size="small">
+        <Button variant="outlined" size="small" onClick={handleButtonClick}>
           {buttonText}
         </Button>
       )}

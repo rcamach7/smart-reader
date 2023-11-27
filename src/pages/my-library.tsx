@@ -31,6 +31,12 @@ export default function MyLibrary() {
     }
   };
 
+  const toggleCreateShelfModal = () => {
+    setShowCreateShelfModal((SCSM) => {
+      return !SCSM;
+    });
+  };
+
   useEffect(() => {
     if (!user && !isUserLoading) {
       router.push('/');
@@ -87,7 +93,10 @@ export default function MyLibrary() {
         {viewMode === 'favorites' ? (
           <FavoriteBooksContainer user={user} />
         ) : (
-          <MyShelvesContainer shelves={user.shelves} />
+          <MyShelvesContainer
+            shelves={user.shelves}
+            toggleCreateShelfModal={toggleCreateShelfModal}
+          />
         )}
       </Box>
 
