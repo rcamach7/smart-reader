@@ -2,7 +2,7 @@ import useAvailableHeight from '@/hooks/useAvailableHeight';
 import { useUser } from '@/context/UserContext';
 import { useLoadingContext } from '@/context/LoadingContext';
 
-import { Box } from '@mui/material';
+import { Box, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { BookCard } from '@/components/molecules';
 import { SectionHeader } from '@/components/atoms';
 
@@ -18,28 +18,14 @@ export default function MyLibrary() {
   const { setIsPageLoading } = useLoadingContext();
   const [viewMode, setViewMode] = useState<ViewMode>('favorites');
 
-  const toggleViewMode = () => {
-    setViewMode((VM) => {
-      return VM === 'favorites' ? 'shelves' : 'favorites';
-    });
+  const handleViewModeChange = (
+    event: React.MouseEvent<HTMLElement>,
+    newAlignment: string
+  ) => {
+    if (newAlignment === 'favorites' || newAlignment === 'shelves') {
+      setViewMode(newAlignment);
+    }
   };
-
-  const renderFavoritedBooks = (
-    <Box>
-      <SectionHeader
-        title="My Favorited Books"
-        buttonText="Search For More"
-        handleButtonClick={() => {}}
-      />
-      <Box sx={{ p: 1 }}>
-        {user.savedBooks.map((book) => {
-          return <BookCard book={book} type="transparent" />;
-        })}
-      </Box>
-    </Box>
-  );
-
-  const renderShelves = <>Shelves Collection</>;
 
   useEffect(() => {
     if (!user && !isUserLoading) {
@@ -56,6 +42,31 @@ export default function MyLibrary() {
   if (isUserLoading || !user) {
     return null;
   }
+
+  const renderFavoritedBooks = (
+    <Box>
+      <SectionHeader
+        title="My Favorited Books"
+        buttonText="Search For More"
+        handleButtonClick={() => {}}
+      />
+      <Box sx={{ p: 1 }}>
+        {user.savedBooks.map((book) => {
+          return <BookCard book={book} type="transparent" />;
+        })}
+      </Box>
+    </Box>
+  );
+
+  const renderShelves = (
+    <Box>
+      <SectionHeader
+        title="My Shelves"
+        buttonText="Create One"
+        handleButtonClick={() => {}}
+      />
+    </Box>
+  );
   return (
     <Box
       sx={{
@@ -71,6 +82,22 @@ export default function MyLibrary() {
           width: 'clamp(320px, 100vw, 900px)',
         }}
       >
+        <Box sx={{ display: 'flex', justifyContent: 'center', py: 1 }}>
+          <ToggleButtonGroup
+            color="primary"
+            value={viewMode}
+            exclusive
+            onChange={handleViewModeChange}
+            aria-label="view-mode-selection"
+          >
+            <ToggleButton size="small" value="favorites">
+              Favorites
+            </ToggleButton>
+            <ToggleButton size="small" value="shelves">
+              Shelves
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Box>
         {viewMode === 'favorites' ? renderFavoritedBooks : renderShelves}
       </Box>
     </Box>
