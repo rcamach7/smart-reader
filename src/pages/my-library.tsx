@@ -48,6 +48,8 @@ export default function MyLibrary() {
       <SectionHeader
         title="My Favorited Books"
         buttonText="Search For More"
+        buttonType="link"
+        link="/search"
         handleButtonClick={() => {}}
       />
       <Box

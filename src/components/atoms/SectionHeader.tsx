@@ -1,15 +1,20 @@
 import { Box, Typography, Button } from '@mui/material';
+import Link from 'next/link';
 
 interface Props {
   title: string;
   buttonText: string;
   handleButtonClick: () => void;
+  buttonType?: 'link';
+  link?: string;
 }
 
 export default function SectionHeader({
   title,
   buttonText,
   handleButtonClick,
+  buttonType,
+  link,
 }: Props) {
   return (
     <Box
@@ -27,9 +32,17 @@ export default function SectionHeader({
       <Typography sx={{ fontSize: { xs: '.9rem', sm: '1rem', md: '1.1rem' } }}>
         {title}
       </Typography>
-      <Button variant="outlined" size="small">
-        {buttonText}
-      </Button>
+      {buttonType === 'link' ? (
+        <Link href={link}>
+          <Button variant="outlined" size="small">
+            {buttonText}
+          </Button>
+        </Link>
+      ) : (
+        <Button variant="outlined" size="small">
+          {buttonText}
+        </Button>
+      )}
     </Box>
   );
 }
