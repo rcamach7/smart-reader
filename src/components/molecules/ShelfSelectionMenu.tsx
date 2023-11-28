@@ -1,16 +1,24 @@
 import * as React from 'react';
+import axios from 'axios';
 
 import { Button, Menu, MenuItem, Typography } from '@mui/material/';
 import { Add as AddIcon } from '@mui/icons-material';
 
 import { useUser } from '@/context/UserContext';
+import { useLoadingContext } from '@/context/LoadingContext';
+import { useFeedbackContext } from '@/context/FeedbackContext';
+import { BookType } from '@/types/index';
 
 interface Props {
   type?: 'card';
+  book: BookType;
 }
 
-export default function ShelfSelectionMenu({ type }: Props) {
-  const { user } = useUser();
+export default function ShelfSelectionMenu({ type, book }: Props) {
+  const { user, setUser } = useUser();
+  const { addAlertMessage } = useFeedbackContext();
+  const { setIsPageLoading } = useLoadingContext();
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -19,6 +27,42 @@ export default function ShelfSelectionMenu({ type }: Props) {
   };
 
   const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleAddBookToShelf = async (shelfId) => {
+    if (!user) {
+      addAlertMessage({
+        text: 'Please sign in.',
+        severity: 'error',
+      });
+      return;
+    }
+
+    setIsPageLoading(true);
+    try {
+      const url = '/api/shelf/' + shelfId + '/book';
+      const res = await axios.put(url, { book });
+      setUser((U) => {
+        return {
+          ...U,
+          shelves: U.shelves.map((shelf) => {
+            if (shelf._id === res.data.shelf._id) {
+              return res.data.shelf;
+            } else {
+              return shelf;
+            }
+          }),
+        };
+      });
+
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+      addAlertMessage({ text: 'Error adding to shelf', severity: 'error' });
+    }
+    setIsPageLoading(false);
+
     setAnchorEl(null);
   };
 
@@ -62,7 +106,12 @@ export default function ShelfSelectionMenu({ type }: Props) {
       >
         {user?.shelves?.map((shelf, i) => {
           return (
-            <MenuItem key={i} onClick={handleClose}>
+            <MenuItem
+              key={i}
+              onClick={() => {
+                handleAddBookToShelf(shelf._id);
+              }}
+            >
               {shelf.name}
             </MenuItem>
           );

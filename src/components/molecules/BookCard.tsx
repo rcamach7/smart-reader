@@ -74,7 +74,7 @@ export default function BookCard({ book, type }: Props) {
         }}
       >
         <FavoriteBookButton book={book} type="card" />
-        <ShelfSelectionMenu type="card" />
+        <ShelfSelectionMenu type="card" book={book} />
       </CardActions>
     </Card>
   );

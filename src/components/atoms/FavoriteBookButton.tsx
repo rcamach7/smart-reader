@@ -40,8 +40,6 @@ export default function FavoriteBookButton({ book, type }: Props) {
           savedBooks: res.data.savedBooks,
         };
       });
-
-      console.log(res);
     } catch (error) {
       console.log(error);
       addAlertMessage({ text: 'Error adding to favorites', severity: 'error' });

@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { connectToMongoDB } from '@/services/mongobd';
-import { ShelfSchema } from '@/schemas/index';
+import { BookSchema, ShelfSchema } from '@/schemas/index';
 import { decodeAuthToken } from '@/utils/token';
 
 export default async function handler(
@@ -15,23 +15,17 @@ export default async function handler(
   }
 
   const { sid } = req.query;
-  const { bookId } = req.body;
-  if (
-    !sid ||
-    typeof sid !== 'string' ||
-    !bookId ||
-    typeof bookId !== 'string'
-  ) {
-    return res
-      .status(400)
-      .json({ message: 'Shelf ID and Book ID are required' });
+  const { book } = req.body;
+
+  if (!sid || typeof sid !== 'string' || !book) {
+    return res.status(400).json({ message: 'Shelf ID and Book Are Required' });
   }
 
   try {
     await connectToMongoDB();
     const shelf = await ShelfSchema.findById(sid).populate('creator');
 
-    if (shelf.creator.toString() !== decodedAuthToken._id) {
+    if (shelf.creator._id.toString() !== decodedAuthToken._id) {
       return res
         .status(400)
         .json({ message: 'Only creator may modify this shelf.' });
@@ -48,10 +42,16 @@ export default async function handler(
     switch (req.method) {
       case 'PUT':
         try {
+          let bookDoc = await BookSchema.findOne({ googleId: book.googleId });
+          if (!bookDoc) {
+            const newBook = new BookSchema({ ...book });
+            bookDoc = await newBook.save();
+          }
+
           const updatedShelf = await ShelfSchema.findByIdAndUpdate(
             sid,
             {
-              $push: { books: bookId },
+              $push: { books: bookDoc._id },
             },
             { new: true }
           ).populate(['books', 'likes', 'creator']);
@@ -70,10 +70,11 @@ export default async function handler(
 
       case 'DELETE':
         try {
+          const bookDoc = await BookSchema.findOne({ googleId: book.googleId });
           const updatedShelf = await ShelfSchema.findByIdAndUpdate(
             sid,
             {
-              $pull: { books: bookId },
+              $pull: { books: bookDoc._id },
             },
             { new: true }
           ).populate(['books', 'likes', 'creator']);

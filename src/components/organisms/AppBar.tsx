@@ -118,7 +118,7 @@ export default function PrimarySearchAppBar() {
   const hamburgerMenuItems = [
     { title: 'Home', link: '/', authRequired: false },
     { title: 'Search', link: '/search', authRequired: false },
-    { title: 'My Library', link: '/my-shelves', authRequired: true },
+    { title: 'My Library', link: '/my-library', authRequired: true },
     { title: 'Public Shelves', link: '/shelves', authRequired: false },
   ];
 

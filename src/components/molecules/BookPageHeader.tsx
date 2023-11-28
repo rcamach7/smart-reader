@@ -71,7 +71,7 @@ export default function BookPageHeader({ book }: Props) {
             }}
           >
             <FavoriteBookButton book={book} />
-            <ShelfSelectionMenu />
+            <ShelfSelectionMenu book={book} />
           </Box>
         </Box>
       </Box>
