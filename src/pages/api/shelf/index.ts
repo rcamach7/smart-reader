@@ -45,6 +45,7 @@ export default async function handler(
             path: 'shelves',
             populate: {
               path: 'creator',
+              select: '-password -savedBooks -shelves',
             },
           });
         } catch (userUpdateError) {
