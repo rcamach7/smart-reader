@@ -4,10 +4,10 @@ import {
   CardMedia,
   CardContent,
   CardActions,
-  Button,
   CardActionArea,
 } from '@mui/material';
 import { FavoriteBookButton } from '@/components/atoms';
+import { ShelfSelectionMenu } from '@/components/molecules';
 
 import { shortenString } from '@/utils/helpers';
 import Book from '@/types/book';
@@ -74,9 +74,7 @@ export default function BookCard({ book, type }: Props) {
         }}
       >
         <FavoriteBookButton book={book} type="card" />
-        <Button size="small" sx={{ px: 0.5, ml: '0px !important' }}>
-          Add To Shelf
-        </Button>
+        <ShelfSelectionMenu type="card" />
       </CardActions>
     </Card>
   );

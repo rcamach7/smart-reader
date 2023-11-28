@@ -1,5 +1,6 @@
-import { Box, Typography, Button } from '@mui/material';
-import { Add as AddIcon } from '@mui/icons-material';
+import { Box, Typography } from '@mui/material';
+import { ShelfSelectionMenu } from '@/components/molecules';
+
 import { BookType } from '@/types/index';
 import { FavoriteBookButton } from '@/components/atoms';
 
@@ -70,12 +71,7 @@ export default function BookPageHeader({ book }: Props) {
             }}
           >
             <FavoriteBookButton book={book} />
-            <Button variant="outlined">
-              <AddIcon />
-              <Typography sx={{ display: { xs: 'none', sm: 'block' } }}>
-                Add To Shelf
-              </Typography>
-            </Button>
+            <ShelfSelectionMenu />
           </Box>
         </Box>
       </Box>
