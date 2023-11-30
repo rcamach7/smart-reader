@@ -1,4 +1,5 @@
 import { Box, Typography, Button } from '@mui/material';
+import { ShelfGallery } from '@/components/molecules';
 
 import useAvailableHeight from '@/hooks/useAvailableHeight';
 
@@ -84,6 +85,9 @@ export default function Home() {
           friends. Plus, get AI-powered answers to all your book-related
           questions!
         </Typography>
+      </Box>
+      <Box sx={{ border: 'solid red 2px', p: 2 }}>
+        <ShelfGallery />
       </Box>
     </Box>
   );
