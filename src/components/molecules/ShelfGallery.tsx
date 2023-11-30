@@ -6,6 +6,7 @@ import useCurrentBreakpoint from '@/hooks/useCurrentBreakpoint';
 
 const ImageContainer = () => {
   const currentBreakpoint = useCurrentBreakpoint();
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [displayedItems, setDisplayedItems] = useState([]);
 
   const calculateNumberOfItemsToDisplay = () => {
@@ -21,14 +22,30 @@ const ImageContainer = () => {
     }
   };
 
-  const handleNext = () => {};
+  const updateDisplayedItems = () => {
+    const numberOfItems = calculateNumberOfItemsToDisplay();
+    setDisplayedItems(
+      imageItems.slice(currentIndex, currentIndex + numberOfItems)
+    );
+  };
 
-  const handleBack = () => {};
+  const handleNext = () => {
+    const numberOfItems = calculateNumberOfItemsToDisplay();
+    if (currentIndex + numberOfItems < imageItems.length) {
+      setCurrentIndex(currentIndex + numberOfItems);
+    }
+  };
+
+  const handleBack = () => {
+    const numberOfItems = calculateNumberOfItemsToDisplay();
+    if (currentIndex - numberOfItems >= 0) {
+      setCurrentIndex(currentIndex - numberOfItems);
+    }
+  };
 
   useEffect(() => {
-    const numberOfItems = calculateNumberOfItemsToDisplay();
-    setDisplayedItems(imageItems.slice(0, numberOfItems));
-  }, [currentBreakpoint, imageItems]);
+    updateDisplayedItems();
+  }, [currentBreakpoint, currentIndex, imageItems]);
 
   return (
     <Box>
@@ -40,14 +57,20 @@ const ImageContainer = () => {
               alt={item.altText}
               style={{ width: 100, height: 100 }}
             />
+            <p>{item.rank}</p>
           </Box>
         ))}
       </Box>
 
-      <IconButton onClick={handleBack}>
+      <IconButton onClick={handleBack} disabled={currentIndex === 0}>
         <ArrowBackIos />
       </IconButton>
-      <IconButton onClick={handleNext}>
+      <IconButton
+        onClick={handleNext}
+        disabled={
+          currentIndex + calculateNumberOfItemsToDisplay() >= imageItems.length
+        }
+      >
         <ArrowForwardIos />
       </IconButton>
     </Box>
@@ -60,26 +83,31 @@ const imageItems = [
     title: 'Breakfast',
     author: '@bkristastucchio',
     featured: true,
+    rank: 1,
   },
   {
     img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
     title: 'Burger',
     author: '@rollelflex_graphy726',
+    rank: 2,
   },
   {
     img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
     title: 'Camera',
     author: '@helloimnik',
+    rank: 3,
   },
   {
     img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
     title: 'Camera',
     author: '@helloimnik',
+    rank: 4,
   },
   {
     img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
     title: 'Camera',
     author: '@helloimnik',
+    rank: 5,
   },
 ];
 
