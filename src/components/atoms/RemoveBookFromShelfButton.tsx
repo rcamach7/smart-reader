@@ -3,16 +3,16 @@ import { Button } from '@mui/material';
 import { useUser } from '@/context/UserContext';
 import { useLoadingContext } from '@/context/LoadingContext';
 import { useFeedbackContext } from '@/context/FeedbackContext';
-import { BookType } from '@/types/index';
+import { BookType, ShelfType } from '@/types/index';
 
 import axios from 'axios';
 
 interface Props {
   book: BookType;
-  shelfId: string;
+  shelf: ShelfType;
 }
 
-export default function RemoveBookFromShelfButton({ book, shelfId }: Props) {
+export default function RemoveBookFromShelfButton({ book, shelf }: Props) {
   const { user, setUser } = useUser();
   const { addAlertMessage } = useFeedbackContext();
   const { setIsPageLoading } = useLoadingContext();
@@ -28,13 +28,13 @@ export default function RemoveBookFromShelfButton({ book, shelfId }: Props) {
 
     setIsPageLoading(true);
     try {
-      const url = '/api/shelf/' + shelfId + '/book';
+      const url = '/api/shelf/' + shelf._id + '/book';
       const res = await axios.put(url, { book });
       setUser((U) => {
         return {
           ...U,
           shelves: U.shelves.map((curShelf) => {
-            if (curShelf._id === shelfId) {
+            if (curShelf._id === shelf._id) {
               return res.data.shelf;
             } else {
               return curShelf;
@@ -49,6 +49,17 @@ export default function RemoveBookFromShelfButton({ book, shelfId }: Props) {
     setIsPageLoading(false);
   };
 
+  const isMyShelf = () => {
+    if (shelf.creator._id === user._id) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  if (!isMyShelf()) {
+    return null;
+  }
   return (
     <Button
       id="basic-button"

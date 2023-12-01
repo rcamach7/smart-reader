@@ -81,7 +81,7 @@ export default function ShelfGallery({ shelf, type, updateShelfFunc }: Props) {
         {displayedItems.map((item) => (
           <BookCard
             key={item._id}
-            shelfId={shelf._id}
+            shelf={shelf}
             book={item}
             variant="gallery"
             type="transparent"

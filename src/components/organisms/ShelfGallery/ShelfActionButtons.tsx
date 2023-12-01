@@ -7,7 +7,7 @@ import {
   BookmarkBorder as BookmarkBorderIcon,
 } from '@mui/icons-material';
 import { Box, Typography, Button } from '@mui/material';
-import { BookCard, ShelfFormModal } from '@/components/molecules';
+import { ShelfFormModal } from '@/components/molecules';
 
 import axios from 'axios';
 import { useState } from 'react';

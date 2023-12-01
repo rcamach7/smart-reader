@@ -15,6 +15,7 @@ import { ShelfSelectionMenu } from '@/components/molecules';
 
 import { shortenString } from '@/utils/helpers';
 import Book from '@/types/book';
+import { ShelfType } from '@/types/index';
 
 import Link from 'next/link';
 
@@ -22,7 +23,7 @@ interface Props {
   book: Book;
   type?: 'transparent';
   variant?: 'gallery';
-  shelfId?: string;
+  shelf?: ShelfType;
   elevation?: number;
 }
 
@@ -30,7 +31,7 @@ export default function BookCard({
   book,
   type,
   variant,
-  shelfId,
+  shelf,
   elevation,
 }: Props) {
   return (
@@ -90,7 +91,7 @@ export default function BookCard({
       >
         <FavoriteBookButton book={book} type="card" />
         {variant === 'gallery' ? (
-          <RemoveBookFromShelfButton book={book} shelfId={shelfId} />
+          <RemoveBookFromShelfButton book={book} shelf={shelf} />
         ) : (
           <ShelfSelectionMenu type="card" book={book} />
         )}
