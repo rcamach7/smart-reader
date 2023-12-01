@@ -42,10 +42,14 @@ export default async function handler(
             sid,
             updateOperation,
             { new: true }
-          ).populate({
-            path: 'likes',
-            select: '-password -savedBooks -shelves',
-          });
+          ).populate([
+            {
+              path: 'likes',
+              select: '-password -savedBooks -shelves',
+            },
+            { path: 'books' },
+            { path: 'creator', select: '-password -savedBooks -shelves' },
+          ]);
 
           return res.status(200).json({
             message: `${

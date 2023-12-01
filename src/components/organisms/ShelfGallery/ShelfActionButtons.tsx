@@ -1,8 +1,10 @@
 import {
   Edit as EditIcon,
-  FavoriteBorder as FavoriteBorderIcon,
   DeleteOutline as DeleteOutlineIcon,
   ThumbUpOffAlt as ThumbUpOffAltIcon,
+  ThumbUpAlt as ThumbUpAltIcon,
+  BookmarkAdded as BookmarkAddedIcon,
+  BookmarkBorder as BookmarkBorderIcon,
 } from '@mui/icons-material';
 import { Box, Typography, Button } from '@mui/material';
 
@@ -15,9 +17,11 @@ import Shelf from '@/types/shelf';
 
 interface Props {
   shelf: Shelf;
+  type?: 'preview';
+  updateShelfFunc?: (shelf: Shelf) => void;
 }
 
-export default function ActionButtons({ shelf }: Props) {
+export default function ActionButtons({ shelf, type, updateShelfFunc }: Props) {
   const { user, setUser } = useUser();
   const { addAlertMessage } = useFeedbackContext();
   const { setIsPageLoading } = useLoadingContext();
@@ -50,6 +54,67 @@ export default function ActionButtons({ shelf }: Props) {
     }
   };
 
+  const handleLikeShelf = async () => {
+    if (!user) {
+      addAlertMessage({
+        text: 'Please sign in to like this shelf',
+        severity: 'error',
+      });
+      return;
+    }
+
+    setIsPageLoading(true);
+    try {
+      const res = await axios.post('/api/shelf/' + shelf._id + '/like');
+      const updatedShelf = res.data.shelf;
+
+      if (type === 'preview') {
+        updateShelfFunc(updatedShelf);
+      }
+      setUser((U) => ({
+        ...U,
+        shelves: U.shelves.map((curShelf) => {
+          if (curShelf._id === updatedShelf._id) {
+            return updatedShelf;
+          } else {
+            return curShelf;
+          }
+        }),
+      }));
+
+      addAlertMessage({
+        text: 'Toggled like for this shelf',
+        severity: 'success',
+      });
+    } catch (error) {
+      console.log(error);
+      addAlertMessage({ text: 'Error toggling like', severity: 'error' });
+    }
+    setIsPageLoading(false);
+  };
+
+  const hasUserLiked = () => {
+    if (!user) return false;
+
+    for (let i = 0; i < shelf.likes.length; i++) {
+      if (shelf.likes[i]?._id === user._id) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const hasUserSaved = () => {
+    if (!user) return false;
+
+    for (let i = 0; i < user.shelves.length; i++) {
+      if (shelf._id === user.shelves[i]._id) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   return (
     <Box
       sx={{
@@ -64,9 +129,13 @@ export default function ActionButtons({ shelf }: Props) {
       <Button
         size="small"
         sx={{ px: 0.5, minWidth: 20 }}
-        onClick={handleFavoriteShelfToggle}
+        onClick={handleLikeShelf}
       >
-        <ThumbUpOffAltIcon sx={{ fontSize: 20 }} />
+        {hasUserLiked() ? (
+          <ThumbUpAltIcon sx={{ fontSize: 20 }} />
+        ) : (
+          <ThumbUpOffAltIcon sx={{ fontSize: 20 }} />
+        )}
         <Typography
           sx={{
             display: { xs: 'none', sm: 'block' },
@@ -110,7 +179,11 @@ export default function ActionButtons({ shelf }: Props) {
             sx={{ px: 0.5, minWidth: 20 }}
             onClick={handleFavoriteShelfToggle}
           >
-            <FavoriteBorderIcon sx={{ fontSize: 20 }} />
+            {hasUserSaved() ? (
+              <BookmarkAddedIcon sx={{ fontSize: 20 }} />
+            ) : (
+              <BookmarkBorderIcon sx={{ fontSize: 20 }} />
+            )}
             <Typography
               sx={{
                 display: { xs: 'none', sm: 'block' },
@@ -118,7 +191,7 @@ export default function ActionButtons({ shelf }: Props) {
                 pl: { xs: 0, sm: 0.5 },
               }}
             >
-              Favorite
+              {hasUserSaved() ? 'Unsave' : 'Save'}
             </Typography>
           </Button>
         </>

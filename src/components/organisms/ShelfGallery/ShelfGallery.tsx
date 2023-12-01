@@ -10,9 +10,11 @@ import { ShelfType } from '@/types/index';
 
 interface Props {
   shelf: ShelfType;
+  type?: 'preview';
+  updateShelfFunc?: (shelf: ShelfType) => void;
 }
 
-export default function ShelfGallery({ shelf }: Props) {
+export default function ShelfGallery({ shelf, type, updateShelfFunc }: Props) {
   const currentBreakpoint = useCurrentBreakpoint();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [displayedItems, setDisplayedItems] = useState([]);
@@ -109,7 +111,11 @@ export default function ShelfGallery({ shelf }: Props) {
           <ArrowForwardIos />
         </IconButton>
 
-        <ShelfActionButtons shelf={shelf} />
+        <ShelfActionButtons
+          shelf={shelf}
+          type={type}
+          updateShelfFunc={updateShelfFunc ? updateShelfFunc : null}
+        />
       </Box>
     </Paper>
   );

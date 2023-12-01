@@ -14,6 +14,18 @@ export default function Home() {
   const { addAlertMessage } = useFeedbackContext();
   const [previewShelves, setPreviewShelves] = useState<Shelf[]>([]);
 
+  const updatePreviewShelf = (shelf: Shelf) => {
+    setPreviewShelves((PS) => {
+      return PS.map((PS) => {
+        if (PS._id === shelf._id) {
+          return shelf;
+        } else {
+          return PS;
+        }
+      });
+    });
+  };
+
   useEffect(() => {
     const fetchPublicShelves = async () => {
       try {
@@ -122,7 +134,14 @@ export default function Home() {
       >
         {previewShelves.length ? (
           previewShelves.map((shelf, i) => {
-            return <ShelfGallery shelf={shelf} key={i} />;
+            return (
+              <ShelfGallery
+                shelf={shelf}
+                key={i}
+                type="preview"
+                updateShelfFunc={updatePreviewShelf}
+              />
+            );
           })
         ) : (
           <Box
