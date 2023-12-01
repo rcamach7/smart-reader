@@ -4,7 +4,7 @@ import Link from 'next/link';
 interface Props {
   title: string;
   buttonText: string;
-  handleButtonClick: () => void;
+  handleButtonClick?: () => void;
   buttonType?: 'link';
   link?: string;
 }
@@ -22,7 +22,8 @@ export default function SectionHeader({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        p: 1,
+        px: 1,
+        pb: 1,
         boxShadow: '0 6px 4px -6px rgba(0, 0, 0, 0.5)',
         '&:hover': {
           boxShadow: '0 8px 6px -6px rgba(0, 0, 0, 0.6)',

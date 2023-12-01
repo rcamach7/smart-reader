@@ -109,7 +109,9 @@ export default function Home() {
           questions!
         </Typography>
       </Box>
-      <Box sx={{ p: 1 }}>
+      <Box
+        sx={{ px: 2, pt: 1, display: 'flex', flexDirection: 'column', gap: 1 }}
+      >
         {previewShelves.map((shelf, i) => {
           return <ShelfGallery shelf={shelf} key={i} />;
         })}

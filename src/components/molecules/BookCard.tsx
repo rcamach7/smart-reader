@@ -23,9 +23,16 @@ interface Props {
   type?: 'transparent';
   variant?: 'gallery';
   shelfId?: string;
+  elevation?: number;
 }
 
-export default function BookCard({ book, type, variant, shelfId }: Props) {
+export default function BookCard({
+  book,
+  type,
+  variant,
+  shelfId,
+  elevation,
+}: Props) {
   return (
     <Card
       sx={{
@@ -35,7 +42,7 @@ export default function BookCard({ book, type, variant, shelfId }: Props) {
         flexDirection: 'column',
         backgroundColor: type === 'transparent' ? 'transparent' : 'default',
       }}
-      elevation={2}
+      elevation={elevation ? elevation : 0}
     >
       <Link href={`/book/${book.googleId}`}>
         <CardActionArea>
@@ -67,6 +74,7 @@ export default function BookCard({ book, type, variant, shelfId }: Props) {
             p: 0,
             px: 0.5,
             fontSize: 14,
+            width: '100%',
           }}
         >
           {shortenString(book?.title, 30)}

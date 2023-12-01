@@ -70,7 +70,6 @@ export default function ShelfGallery({ shelf }: Props) {
         <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
           {shelf.name}
         </Typography>
-        <Typography variant="body1">{shelf.description}</Typography>
       </Box>
       <Box sx={{ display: 'flex', gap: 1, py: 1 }}>
         {displayedItems.map((item) => (
@@ -83,7 +82,9 @@ export default function ShelfGallery({ shelf }: Props) {
           />
         ))}
       </Box>
-
+      <Box sx={{ width: '100%', px: { xs: 1, sm: 2, md: 3 } }}>
+        <Typography variant="body1">{shelf.description}</Typography>
+      </Box>
       <Box
         sx={{
           position: 'relative',

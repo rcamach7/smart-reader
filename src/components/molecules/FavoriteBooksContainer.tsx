@@ -16,7 +16,6 @@ export default function FavoriteBooksContainer({ user }: Props) {
         buttonText="Search For More"
         buttonType="link"
         link="/search"
-        handleButtonClick={() => {}}
       />
       <Box
         sx={{
@@ -28,7 +27,7 @@ export default function FavoriteBooksContainer({ user }: Props) {
         }}
       >
         {user.savedBooks.map((book, i) => {
-          return <BookCard key={i} book={book} type="transparent" />;
+          return <BookCard key={i} book={book} elevation={3} />;
         })}
       </Box>
     </Box>
