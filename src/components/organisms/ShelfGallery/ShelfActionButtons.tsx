@@ -7,14 +7,15 @@ import {
   BookmarkBorder as BookmarkBorderIcon,
 } from '@mui/icons-material';
 import { Box, Typography, Button } from '@mui/material';
+import { BookCard, ShelfFormModal } from '@/components/molecules';
 
 import axios from 'axios';
+import { useState } from 'react';
 
 import { useUser } from '@/context/UserContext';
 import { useLoadingContext } from '@/context/LoadingContext';
 import { useFeedbackContext } from '@/context/FeedbackContext';
 import Shelf from '@/types/shelf';
-
 interface Props {
   shelf: Shelf;
   type?: 'preview';
@@ -25,6 +26,11 @@ export default function ActionButtons({ shelf, type, updateShelfFunc }: Props) {
   const { user, setUser } = useUser();
   const { addAlertMessage } = useFeedbackContext();
   const { setIsPageLoading } = useLoadingContext();
+  const [showEditShelfModal, setShowEditShelfModal] = useState(false);
+
+  const toggle = () => {
+    setShowEditShelfModal((SESM) => !SESM);
+  };
 
   const isUsersShelf = () => {
     if (!user) return false;
@@ -160,7 +166,7 @@ export default function ActionButtons({ shelf, type, updateShelfFunc }: Props) {
               Delete Shelf
             </Typography>
           </Button>
-          <Button size="small" sx={{ px: 0.5, minWidth: 20 }}>
+          <Button size="small" sx={{ px: 0.5, minWidth: 20 }} onClick={toggle}>
             <EditIcon sx={{ fontSize: 20 }} />
             <Typography
               sx={{
@@ -196,6 +202,16 @@ export default function ActionButtons({ shelf, type, updateShelfFunc }: Props) {
           </Button>
         </>
       )}
+
+      <ShelfFormModal
+        open={showEditShelfModal}
+        toggle={toggle}
+        type="edit"
+        description={shelf.description}
+        name={shelf.name}
+        isPublic={shelf.public}
+        shelfId={shelf._id}
+      />
     </Box>
   );
 }

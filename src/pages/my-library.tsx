@@ -6,7 +6,7 @@ import { Box, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import {
   FavoriteBooksContainer,
   MyShelvesContainer,
-  CreateShelfModal,
+  ShelfFormModal,
 } from '@/components/molecules';
 
 import { useEffect, useState } from 'react';
@@ -102,7 +102,8 @@ export default function MyLibrary() {
         )}
       </Box>
 
-      <CreateShelfModal
+      <ShelfFormModal
+        type="create"
         open={showCreateShelfModal}
         toggle={() => {
           setShowCreateShelfModal((SCSM) => {

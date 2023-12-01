@@ -16,6 +16,7 @@ interface Props {
 
 export default function ShelfGallery({ shelf, type, updateShelfFunc }: Props) {
   const currentBreakpoint = useCurrentBreakpoint();
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [displayedItems, setDisplayedItems] = useState([]);
 

@@ -71,7 +71,13 @@ export default async function handler(
           sid,
           updateFields,
           { new: true }
-        ).populate(['books', 'likes', 'creator']);
+        ).populate([
+          {
+            path: 'books',
+          },
+          { path: 'likes', select: '-password -savedBooks -shelves' },
+          { path: 'creator', select: '-password -savedBooks -shelves' },
+        ]);
 
         return res.status(201).json({
           message: 'Updated shelf',

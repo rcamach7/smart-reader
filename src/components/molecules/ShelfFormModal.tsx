@@ -19,19 +19,36 @@ import { useUser } from '@/context/UserContext';
 import { useFeedbackContext } from '@/context/FeedbackContext';
 
 interface Props {
+  name?: string;
+  description?: string;
+  isPublic?: boolean;
+  shelfId?: string;
   open: boolean;
   toggle: () => void;
+  type: 'create' | 'edit';
 }
 
-export default function CreateShelf({ open, toggle }: Props) {
-  const { user, setUser } = useUser();
+export default function ShelfFormModal({
+  name,
+  description,
+  isPublic,
+  open,
+  shelfId,
+  toggle,
+  type,
+}: Props) {
+  const { setUser } = useUser();
   const { setIsPageLoading } = useLoadingContext();
   const { addAlertMessage } = useFeedbackContext();
 
-  const [formDetails, setFormDetails] = useState({
-    name: '',
-    description: '',
-    isPublic: true,
+  const [formDetails, setFormDetails] = useState<{
+    name: string;
+    description: string;
+    isPublic: boolean;
+  }>({
+    name: name ? name : '',
+    description: description ? description : '',
+    isPublic: isPublic ? isPublic : true,
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,7 +56,7 @@ export default function CreateShelf({ open, toggle }: Props) {
     setFormDetails({ ...formDetails, [name]: value });
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleCreateSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setIsPageLoading(true);
@@ -63,6 +80,36 @@ export default function CreateShelf({ open, toggle }: Props) {
     toggle();
   };
 
+  const handleEditSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    setIsPageLoading(true);
+    try {
+      const res = await axios.put('/api/shelf/' + shelfId, formDetails);
+      setUser((U) => {
+        return {
+          ...U,
+          shelves: U.shelves.map((curShelf) => {
+            if (curShelf._id === res.data.shelf._id) {
+              return res.data.shelf;
+            } else {
+              return curShelf;
+            }
+          }),
+        };
+      });
+      addAlertMessage({
+        text: 'Shelf edited successfully',
+        severity: 'success',
+      });
+    } catch (error) {
+      console.log(error);
+      addAlertMessage({ text: 'Error editing shelf', severity: 'error' });
+    }
+    setIsPageLoading(false);
+    toggle();
+  };
+
   return (
     <div>
       <Modal
@@ -71,14 +118,21 @@ export default function CreateShelf({ open, toggle }: Props) {
         aria-labelledby="modal-modal-confirm"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style} component="form" onSubmit={handleSubmit}>
-          <Typography textAlign="center">Create New Shelf</Typography>
+        <Box
+          sx={style}
+          component="form"
+          onSubmit={type === 'create' ? handleCreateSubmit : handleEditSubmit}
+        >
+          <Typography textAlign="center">
+            {type === 'create' ? 'Create New Shelf' : 'Edit Shelf'}
+          </Typography>
           <TextField
             id="standard-helperText"
             label="Shelf Name"
             variant="standard"
             name="name"
             onChange={handleInputChange}
+            value={formDetails.name}
           />
           <TextField
             id="standard-helperText"
@@ -88,6 +142,7 @@ export default function CreateShelf({ open, toggle }: Props) {
             maxRows={4}
             name="description"
             onChange={handleInputChange}
+            value={formDetails.description}
           />
           <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
             <InputLabel id="demo-simple-select-standard-label">
@@ -111,7 +166,7 @@ export default function CreateShelf({ open, toggle }: Props) {
               <MenuItem value="private">Private</MenuItem>
             </Select>
             <Button sx={{ mt: 3 }} type="submit" variant="outlined">
-              Create
+              {type === 'create' ? 'Create' : 'Confirm Edit'}
             </Button>
           </FormControl>
         </Box>
