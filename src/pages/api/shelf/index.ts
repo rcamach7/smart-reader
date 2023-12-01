@@ -20,6 +20,7 @@ export default async function handler(
               select: '-password -shelves -savedBooks',
             },
             { path: 'books' },
+            { path: 'likes', select: '-password -shelves -savedBooks' },
           ])
           .exec();
         const shelvesWithAdminCreator = publicShelves.filter(

@@ -32,26 +32,26 @@ export default function ActionButtons({ shelf, type, updateShelfFunc }: Props) {
     return false;
   };
 
-  const handleFavoriteShelfToggle = async () => {
+  const handleSaveShelfToggle = async () => {
     if (!user) {
       addAlertMessage({
-        text: 'Please sign in to favorite a shelf',
+        text: 'Please sign in to save a shelf',
         severity: 'error',
       });
       return;
-    } else {
-      setIsPageLoading(true);
-      try {
-        const res = await axios.post('/api/shelf/' + shelf._id + '/favorite');
-        setUser((U) => ({ ...U, shelves: res.data.shelves }));
-      } catch (error) {
-        addAlertMessage({
-          text: 'Error toggling favorite on shelf',
-          severity: 'error',
-        });
-      }
-      setIsPageLoading(false);
     }
+
+    setIsPageLoading(true);
+    try {
+      const res = await axios.post('/api/shelf/' + shelf._id + '/save');
+      setUser((U) => ({ ...U, shelves: res.data.shelves }));
+    } catch (error) {
+      addAlertMessage({
+        text: 'Error toggling save on shelf',
+        severity: 'error',
+      });
+    }
+    setIsPageLoading(false);
   };
 
   const handleLikeShelf = async () => {
@@ -97,7 +97,7 @@ export default function ActionButtons({ shelf, type, updateShelfFunc }: Props) {
     if (!user) return false;
 
     for (let i = 0; i < shelf.likes.length; i++) {
-      if (shelf.likes[i]?._id === user._id) {
+      if (shelf.likes[i]._id === user._id) {
         return true;
       }
     }
@@ -177,7 +177,7 @@ export default function ActionButtons({ shelf, type, updateShelfFunc }: Props) {
           <Button
             size="small"
             sx={{ px: 0.5, minWidth: 20 }}
-            onClick={handleFavoriteShelfToggle}
+            onClick={handleSaveShelfToggle}
           >
             {hasUserSaved() ? (
               <BookmarkAddedIcon sx={{ fontSize: 20 }} />
