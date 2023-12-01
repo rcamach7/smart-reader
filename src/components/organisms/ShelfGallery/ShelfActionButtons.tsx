@@ -99,6 +99,30 @@ export default function ActionButtons({ shelf, type, updateShelfFunc }: Props) {
     setIsPageLoading(false);
   };
 
+  const handleDeleteShelf = async () => {
+    setIsPageLoading(true);
+    try {
+      await axios.delete('/api/shelf/' + shelf._id);
+      setUser((U) => ({
+        ...U,
+        shelves: U.shelves.filter((curShelf) => {
+          if (curShelf._id !== shelf._id) {
+            return curShelf;
+          }
+        }),
+      }));
+
+      addAlertMessage({
+        text: 'Successfully deleted shelf',
+        severity: 'success',
+      });
+    } catch (error) {
+      console.log(error);
+      addAlertMessage({ text: 'Error deleting shelf', severity: 'error' });
+    }
+    setIsPageLoading(false);
+  };
+
   const hasUserLiked = () => {
     if (!user) return false;
 
@@ -155,7 +179,12 @@ export default function ActionButtons({ shelf, type, updateShelfFunc }: Props) {
 
       {isUsersShelf() ? (
         <>
-          <Button size="small" color="error" sx={{ px: 0.5, minWidth: 20 }}>
+          <Button
+            size="small"
+            color="error"
+            sx={{ px: 0.5, minWidth: 20 }}
+            onClick={handleDeleteShelf}
+          >
             <DeleteOutlineIcon sx={{ fontSize: 20 }} />
             <Typography
               sx={{

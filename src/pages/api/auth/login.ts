@@ -21,7 +21,21 @@ export default async function handler(
       await connectToMongoDB();
       const user = await UserSchema.findOne({
         username: credentials.username,
-      }).populate(['shelves', 'savedBooks']);
+      }).populate([
+        {
+          path: 'shelves',
+          populate: [
+            {
+              path: 'creator',
+              select: '-password -savedBooks -shelves',
+            },
+            { path: 'books' },
+          ],
+        },
+        {
+          path: 'savedBooks',
+        },
+      ]);
       if (!user) {
         return res
           .status(400)

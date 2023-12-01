@@ -102,17 +102,15 @@ export default async function handler(
             .json({ message: 'Only creator can delete this shelf.' });
         }
 
-        const updatedUser = await UserSchema.findByIdAndUpdate(
-          decodedAuthToken._id,
-          { $pull: { shelves: sid } },
-          { new: true }
-        ).populate('shelves');
+        await UserSchema.updateMany(
+          { shelves: sid },
+          { $pull: { shelves: sid } }
+        );
 
         await ShelfSchema.findByIdAndDelete(sid);
 
         return res.status(200).json({
           message: 'Shelf has been deleted',
-          shelves: updatedUser.shelves,
         });
       } catch (error) {
         console.log(error);
