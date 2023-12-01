@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
-import { IconButton, Box } from '@mui/material';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import EditIcon from '@mui/icons-material/Edit';
+import { Box, Typography, Button, IconButton } from '@mui/material';
 import { BookCard } from '@/components/molecules';
 
 import useCurrentBreakpoint from '@/hooks/useCurrentBreakpoint';
@@ -24,7 +26,7 @@ export default function ShelfGallery({ shelf }: Props) {
       case 'md':
         return 6;
       default:
-        return 8;
+        return 6;
     }
   };
 
@@ -55,9 +57,20 @@ export default function ShelfGallery({ shelf }: Props) {
 
   return (
     <Box
-      sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        border: 'solid black 2px',
+      }}
     >
-      <Box sx={{ display: 'flex', gap: 1 }}>
+      <Box sx={{ width: '100%', px: { xs: 1, sm: 2, md: 3 } }}>
+        <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+          {shelf.name}
+        </Typography>
+        <Typography variant="body1">{shelf.description}</Typography>
+      </Box>
+      <Box sx={{ display: 'flex', gap: 1, py: 1 }}>
         {displayedItems.map((item, index) => (
           <BookCard
             key={item._id}
@@ -68,7 +81,14 @@ export default function ShelfGallery({ shelf }: Props) {
         ))}
       </Box>
 
-      <Box>
+      <Box
+        sx={{
+          position: 'relative',
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
         <IconButton onClick={handleBack} disabled={currentIndex === 0}>
           <ArrowBackIos />
         </IconButton>
@@ -81,6 +101,40 @@ export default function ShelfGallery({ shelf }: Props) {
         >
           <ArrowForwardIos />
         </IconButton>
+
+        <Box
+          sx={{
+            position: 'absolute',
+            bottom: 0,
+            right: 0,
+            height: '100%',
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <Button size="small" color="error" sx={{ px: 0.5, minWidth: 45 }}>
+            <DeleteOutlineIcon sx={{ fontSize: 20 }} />
+            <Typography
+              sx={{
+                display: { xs: 'none', sm: 'block' },
+                fontSize: { xs: '.8rem', sm: '.9rem' },
+              }}
+            >
+              Delete Shelf
+            </Typography>
+          </Button>
+          <Button size="small" sx={{ px: 0.5, minWidth: 45 }}>
+            <EditIcon sx={{ fontSize: 20 }} />
+            <Typography
+              sx={{
+                display: { xs: 'none', sm: 'block' },
+                fontSize: { xs: '.8rem', sm: '.9rem' },
+              }}
+            >
+              Edit Shelf
+            </Typography>
+          </Button>
+        </Box>
       </Box>
     </Box>
   );
