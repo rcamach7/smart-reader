@@ -19,11 +19,11 @@ export default function ShelfGallery({ shelf }: Props) {
       case 'xs':
         return 2;
       case 'sm':
-        return 3;
+        return 4;
       case 'md':
-        return 5;
+        return 6;
       default:
-        return 7;
+        return 8;
     }
   };
 
@@ -50,7 +50,12 @@ export default function ShelfGallery({ shelf }: Props) {
     updateDisplayedItems();
   }, [currentBreakpoint, currentIndex, shelf.books]);
 
-  console.log(shelf);
+  useEffect(() => {
+    console.log('Current index: ', currentIndex);
+    console.log(
+      `Displaying ${calculateNumberOfItemsToDisplay()} based on break point: ${currentBreakpoint}`
+    );
+  }, [currentIndex, currentBreakpoint]);
 
   return (
     <Box
@@ -58,8 +63,17 @@ export default function ShelfGallery({ shelf }: Props) {
     >
       <Box sx={{ display: 'flex', gap: 1 }}>
         {displayedItems.map((item, index) => (
-          <Box key={index}>
-            <img src={item.imageLinks?.smallThumbnail} style={{ width: 150 }} />
+          <Box key={index} sx={{ width: 150, height: 200, overflow: 'hidden' }}>
+            <img
+              src={item.imageLinks?.smallThumbnail}
+              style={{
+                maxWidth: '100%',
+                maxHeight: '100%',
+                objectFit: 'contain',
+                width: 'auto',
+                height: 'auto',
+              }}
+            />
           </Box>
         ))}
       </Box>
