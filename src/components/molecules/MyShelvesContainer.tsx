@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
 import { SectionHeader } from '@/components/atoms';
+import { ShelfGallery } from '@/components/molecules';
 
 import { UserType } from '@/types/index';
 
@@ -19,6 +20,12 @@ export default function MyShelvesContainer({
         buttonText="Create New"
         handleButtonClick={toggleCreateShelfModal}
       />
+
+      <Box sx={{ p: 0.5 }}>
+        {shelves.map((shelf, i) => {
+          return <ShelfGallery shelf={shelf} key={i} />;
+        })}
+      </Box>
     </Box>
   );
 }

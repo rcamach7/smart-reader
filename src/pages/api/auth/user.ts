@@ -22,10 +22,13 @@ export default async function handler(
         const user = await UserSchema.findById(decodedAuthToken._id).populate([
           {
             path: 'shelves',
-            populate: {
-              path: 'creator',
-              select: '-password -savedBooks -shelves',
-            },
+            populate: [
+              {
+                path: 'creator',
+                select: '-password -savedBooks -shelves',
+              },
+              { path: 'books' },
+            ],
           },
           {
             path: 'savedBooks',

@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
-import { Grid, IconButton, Box } from '@mui/material';
+import { IconButton, Box } from '@mui/material';
 
 import useCurrentBreakpoint from '@/hooks/useCurrentBreakpoint';
+import { ShelfType } from '@/types/index';
 
-const ImageContainer = () => {
+interface Props {
+  shelf: ShelfType;
+}
+
+export default function ShelfGallery({ shelf }: Props) {
   const currentBreakpoint = useCurrentBreakpoint();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [displayedItems, setDisplayedItems] = useState([]);
@@ -12,7 +17,7 @@ const ImageContainer = () => {
   const calculateNumberOfItemsToDisplay = () => {
     switch (currentBreakpoint) {
       case 'xs':
-        return 1;
+        return 2;
       case 'sm':
         return 3;
       case 'md':
@@ -25,90 +30,51 @@ const ImageContainer = () => {
   const updateDisplayedItems = () => {
     const numberOfItems = calculateNumberOfItemsToDisplay();
     setDisplayedItems(
-      imageItems.slice(currentIndex, currentIndex + numberOfItems)
+      shelf.books.slice(currentIndex, currentIndex + numberOfItems)
     );
   };
 
   const handleNext = () => {
-    const numberOfItems = calculateNumberOfItemsToDisplay();
-    if (currentIndex + numberOfItems < imageItems.length) {
-      setCurrentIndex(currentIndex + numberOfItems);
+    if (currentIndex + 1 < shelf.books.length) {
+      setCurrentIndex(currentIndex + 1);
     }
   };
 
   const handleBack = () => {
-    const numberOfItems = calculateNumberOfItemsToDisplay();
-    if (currentIndex - numberOfItems >= 0) {
-      setCurrentIndex(currentIndex - numberOfItems);
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
     }
   };
 
   useEffect(() => {
     updateDisplayedItems();
-  }, [currentBreakpoint, currentIndex, imageItems]);
+  }, [currentBreakpoint, currentIndex, shelf.books]);
+
+  console.log(shelf);
 
   return (
-    <Box>
-      <Box sx={{ display: 'flex', border: 'solid black 1px', gap: 1 }}>
+    <Box
+      sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+    >
+      <Box sx={{ display: 'flex', gap: 1 }}>
         {displayedItems.map((item, index) => (
           <Box key={index}>
-            <img
-              src={item.img}
-              alt={item.altText}
-              style={{ width: 100, height: 100 }}
-            />
-            <p>{item.rank}</p>
+            <img src={item.imageLinks?.smallThumbnail} style={{ width: 150 }} />
           </Box>
         ))}
       </Box>
 
-      <IconButton onClick={handleBack} disabled={currentIndex === 0}>
-        <ArrowBackIos />
-      </IconButton>
-      <IconButton
-        onClick={handleNext}
-        disabled={
-          currentIndex + calculateNumberOfItemsToDisplay() >= imageItems.length
-        }
-      >
-        <ArrowForwardIos />
-      </IconButton>
+      <Box>
+        <IconButton onClick={handleBack} disabled={currentIndex === 0}>
+          <ArrowBackIos />
+        </IconButton>
+        <IconButton
+          onClick={handleNext}
+          disabled={currentIndex + 1 >= shelf.books.length}
+        >
+          <ArrowForwardIos />
+        </IconButton>
+      </Box>
     </Box>
   );
-};
-
-const imageItems = [
-  {
-    img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-    title: 'Breakfast',
-    author: '@bkristastucchio',
-    featured: true,
-    rank: 1,
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-    title: 'Burger',
-    author: '@rollelflex_graphy726',
-    rank: 2,
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-    title: 'Camera',
-    author: '@helloimnik',
-    rank: 3,
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-    title: 'Camera',
-    author: '@helloimnik',
-    rank: 4,
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-    title: 'Camera',
-    author: '@helloimnik',
-    rank: 5,
-  },
-];
-
-export default ImageContainer;
+}
