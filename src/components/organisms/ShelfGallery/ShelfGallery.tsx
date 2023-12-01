@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
+
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import EditIcon from '@mui/icons-material/Edit';
-import { Box, Typography, Button, IconButton, Paper } from '@mui/material';
+import { Box, Typography, IconButton, Paper } from '@mui/material';
 import { BookCard } from '@/components/molecules';
+import ShelfActionButtons from './ShelfActionButtons';
 
 import useCurrentBreakpoint from '@/hooks/useCurrentBreakpoint';
 import { ShelfType } from '@/types/index';
@@ -66,9 +66,12 @@ export default function ShelfGallery({ shelf }: Props) {
       }}
       elevation={3}
     >
-      <Box sx={{ width: '100%', px: { xs: 1, sm: 2, md: 3 } }}>
+      <Box sx={{ width: '100%', maxWidth: 900, px: { xs: 1, sm: 2, md: 3 } }}>
         <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
           {shelf.name}
+        </Typography>
+        <Typography component="span" sx={{ fontSize: 14 }}>
+          by {shelf.creator.username}
         </Typography>
       </Box>
       <Box sx={{ display: 'flex', gap: 1, py: 1 }}>
@@ -82,7 +85,7 @@ export default function ShelfGallery({ shelf }: Props) {
           />
         ))}
       </Box>
-      <Box sx={{ width: '100%', px: { xs: 1, sm: 2, md: 3 } }}>
+      <Box sx={{ width: '100%', maxWidth: 900, px: { xs: 1, sm: 2, md: 3 } }}>
         <Typography variant="body1">{shelf.description}</Typography>
       </Box>
       <Box
@@ -106,39 +109,7 @@ export default function ShelfGallery({ shelf }: Props) {
           <ArrowForwardIos />
         </IconButton>
 
-        <Box
-          sx={{
-            position: 'absolute',
-            bottom: 0,
-            right: 0,
-            height: '100%',
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
-          <Button size="small" color="error" sx={{ px: 0.5, minWidth: 45 }}>
-            <DeleteOutlineIcon sx={{ fontSize: 20 }} />
-            <Typography
-              sx={{
-                display: { xs: 'none', sm: 'block' },
-                fontSize: { xs: '.8rem', sm: '.9rem' },
-              }}
-            >
-              Delete Shelf
-            </Typography>
-          </Button>
-          <Button size="small" sx={{ px: 0.5, minWidth: 45 }}>
-            <EditIcon sx={{ fontSize: 20 }} />
-            <Typography
-              sx={{
-                display: { xs: 'none', sm: 'block' },
-                fontSize: { xs: '.8rem', sm: '.9rem' },
-              }}
-            >
-              Edit Shelf
-            </Typography>
-          </Button>
-        </Box>
+        <ShelfActionButtons shelf={shelf} />
       </Box>
     </Paper>
   );

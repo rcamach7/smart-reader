@@ -1,5 +1,5 @@
 import { Box, Typography, Button, Skeleton } from '@mui/material';
-import { ShelfGallery } from '@/components/molecules';
+import { ShelfGallery } from '@/components/organisms';
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -111,7 +111,14 @@ export default function Home() {
       </Box>
 
       <Box
-        sx={{ px: 2, pt: 1, display: 'flex', flexDirection: 'column', gap: 1 }}
+        sx={{
+          px: 2,
+          pt: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 1,
+          alignItems: 'center',
+        }}
       >
         {previewShelves.length ? (
           previewShelves.map((shelf, i) => {
@@ -131,8 +138,7 @@ export default function Home() {
               <Box
                 key={index}
                 sx={{
-                  maxWidth: 600,
-                  width: '100%',
+                  width: 'clamp(310px, 98vw, 900px)',
                   display: 'flex',
                   flexDirection: 'column',
                   gap: 0.2,

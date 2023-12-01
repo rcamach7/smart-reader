@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import { SectionHeader } from '@/components/atoms';
-import { ShelfGallery } from '@/components/molecules';
+import { ShelfGallery } from '@/components/organisms';
 
 import { UserType } from '@/types/index';
 

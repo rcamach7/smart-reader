@@ -1,5 +1,5 @@
 export function shortenString(str: string, max: number, etcString?: string) {
-  if (str.length <= max) {
+  if (str?.length <= max) {
     return str.trim();
   }
   const etc = etcString ? etcString : '...';
