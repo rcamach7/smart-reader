@@ -1,11 +1,35 @@
 import { Box, Typography, Button } from '@mui/material';
-
-import useAvailableHeight from '@/hooks/useAvailableHeight';
+import { ShelfGallery } from '@/components/molecules';
 
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+
+import Shelf from '@/types/shelf';
+import useAvailableHeight from '@/hooks/useAvailableHeight';
+import { useFeedbackContext } from '@/context/FeedbackContext';
+import axios from 'axios';
 
 export default function Home() {
   const availableHeight = useAvailableHeight();
+  const { addAlertMessage } = useFeedbackContext();
+  const [previewShelves, setPreviewShelves] = useState<Shelf[]>([]);
+
+  useEffect(() => {
+    const fetchPublicShelves = async () => {
+      try {
+        const res = await axios.get('/api/shelf');
+        setPreviewShelves(res.data.shelves);
+      } catch (error) {
+        console.log(error);
+        addAlertMessage({
+          text: 'Error fetching public shelves',
+          severity: 'error',
+        });
+      }
+    };
+
+    fetchPublicShelves();
+  }, []);
 
   return (
     <Box sx={{ height: availableHeight }}>
@@ -84,6 +108,11 @@ export default function Home() {
           friends. Plus, get AI-powered answers to all your book-related
           questions!
         </Typography>
+      </Box>
+      <Box sx={{ p: 1 }}>
+        {previewShelves.map((shelf, i) => {
+          return <ShelfGallery shelf={shelf} key={i} />;
+        })}
       </Box>
     </Box>
   );

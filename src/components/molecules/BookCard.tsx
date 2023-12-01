@@ -35,6 +35,7 @@ export default function BookCard({ book, type, variant, shelfId }: Props) {
         flexDirection: 'column',
         backgroundColor: type === 'transparent' ? 'transparent' : 'default',
       }}
+      elevation={2}
     >
       <Link href={`/book/${book.googleId}`}>
         <CardActionArea>
@@ -68,7 +69,7 @@ export default function BookCard({ book, type, variant, shelfId }: Props) {
             fontSize: 14,
           }}
         >
-          {shortenString(book.title, 30)}
+          {shortenString(book?.title, 30)}
         </Typography>
       </CardContent>
       <CardActions

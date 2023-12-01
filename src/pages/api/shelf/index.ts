@@ -7,15 +7,42 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  let decodedAuthToken;
-  try {
-    decodedAuthToken = await decodeAuthToken(req);
-  } catch (error) {
-    return res.status(400).json({ message: 'User not authenticated', error });
-  }
-
   switch (req.method) {
+    case 'GET':
+      try {
+        await connectToMongoDB();
+
+        const publicShelves = await ShelfSchema.find()
+          .populate([
+            {
+              path: 'creator',
+              match: { type: 'admin' },
+              select: '-password -shelves -savedBooks',
+            },
+            { path: 'books' },
+          ])
+          .exec();
+        const shelvesWithAdminCreator = publicShelves.filter(
+          (shelf) => shelf.creator !== null
+        );
+
+        return res.status(200).json({ shelves: shelvesWithAdminCreator });
+      } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: 'Error retrieving shelves' });
+      }
+      break;
+
     case 'POST':
+      let decodedAuthToken;
+      try {
+        decodedAuthToken = await decodeAuthToken(req);
+      } catch (error) {
+        return res
+          .status(400)
+          .json({ message: 'User not authenticated', error });
+      }
+
       const { name, description, isPublic } = req.body;
       if (!name || !description) {
         return res.status(400).json({ message: 'Missing Required Fields' });
@@ -67,7 +94,7 @@ export default async function handler(
       }
 
     default:
-      res.setHeader('Allow', ['POST']);
+      res.setHeader('Allow', ['GET', 'POST']);
       res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
