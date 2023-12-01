@@ -14,7 +14,7 @@ export default function MyShelvesContainer({
   toggleCreateShelfModal,
 }: Props) {
   return (
-    <Box sx={{ p: 1 }}>
+    <Box sx={{ px: 1 }}>
       <SectionHeader
         title="My Shelves"
         buttonText="Create New"

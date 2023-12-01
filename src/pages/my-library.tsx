@@ -56,10 +56,11 @@ export default function MyLibrary() {
   return (
     <Box
       sx={{
-        height: availableHeight,
+        minHeight: availableHeight,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        pb: 5,
       }}
     >
       <Box
@@ -72,7 +73,8 @@ export default function MyLibrary() {
           sx={{
             display: 'flex',
             justifyContent: 'center',
-            py: { xs: 1, md: 2 },
+            pt: 1,
+            pb: 1,
           }}
         >
           <ToggleButtonGroup

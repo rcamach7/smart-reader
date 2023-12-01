@@ -110,11 +110,12 @@ export default function SearchBooksPage() {
   return (
     <Box
       sx={{
-        height: availableHeight,
+        minHeight: availableHeight,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         pt: 2,
+        pb: 5,
       }}
     >
       <Box

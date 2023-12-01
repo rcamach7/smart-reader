@@ -1,13 +1,13 @@
-import { Box, Typography, Button } from '@mui/material';
+import { Box, Typography, Button, Skeleton } from '@mui/material';
 import { ShelfGallery } from '@/components/molecules';
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import Shelf from '@/types/shelf';
 import useAvailableHeight from '@/hooks/useAvailableHeight';
 import { useFeedbackContext } from '@/context/FeedbackContext';
-import axios from 'axios';
 
 export default function Home() {
   const availableHeight = useAvailableHeight();
@@ -32,7 +32,7 @@ export default function Home() {
   }, []);
 
   return (
-    <Box sx={{ height: availableHeight }}>
+    <Box sx={{ minHeight: availableHeight, pb: 5 }}>
       <Box
         sx={{
           display: 'flex',
@@ -109,12 +109,42 @@ export default function Home() {
           questions!
         </Typography>
       </Box>
+
       <Box
         sx={{ px: 2, pt: 1, display: 'flex', flexDirection: 'column', gap: 1 }}
       >
-        {previewShelves.map((shelf, i) => {
-          return <ShelfGallery shelf={shelf} key={i} />;
-        })}
+        {previewShelves.length ? (
+          previewShelves.map((shelf, i) => {
+            return <ShelfGallery shelf={shelf} key={i} />;
+          })
+        ) : (
+          <Box
+            sx={{
+              p: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 1,
+              alignItems: 'center',
+            }}
+          >
+            {Array.from({ length: 2 }, (_, index) => (
+              <Box
+                key={index}
+                sx={{
+                  maxWidth: 600,
+                  width: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 0.2,
+                }}
+              >
+                <Skeleton animation="wave" variant="rounded" height={35} />
+                <Skeleton animation="wave" variant="rectangular" height={80} />
+                <Skeleton animation="wave" variant="rounded" height={20} />
+              </Box>
+            ))}
+          </Box>
+        )}
       </Box>
     </Box>
   );

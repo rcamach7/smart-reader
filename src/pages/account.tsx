@@ -70,8 +70,8 @@ export default function Account() {
   }
   return (
     <Box
-      style={{
-        height: availableHeight,
+      sx={{
+        minHeight: availableHeight,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',

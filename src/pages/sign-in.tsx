@@ -107,7 +107,7 @@ export default function Login() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        height: availableHeight,
+        minHeight: availableHeight,
         pb: 10,
       }}
     >
