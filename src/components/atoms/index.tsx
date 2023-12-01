@@ -6,3 +6,4 @@ export { default as BookDetailLine } from './BookDetailLine';
 export { default as FabButton } from './FabButton';
 export { default as FavoriteBookButton } from './FavoriteBookButton';
 export { default as SectionHeader } from './SectionHeader';
+export { default as RemoveBookFromShelfButton } from './RemoveBookFromShelfButton';

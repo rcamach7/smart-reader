@@ -42,7 +42,7 @@ export default function ShelfSelectionMenu({ type, book }: Props) {
     setIsPageLoading(true);
     try {
       const url = '/api/shelf/' + shelfId + '/book';
-      const res = await axios.put(url, { book });
+      const res = await axios.post(url, { book });
       setUser((U) => {
         return {
           ...U,
@@ -55,8 +55,6 @@ export default function ShelfSelectionMenu({ type, book }: Props) {
           }),
         };
       });
-
-      console.log(res);
     } catch (error) {
       console.log(error);
       addAlertMessage({ text: 'Error adding to shelf', severity: 'error' });

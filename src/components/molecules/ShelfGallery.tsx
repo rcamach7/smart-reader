@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
 import { IconButton, Box } from '@mui/material';
+import { BookCard } from '@/components/molecules';
 
 import useCurrentBreakpoint from '@/hooks/useCurrentBreakpoint';
 import { ShelfType } from '@/types/index';
@@ -35,7 +36,9 @@ export default function ShelfGallery({ shelf }: Props) {
   };
 
   const handleNext = () => {
-    if (currentIndex + 1 < shelf.books.length) {
+    const numberOfItems = calculateNumberOfItemsToDisplay();
+    const maxIndex = shelf.books.length - numberOfItems;
+    if (currentIndex < maxIndex) {
       setCurrentIndex(currentIndex + 1);
     }
   };
@@ -50,31 +53,18 @@ export default function ShelfGallery({ shelf }: Props) {
     updateDisplayedItems();
   }, [currentBreakpoint, currentIndex, shelf.books]);
 
-  useEffect(() => {
-    console.log('Current index: ', currentIndex);
-    console.log(
-      `Displaying ${calculateNumberOfItemsToDisplay()} based on break point: ${currentBreakpoint}`
-    );
-  }, [currentIndex, currentBreakpoint]);
-
   return (
     <Box
       sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
     >
       <Box sx={{ display: 'flex', gap: 1 }}>
         {displayedItems.map((item, index) => (
-          <Box key={index} sx={{ width: 150, height: 200, overflow: 'hidden' }}>
-            <img
-              src={item.imageLinks?.smallThumbnail}
-              style={{
-                maxWidth: '100%',
-                maxHeight: '100%',
-                objectFit: 'contain',
-                width: 'auto',
-                height: 'auto',
-              }}
-            />
-          </Box>
+          <BookCard
+            key={item._id}
+            shelfId={shelf._id}
+            book={item}
+            variant="gallery"
+          />
         ))}
       </Box>
 
@@ -84,7 +74,10 @@ export default function ShelfGallery({ shelf }: Props) {
         </IconButton>
         <IconButton
           onClick={handleNext}
-          disabled={currentIndex + 1 >= shelf.books.length}
+          disabled={
+            currentIndex >=
+            shelf.books.length - calculateNumberOfItemsToDisplay()
+          }
         >
           <ArrowForwardIos />
         </IconButton>

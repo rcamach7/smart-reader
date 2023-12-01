@@ -40,7 +40,7 @@ export default async function handler(
 
   try {
     switch (req.method) {
-      case 'PUT':
+      case 'POST':
         try {
           let bookDoc = await BookSchema.findOne({ googleId: book.googleId });
           if (!bookDoc) {
@@ -68,9 +68,11 @@ export default async function handler(
           });
         }
 
-      case 'DELETE':
+      case 'PUT':
         try {
           const bookDoc = await BookSchema.findOne({ googleId: book.googleId });
+          console.log(bookDoc);
+
           const updatedShelf = await ShelfSchema.findByIdAndUpdate(
             sid,
             {

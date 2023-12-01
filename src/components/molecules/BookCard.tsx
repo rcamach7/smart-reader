@@ -5,8 +5,12 @@ import {
   CardContent,
   CardActions,
   CardActionArea,
+  Button,
 } from '@mui/material';
-import { FavoriteBookButton } from '@/components/atoms';
+import {
+  FavoriteBookButton,
+  RemoveBookFromShelfButton,
+} from '@/components/atoms';
 import { ShelfSelectionMenu } from '@/components/molecules';
 
 import { shortenString } from '@/utils/helpers';
@@ -17,9 +21,11 @@ import Link from 'next/link';
 interface Props {
   book: Book;
   type?: 'transparent';
+  variant?: 'gallery';
+  shelfId?: string;
 }
 
-export default function BookCard({ book, type }: Props) {
+export default function BookCard({ book, type, variant, shelfId }: Props) {
   return (
     <Card
       sx={{
@@ -74,7 +80,11 @@ export default function BookCard({ book, type }: Props) {
         }}
       >
         <FavoriteBookButton book={book} type="card" />
-        <ShelfSelectionMenu type="card" book={book} />
+        {variant === 'gallery' ? (
+          <RemoveBookFromShelfButton book={book} shelfId={shelfId} />
+        ) : (
+          <ShelfSelectionMenu type="card" book={book} />
+        )}
       </CardActions>
     </Card>
   );
