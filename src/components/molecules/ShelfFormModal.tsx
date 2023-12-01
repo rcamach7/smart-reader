@@ -65,7 +65,7 @@ export default function ShelfFormModal({
       setUser((U) => {
         return {
           ...U,
-          shelves: res.data.shelves,
+          shelves: [...U.shelves, res.data.shelf],
         };
       });
       addAlertMessage({

@@ -61,7 +61,11 @@ export default async function handler(
           likes: [],
         });
         const shelf = await newShelf.save();
-        const shelfObject = shelf.toObject();
+        const populatedShelf = await shelf.populate({
+          path: 'creator',
+          select: '-password -savedBooks -shelves',
+        });
+        const shelfObject = populatedShelf.toObject();
 
         let updatedUser;
         try {
@@ -69,13 +73,7 @@ export default async function handler(
             decodedAuthToken._id,
             { $push: { shelves: shelf._id } },
             { new: true }
-          ).populate({
-            path: 'shelves',
-            populate: {
-              path: 'creator',
-              select: '-password -savedBooks -shelves',
-            },
-          });
+          );
         } catch (userUpdateError) {
           return res.status(500).json({
             message: 'Error occurred while updating user',
@@ -86,9 +84,9 @@ export default async function handler(
         return res.status(201).json({
           message: 'Shelf created successfully',
           shelf: shelfObject,
-          shelves: updatedUser.toObject().shelves,
         });
       } catch (error) {
+        console.log(error);
         return res
           .status(500)
           .json({ message: 'Error occurred while creating shelf', error });
