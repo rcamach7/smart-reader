@@ -54,7 +54,11 @@ export default async function handler(
               $push: { books: bookDoc._id },
             },
             { new: true }
-          ).populate(['books', 'likes', 'creator']);
+          ).populate([
+            { path: 'books' },
+            { path: 'likes', select: '-password -shelved -savedBooks' },
+            { path: 'creator', select: '-password -shelved -savedBooks' },
+          ]);
 
           return res.status(200).json({
             message: 'Added book to shelf.',
@@ -79,7 +83,11 @@ export default async function handler(
               $pull: { books: bookDoc._id },
             },
             { new: true }
-          ).populate(['books', 'likes', 'creator']);
+          ).populate([
+            { path: 'books' },
+            { path: 'likes', select: '-password -shelved -savedBooks' },
+            { path: 'creator', select: '-password -shelved -savedBooks' },
+          ]);
 
           return res.status(200).json({
             message: 'Deleted book from shelf.',
