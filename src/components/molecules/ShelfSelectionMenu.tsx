@@ -55,9 +55,16 @@ export default function ShelfSelectionMenu({ type, book }: Props) {
           }),
         };
       });
+      addAlertMessage({
+        text: 'Book has been added to shelf!',
+        severity: 'success',
+      });
     } catch (error) {
       console.log(error);
-      addAlertMessage({ text: 'Error adding to shelf', severity: 'error' });
+      addAlertMessage({
+        text: `Error adding to shelf! ${error?.response?.data?.message}`,
+        severity: 'error',
+      });
     }
     setIsPageLoading(false);
 

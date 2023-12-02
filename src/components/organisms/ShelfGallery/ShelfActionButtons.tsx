@@ -32,12 +32,6 @@ export default function ActionButtons({ shelf, type, updateShelfFunc }: Props) {
     setShowEditShelfModal((SESM) => !SESM);
   };
 
-  const isUsersShelf = () => {
-    if (!user) return false;
-    if (shelf.creator._id === user._id) return true;
-    return false;
-  };
-
   const handleSaveShelfToggle = async () => {
     if (!user) {
       addAlertMessage({
@@ -51,6 +45,12 @@ export default function ActionButtons({ shelf, type, updateShelfFunc }: Props) {
     try {
       const res = await axios.post('/api/shelf/' + shelf._id + '/save');
       setUser((U) => ({ ...U, shelves: res.data.shelves }));
+      addAlertMessage({
+        text: !hasUserSaved()
+          ? 'Saved shelf successfully'
+          : 'Shelf has been unsaved',
+        severity: 'success',
+      });
     } catch (error) {
       addAlertMessage({
         text: 'Error toggling save on shelf',
@@ -89,7 +89,9 @@ export default function ActionButtons({ shelf, type, updateShelfFunc }: Props) {
       }));
 
       addAlertMessage({
-        text: 'Toggled like for this shelf',
+        text: !hasUserLiked()
+          ? 'Shelf has been liked'
+          : 'Removed like from shelf',
         severity: 'success',
       });
     } catch (error) {
@@ -121,6 +123,12 @@ export default function ActionButtons({ shelf, type, updateShelfFunc }: Props) {
       addAlertMessage({ text: 'Error deleting shelf', severity: 'error' });
     }
     setIsPageLoading(false);
+  };
+
+  const isUsersShelf = () => {
+    if (!user) return false;
+    if (shelf.creator._id === user._id) return true;
+    return false;
   };
 
   const hasUserLiked = () => {

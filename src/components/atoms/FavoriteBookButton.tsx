@@ -40,6 +40,12 @@ export default function FavoriteBookButton({ book, type }: Props) {
           savedBooks: res.data.savedBooks,
         };
       });
+      addAlertMessage({
+        text: !isFavorited()
+          ? 'Added book to favorites'
+          : 'Removed book from favorites',
+        severity: 'success',
+      });
     } catch (error) {
       console.log(error);
       addAlertMessage({ text: 'Error adding to favorites', severity: 'error' });
