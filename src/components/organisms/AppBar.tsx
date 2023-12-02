@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Link from 'next/link';
 import {
   AppBar,
@@ -21,6 +20,9 @@ import {
   Home as HomeIcon,
   Person as PersonIcon,
 } from '@mui/icons-material';
+
+import Image from 'next/image';
+import * as React from 'react';
 
 import { useUser } from '@/context/UserContext';
 import { useRouter } from 'next/router';
@@ -235,19 +237,22 @@ export default function PrimarySearchAppBar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
+          <Box
             sx={{
-              display: {
-                xs: router.pathname === '/search' ? 'block' : 'none',
-                sm: 'block',
-              },
+              display: { xs: 'none', sm: 'flex', alignItems: 'center' },
             }}
           >
-            BookSphere
-          </Typography>
+            <Link href="/">
+              <a style={{ display: 'flex', alignItems: 'center' }}>
+                <Image
+                  src="/logos/logo.svg"
+                  alt="Headline Hunter"
+                  width={125}
+                  height={40}
+                />
+              </a>
+            </Link>
+          </Box>
           {router.pathname !== '/search' ? (
             <Search>
               <SearchIconWrapper>

@@ -92,7 +92,7 @@ export default function Home() {
                 fontWeight: 'bold',
               }}
             >
-              BookSphere
+              SmartReads
             </span>{' '}
             Share, Chat, Explore.
           </Typography>
@@ -116,7 +116,7 @@ export default function Home() {
           textAlign="center"
           sx={{ fontSize: { sm: 16, md: 19 }, maxWidth: 600 }}
         >
-          Discover BookSphere: Bookmark books, create shelves, and share with
+          Discover SmartReads: Bookmark books, create shelves, and share with
           friends. Plus, get AI-powered answers to all your book-related
           questions!
         </Typography>
