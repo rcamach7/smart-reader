@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { styled } from '@mui/material/styles';
 
 import { useLoadingContext } from '@/context/LoadingContext';
 import { useFeedbackContext } from '@/context/FeedbackContext';
@@ -10,12 +9,16 @@ import useAvailableHeight from '@/hooks/useAvailableHeight';
 
 import { PageLoading, BookDetailLine } from '@/components/atoms';
 import { BookPageHeader } from '@/components/molecules';
-import { FabButton } from '@/components/atoms';
+import { FabButton, ConfirmModal } from '@/components/atoms';
 import { Box, Typography, Button } from '@mui/material';
 
 export default function CategoryPage() {
   const { setIsPageLoading, isPageLoading } = useLoadingContext();
   const { addAlertMessage } = useFeedbackContext();
+  const [summaryModal, setSummaryModal] = useState({
+    show: false,
+    summary: '',
+  });
 
   const {
     query: { bookid: bid },
@@ -24,6 +27,22 @@ export default function CategoryPage() {
 
   const [book, setBook] = useState<Book>(null);
   const [error, setError] = useState(false);
+
+  const toggleShowSummaryModal = () => {
+    setSummaryModal((SM) => ({ ...SM, show: !SM.show }));
+  };
+
+  const getBookSummary = async () => {
+    setIsPageLoading(true);
+    try {
+      const res = await axios.post('/api/ai/recommendation', { book });
+      setSummaryModal({ ...summaryModal, summary: res.data.summary });
+      toggleShowSummaryModal();
+    } catch (error) {
+      console.log(error);
+    }
+    setIsPageLoading(false);
+  };
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -69,7 +88,8 @@ export default function CategoryPage() {
           }}
         >
           <Typography>
-            Get an AI-powered check to see if this book is your next great read!
+            Get an AI-powered brief overview and recommendation to see if this
+            book is for you!
           </Typography>
           <Button variant="outlined">Is This Book for Me?</Button>
         </Box>
@@ -94,6 +114,13 @@ export default function CategoryPage() {
           })}
         </Box>
         <FabButton />
+        <ConfirmModal
+          open={summaryModal.show}
+          type="information"
+          description={summaryModal.summary}
+          title="Your Recommendation"
+          toggle={toggleShowSummaryModal}
+        />
       </Box>
     );
   } else if (error) {

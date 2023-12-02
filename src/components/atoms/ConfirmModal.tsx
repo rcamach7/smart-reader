@@ -14,9 +14,10 @@ const style = {
 interface Props {
   open: boolean;
   toggle: () => void;
-  confirmFunc: () => void;
+  confirmFunc?: () => void;
   title: string;
   description: string;
+  type?: 'confirm' | 'information';
 }
 
 export default function ConfirmModal({
@@ -25,6 +26,7 @@ export default function ConfirmModal({
   confirmFunc,
   title,
   description,
+  type,
 }: Props) {
   return (
     <div>
@@ -41,14 +43,16 @@ export default function ConfirmModal({
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             {description}
           </Typography>
-          <Box sx={{ p: 1, display: 'flex', gap: 1 }}>
-            <Button variant="outlined" color="error" onClick={confirmFunc}>
-              Confirm
-            </Button>
-            <Button onClick={toggle} variant="outlined">
-              Cancel
-            </Button>
-          </Box>
+          {type === 'confirm' ? (
+            <Box sx={{ p: 1, display: 'flex', gap: 1 }}>
+              <Button variant="outlined" color="error" onClick={confirmFunc}>
+                Confirm
+              </Button>
+              <Button onClick={toggle} variant="outlined">
+                Cancel
+              </Button>
+            </Box>
+          ) : null}
         </Box>
       </Modal>
     </div>
