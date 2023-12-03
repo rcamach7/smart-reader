@@ -12,27 +12,22 @@ export default async function handler(
       try {
         await connectToMongoDB();
 
-        const publicShelves = await ShelfSchema.find()
+        const publicShelves = await ShelfSchema.find({ public: true })
           .populate([
             {
               path: 'creator',
-              match: { type: 'admin' },
               select: '-password -shelves -savedBooks',
             },
             { path: 'books' },
             { path: 'likes', select: '-password -shelves -savedBooks' },
           ])
           .exec();
-        const shelvesWithAdminCreator = publicShelves.filter(
-          (shelf) => shelf.creator !== null
-        );
 
-        return res.status(200).json({ shelves: shelvesWithAdminCreator });
+        return res.status(200).json({ shelves: publicShelves });
       } catch (error) {
         console.log(error);
         return res.status(500).json({ message: 'Error retrieving shelves' });
       }
-      break;
 
     case 'POST':
       let decodedAuthToken;

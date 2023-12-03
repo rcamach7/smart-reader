@@ -29,7 +29,7 @@ export default function Home() {
   useEffect(() => {
     const fetchPublicShelves = async () => {
       try {
-        const res = await axios.get('/api/shelf');
+        const res = await axios.get('/api/shelf/homepage');
         setPreviewShelves(res.data.shelves);
       } catch (error) {
         console.log(error);

@@ -114,8 +114,8 @@ export default function Login() {
 
   const handleDemoAccount = async () => {
     const demoCredentials = {
-      username: 'ironwolf',
-      password: 'ironwolf',
+      username: 'demo',
+      password: 'demo',
     };
     setCredentials((prevState) => {
       return {
