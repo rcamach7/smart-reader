@@ -24,6 +24,28 @@ export default async function handler(
         const user = await UserSchema.findById(decodedAuthToken._id).populate(
           'savedBooks'
         );
+        if (!user) {
+          throw new Error('User not found');
+        }
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const lastUsed = user.apiUsage.dateLastUsed;
+        lastUsed.setHours(0, 0, 0, 0);
+
+        if (lastUsed < today) {
+          user.apiUsage.dateLastUsed = today;
+          user.apiUsage.dayUsage = 1;
+        } else if (lastUsed.getTime() === today.getTime()) {
+          if (user.apiUsage.dayUsage >= 10) {
+            return res.status(400).json({ message: 'Daily limit exceeded' });
+          } else {
+            user.apiUsage.dayUsage += 1;
+          }
+        }
+        await user.save();
+
         const openaiApi = new OpenAI({ apiKey: process.env.OPEN_AI_KEY });
 
         const bookDetails = `Analyze the book titled '${

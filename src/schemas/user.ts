@@ -1,5 +1,20 @@
 import { model, Schema, models } from 'mongoose';
 
+const ApiUsageSchema = new Schema({
+  dateLastUsed: {
+    type: Date,
+    default: Date.now,
+  },
+  dayUsage: {
+    type: Number,
+    default: 0,
+    validate: {
+      validator: Number.isInteger,
+      message: 'dayUsage must be an integer',
+    },
+  },
+});
+
 const User = new Schema({
   username: {
     type: String,
@@ -25,6 +40,11 @@ const User = new Schema({
   },
   shelves: [{ type: Schema.Types.ObjectId, ref: 'Shelf' }],
   savedBooks: [{ type: Schema.Types.ObjectId, ref: 'Book' }],
+  apiUsage: {
+    type: ApiUsageSchema,
+    required: true,
+    default: {},
+  },
 });
 
 const UserModel = models.User || model('User', User);

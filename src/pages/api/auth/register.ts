@@ -52,6 +52,7 @@ export default async function handler(
           user: userWithoutPassword,
         });
       } catch (error) {
+        console.log(error);
         return res.status(400).json({
           message: 'Error creating user and setting token',
           fieldId: 'error',

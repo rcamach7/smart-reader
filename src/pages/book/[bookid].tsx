@@ -39,6 +39,10 @@ export default function CategoryPage() {
       setSummaryModal({ ...summaryModal, summary: res.data.summary });
       toggleShowSummaryModal();
     } catch (error) {
+      addAlertMessage({
+        text: error?.response?.data?.message,
+        severity: 'error',
+      });
       console.log(error);
     }
     setIsPageLoading(false);
@@ -126,7 +130,7 @@ export default function CategoryPage() {
             }
           })}
         </Box>
-        <FabButton />
+        {/* <FabButton /> */}
         <ConfirmModal
           open={summaryModal.show}
           type="information"
