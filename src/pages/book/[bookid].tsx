@@ -35,7 +35,7 @@ export default function CategoryPage() {
   const getBookSummary = async () => {
     setIsPageLoading(true);
     try {
-      const res = await axios.post('/api/ai/recommendation', { book });
+      const res = await axios.post('/api/ai/blurb', { book });
       setSummaryModal({ ...summaryModal, summary: res.data.summary });
       toggleShowSummaryModal();
     } catch (error) {
@@ -82,16 +82,29 @@ export default function CategoryPage() {
         <Box
           sx={{
             textAlign: 'center',
-            pb: 1,
+            pb: 1.5,
             backgroundColor: '#d3e3f0',
             width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
           }}
         >
-          <Typography>
-            Get an AI-powered brief overview and recommendation to see if this
-            book is for you!
+          <Typography
+            sx={{
+              fontSize: { xs: '.9rem', sm: '1rem', md: '1.1rem' },
+              px: 1,
+              pb: 1,
+              maxWidth: 600,
+            }}
+          >
+            Discover your next favorite read with our AI-powered book insights!
+            We analyze your favorite books to identify any similarities and
+            offer a tailored overview and recommendation.
           </Typography>
-          <Button variant="outlined">Is This Book for Me?</Button>
+          <Button variant="outlined" onClick={getBookSummary}>
+            Get My Personalized Book Insight
+          </Button>
         </Box>
         <Box
           sx={{
