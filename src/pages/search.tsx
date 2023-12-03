@@ -7,19 +7,22 @@ import {
   InputBase,
   ToggleButton,
   ToggleButtonGroup,
-  Pagination,
   Typography,
 } from '@mui/material';
 import {
   Search as SearchIcon,
   KeyboardVoice as KeyboardVoiceIcon,
 } from '@mui/icons-material';
-import { BookCard } from '@/components/molecules';
+import {
+  BookSearchResultsContainer,
+  ShelvesSearchResultsContainer,
+} from '@/components/molecules';
 
 import useAvailableHeight from '@/hooks/useAvailableHeight';
 import Book from '@/types/book';
 import { useFeedbackContext } from '@/context/FeedbackContext';
 import { useLoadingContext } from '@/context/LoadingContext';
+import { ShelfType } from '../types';
 
 export default function SearchBooksPage() {
   const router = useRouter();
@@ -35,30 +38,41 @@ export default function SearchBooksPage() {
     type: type ? type : 'books',
   });
   const [bookSearchResults, setBookSearchResults] = useState<Book[]>([]);
-
-  const [currentBookPage, setCurrentBookPage] = useState(1);
-  const itemsPerPage = 15;
-  const totalBookPages = Math.ceil(bookSearchResults.length / itemsPerPage);
-  const indexOfLastBook = currentBookPage * itemsPerPage;
-  const indexOfFirstBook = indexOfLastBook - itemsPerPage;
-  const currentBooks = bookSearchResults.slice(
-    indexOfFirstBook,
-    indexOfLastBook
+  const [shelvesSearchResults, setShelvesSearchResults] = useState<ShelfType[]>(
+    []
   );
-
-  const handleBookPageChange = (event, value) => {
-    setCurrentBookPage(value);
-  };
 
   const handleInputSearch = () => {
     if (search.type === 'books') {
       handleSearchBooks();
     } else {
-      addAlertMessage({
-        text: 'Shelf searching not yet available',
-        severity: 'warning',
-      });
+      handleSearchShelves();
     }
+  };
+
+  const handleSearchShelves = async () => {
+    if (search.query.length <= 3) {
+      addAlertMessage({ text: 'Query too short', severity: 'warning' });
+      return;
+    }
+
+    setIsPageLoading(true);
+    try {
+      const encodedQuery = encodeURIComponent(search.query);
+      const response = await axios.get(
+        `/api/shelf/search?query=${encodedQuery}`
+      );
+      setShelvesSearchResults(response.data.shelves);
+    } catch (error) {
+      addAlertMessage({
+        text: error.response.data.message
+          ? error.response.data.message
+          : 'Error searching for shelves',
+        severity: 'error',
+      });
+      console.log(error);
+    }
+    setIsPageLoading(false);
   };
 
   const handleSearchBooks = async () => {
@@ -186,38 +200,14 @@ export default function SearchBooksPage() {
         <KeyboardVoiceIcon sx={{ ml: 'auto' }} />
       </Box>
 
-      <Box
-        sx={{
-          flex: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <Box
-          sx={{
-            p: 1,
-            mt: 1,
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            gap: 2,
-          }}
-        >
-          {currentBooks.map((book, i) => {
-            return <BookCard key={i} book={book} />;
-          })}
-        </Box>
-        {bookSearchResults.length ? (
-          <Pagination
-            count={totalBookPages}
-            page={currentBookPage}
-            onChange={handleBookPageChange}
-            sx={{ mt: 'auto', pb: 3 }}
-            color="primary"
-          />
-        ) : null}
-      </Box>
+      <BookSearchResultsContainer bookSearchResults={bookSearchResults} />
+      {search.type === 'query' ? (
+        <BookSearchResultsContainer bookSearchResults={bookSearchResults} />
+      ) : (
+        <ShelvesSearchResultsContainer
+          shelfSearchResults={shelvesSearchResults}
+        />
+      )}
     </Box>
   );
 }

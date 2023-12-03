@@ -4,3 +4,5 @@ export { default as FavoriteBooksContainer } from './FavoriteBooksContainer';
 export { default as MyShelvesContainer } from './MyShelvesContainer';
 export { default as ShelfFormModal } from './ShelfFormModal';
 export { default as ShelfSelectionMenu } from './ShelfSelectionMenu';
+export { default as BookSearchResultsContainer } from './BookSearchResultsContainer';
+export { default as ShelvesSearchResultsContainer } from './ShelvesSearchResultsContainer';
