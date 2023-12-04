@@ -9,7 +9,9 @@ interface Props {
   shelfSearchResults: ShelfType[];
 }
 
-export default function SearchResultsContainer({ shelfSearchResults }: Props) {
+export default function ShelvesSearchResultsContainer({
+  shelfSearchResults,
+}: Props) {
   const [currentShelfPage, setCurrentShelfPage] = useState(1);
   const itemsPerPage = 15;
   const totalShelfPages = Math.ceil(shelfSearchResults.length / itemsPerPage);
