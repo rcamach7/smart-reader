@@ -3,7 +3,6 @@
 SmartReads lets you search and favorite books, create and share personalized book "shelves," and enjoy AI-generated blurbs and recommendations based on your favorites! It's a simple, engaging way for book lovers to discover and organize their reads.
 
 <img src="https://res.cloudinary.com/de2ymful4/image/upload/v1701663112/smartreads_p3tvld.png">
-<div align="center">
 
 <div align="center">
 
