@@ -68,7 +68,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function PrimarySearchAppBar() {
+type Props = {
+  toggleTheme: () => void;
+};
+
+export default function PrimarySearchAppBar({ toggleTheme }: Props) {
   const { user, logout } = useUser();
   const router = useRouter();
 

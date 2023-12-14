@@ -4,18 +4,21 @@ import { ThemeProvider } from '@mui/material/styles';
 import { UserProvider } from '@/context/UserContext';
 import { LoadingProvider } from '@/context/LoadingContext';
 import { FeedbackProvider } from '@/context/FeedbackContext';
+import useTheme from '@/hooks/useTheme';
 
 import { AppBar } from '@/components/organisms';
-import theme from '../theme/theme';
+import { lightTheme, darkTheme } from '../theme/theme';
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
+  const { theme, toggleTheme } = useTheme();
+
   return (
     <UserProvider>
       <LoadingProvider>
         <FeedbackProvider>
-          <ThemeProvider theme={theme}>
+          <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
             <CssBaseline />
-            <AppBar />
+            <AppBar toggleTheme={toggleTheme} />
             <Component {...pageProps} />
           </ThemeProvider>
         </FeedbackProvider>
