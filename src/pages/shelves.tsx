@@ -8,6 +8,7 @@ import { useFeedbackContext } from '@/context/FeedbackContext';
 
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Head from 'next/head';
 
 export default function Shelves() {
   const { setIsPageLoading } = useLoadingContext();
@@ -35,28 +36,33 @@ export default function Shelves() {
   }, []);
 
   return (
-    <Box
-      sx={{
-        minHeight: availableHeight,
-        display: 'flex',
-        justifyContent: 'center',
-      }}
-    >
+    <>
+      <Head>
+        <title>SR: Shelves</title>
+      </Head>
       <Box
         sx={{
-          mt: 2,
-          p: 0.5,
+          minHeight: availableHeight,
           display: 'flex',
-          flexDirection: 'column',
-          gap: { xs: 1, sm: 2, md: 3 },
-          maxWidth: 1200,
-          pb: 5,
+          justifyContent: 'center',
         }}
       >
-        {publicShelves.map((shelf, i) => {
-          return <ShelfGallery shelf={shelf} key={i} />;
-        })}
+        <Box
+          sx={{
+            mt: 2,
+            p: 0.5,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: { xs: 1, sm: 2, md: 3 },
+            maxWidth: 1200,
+            pb: 5,
+          }}
+        >
+          {publicShelves.map((shelf, i) => {
+            return <ShelfGallery shelf={shelf} key={i} />;
+          })}
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 }

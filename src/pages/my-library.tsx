@@ -11,6 +11,7 @@ import {
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 type ViewMode = 'favorites' | 'shelves';
 
@@ -54,63 +55,68 @@ export default function MyLibrary() {
   }
 
   return (
-    <Box
-      sx={{
-        minHeight: availableHeight,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        pb: 5,
-      }}
-    >
+    <>
+      <Head>
+        <title>SR: My Library</title>
+      </Head>
       <Box
         sx={{
-          height: '100%',
-          width: 'clamp(320px, 100vw, 900px)',
+          minHeight: availableHeight,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          pb: 5,
         }}
       >
         <Box
           sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            pt: 1,
-            pb: 1,
+            height: '100%',
+            width: 'clamp(320px, 100vw, 900px)',
           }}
         >
-          <ToggleButtonGroup
-            color="primary"
-            value={viewMode}
-            exclusive
-            onChange={handleViewModeChange}
-            aria-label="view-mode-selection"
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              pt: 1,
+              pb: 1,
+            }}
           >
-            <ToggleButton size="small" value="favorites">
-              Favorites
-            </ToggleButton>
-            <ToggleButton size="small" value="shelves">
-              Shelves
-            </ToggleButton>
-          </ToggleButtonGroup>
+            <ToggleButtonGroup
+              color="primary"
+              value={viewMode}
+              exclusive
+              onChange={handleViewModeChange}
+              aria-label="view-mode-selection"
+            >
+              <ToggleButton size="small" value="favorites">
+                Favorites
+              </ToggleButton>
+              <ToggleButton size="small" value="shelves">
+                Shelves
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </Box>
+          {viewMode === 'favorites' ? (
+            <FavoriteBooksContainer user={user} />
+          ) : (
+            <MyShelvesContainer
+              shelves={user.shelves}
+              toggleCreateShelfModal={toggleCreateShelfModal}
+            />
+          )}
         </Box>
-        {viewMode === 'favorites' ? (
-          <FavoriteBooksContainer user={user} />
-        ) : (
-          <MyShelvesContainer
-            shelves={user.shelves}
-            toggleCreateShelfModal={toggleCreateShelfModal}
-          />
-        )}
-      </Box>
 
-      <ShelfFormModal
-        type="create"
-        open={showCreateShelfModal}
-        toggle={() => {
-          setShowCreateShelfModal((SCSM) => {
-            return !SCSM;
-          });
-        }}
-      />
-    </Box>
+        <ShelfFormModal
+          type="create"
+          open={showCreateShelfModal}
+          toggle={() => {
+            setShowCreateShelfModal((SCSM) => {
+              return !SCSM;
+            });
+          }}
+        />
+      </Box>
+    </>
   );
 }

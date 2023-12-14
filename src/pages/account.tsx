@@ -15,6 +15,7 @@ import { useFeedbackContext } from '@/context/FeedbackContext';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import Head from 'next/head';
 
 export default function Account() {
   const { user, logout, isUserLoading, setUser } = useUser();
@@ -69,129 +70,147 @@ export default function Account() {
     return null;
   }
   return (
-    <Box
-      sx={{
-        minHeight: availableHeight,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}
-    >
+    <>
+      <Head>
+        <title>SR: My Account</title>
+      </Head>
       <Box
         sx={{
+          minHeight: availableHeight,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          pb: '20px',
-          backgroundColor: '#d3e3f0',
-          width: '100%',
-          pt: 2,
         }}
       >
         <Box
           sx={{
             display: 'flex',
-            justifyContent: 'center',
+            flexDirection: 'column',
             alignItems: 'center',
-            borderRadius: '50%',
-            overflow: 'hidden',
-            width: '100px',
-            height: '100px',
-            boxShadow: '20px 20px 20px rgba(0, 0, 0, 0.3)',
+            pb: '20px',
+            backgroundColor: '#d3e3f0',
+            width: '100%',
+            pt: 2,
           }}
         >
-          <img
-            src={`/profile/${user.profileImage}`}
-            alt="User Profile"
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: '50%',
+              overflow: 'hidden',
+              width: '100px',
+              height: '100px',
+              boxShadow: '20px 20px 20px rgba(0, 0, 0, 0.3)',
             }}
-          />
+          >
+            <img
+              src={`/profile/${user.profileImage}`}
+              alt="User Profile"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+              }}
+            />
+          </Box>
+          <Typography variant="h3" sx={{ p: 1, fontFamily: 'Verdana' }}>
+            {user.username}
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={{ fontSize: 12, fontFamily: 'Verdana' }}
+          >
+            {user.type} user
+          </Typography>
         </Box>
-        <Typography variant="h3" sx={{ p: 1, fontFamily: 'Verdana' }}>
-          {user.username}
-        </Typography>
-        <Typography
-          variant="body1"
-          sx={{ fontSize: 12, fontFamily: 'Verdana' }}
-        >
-          {user.type} user
-        </Typography>
-      </Box>
 
-      <Stack
-        spacing={{ xs: 1, sm: 2 }}
-        direction="row"
-        useFlexGap
-        flexWrap="wrap"
-        alignItems="center"
-        justifyContent="center"
-        sx={{ py: 2 }}
-      >
-        <Link href="/my-library">
+        <Stack
+          spacing={{ xs: 1, sm: 2 }}
+          direction="row"
+          useFlexGap
+          flexWrap="wrap"
+          alignItems="center"
+          justifyContent="center"
+          sx={{ py: 2 }}
+        >
+          <Link href="/my-library">
+            <Button
+              size={currentScreenSize}
+              color="secondary"
+              sx={{ textDecoration: 'underline' }}
+            >
+              My Library
+            </Button>
+          </Link>
+          <Link href="/search">
+            <Button
+              size={currentScreenSize}
+              color="secondary"
+              sx={{ textDecoration: 'underline' }}
+            >
+              Search For Books
+            </Button>
+          </Link>
+          <Link href="/shelves">
+            <Button
+              size={currentScreenSize}
+              color="secondary"
+              sx={{ textDecoration: 'underline' }}
+            >
+              View Public Shelves
+            </Button>
+          </Link>
+        </Stack>
+        <Stack
+          spacing={{ xs: 2, sm: 2.5, lg: 3 }}
+          sx={{ flex: '1', pt: { xs: 2, sm: 3, md: 4 } }}
+        >
           <Button
             size={currentScreenSize}
-            color="secondary"
-            sx={{ textDecoration: 'underline' }}
+            variant="outlined"
+            startIcon={<AccountBoxIcon />}
+            disabled
           >
-            My Library
+            Edit Profile Picture
           </Button>
-        </Link>
-        <Link href="/search">
           <Button
             size={currentScreenSize}
-            color="secondary"
-            sx={{ textDecoration: 'underline' }}
+            variant="outlined"
+            startIcon={<PasswordIcon />}
+            disabled
           >
-            Search For Books
+            Edit Password
           </Button>
-        </Link>
-        <Link href="/shelves">
+          <Button
+            startIcon={<LogoutIcon />}
+            size={currentScreenSize}
+            variant="outlined"
+            onClick={handleLogout}
+          >
+            Sign Out
+          </Button>
           <Button
             size={currentScreenSize}
-            color="secondary"
-            sx={{ textDecoration: 'underline' }}
+            variant="outlined"
+            color="error"
+            startIcon={<DeleteIcon />}
+            onClick={() => {
+              setModalOpenState((MOS) => {
+                return {
+                  ...MOS,
+                  confirmDeleteAccountModal: !MOS.confirmDeleteAccountModal,
+                };
+              });
+            }}
           >
-            View Public Shelves
+            Delete Account
           </Button>
-        </Link>
-      </Stack>
-      <Stack
-        spacing={{ xs: 2, sm: 2.5, lg: 3 }}
-        sx={{ flex: '1', pt: { xs: 2, sm: 3, md: 4 } }}
-      >
-        <Button
-          size={currentScreenSize}
-          variant="outlined"
-          startIcon={<AccountBoxIcon />}
-          disabled
-        >
-          Edit Profile Picture
-        </Button>
-        <Button
-          size={currentScreenSize}
-          variant="outlined"
-          startIcon={<PasswordIcon />}
-          disabled
-        >
-          Edit Password
-        </Button>
-        <Button
-          startIcon={<LogoutIcon />}
-          size={currentScreenSize}
-          variant="outlined"
-          onClick={handleLogout}
-        >
-          Sign Out
-        </Button>
-        <Button
-          size={currentScreenSize}
-          variant="outlined"
-          color="error"
-          startIcon={<DeleteIcon />}
-          onClick={() => {
+        </Stack>
+        <ConfirmModal
+          open={modalOpenState.confirmDeleteAccountModal}
+          toggle={() => {
             setModalOpenState((MOS) => {
               return {
                 ...MOS,
@@ -199,24 +218,11 @@ export default function Account() {
               };
             });
           }}
-        >
-          Delete Account
-        </Button>
-      </Stack>
-      <ConfirmModal
-        open={modalOpenState.confirmDeleteAccountModal}
-        toggle={() => {
-          setModalOpenState((MOS) => {
-            return {
-              ...MOS,
-              confirmDeleteAccountModal: !MOS.confirmDeleteAccountModal,
-            };
-          });
-        }}
-        confirmFunc={handleDeleteAccount}
-        description="Warning! This action cannot be reversed, and all associates shelves will be deleted."
-        title="Confirm Account Deletion"
-      />
-    </Box>
+          confirmFunc={handleDeleteAccount}
+          description="Warning! This action cannot be reversed, and all associates shelves will be deleted."
+          title="Confirm Account Deletion"
+        />
+      </Box>
+    </>
   );
 }

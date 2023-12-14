@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Head from 'next/head';
 
 import { useUser } from '@/context/UserContext';
 import { useLoadingContext } from '@/context/LoadingContext';
@@ -149,114 +150,122 @@ export default function Login() {
   }, [user]);
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: availableHeight,
-        pb: 10,
-      }}
-    >
-      <Typography variant="h3">Sign Up</Typography>
+    <>
+      <Head>
+        <title>SR: Sign Up</title>
+      </Head>
       <Box
-        sx={{ display: 'flex', flexDirection: 'column', gap: 1, pt: 2 }}
-        component="form"
-        onSubmit={handleCreateAccount}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          minHeight: availableHeight,
+          pb: 10,
+        }}
       >
+        <Typography variant="h3">Sign Up</Typography>
         <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
+          sx={{ display: 'flex', flexDirection: 'column', gap: 1, pt: 2 }}
+          component="form"
+          onSubmit={handleCreateAccount}
         >
-          <Typography sx={{ pb: 1 }}>Select Profile Image:</Typography>
-          <Stack direction="row" spacing={2}>
-            {profileImageOptions.map((option, i) => {
-              return (
-                <Avatar
-                  key={i}
-                  alt={option}
-                  src={`/profile/${option}`}
-                  onClick={() => {
-                    handleProfileImageSelection(option);
-                  }}
-                  style={{
-                    border:
-                      credentials.profileImage === option
-                        ? 'solid 3px #6fa6b6'
-                        : null,
-                    width: credentials.profileImage === option ? 70 : 50,
-                    height: credentials.profileImage === option ? 70 : 50,
-                  }}
-                />
-              );
-            })}
-          </Stack>
-        </Box>
-        <TextField
-          required
-          id="username"
-          label="Username"
-          variant="outlined"
-          value={credentials.username}
-          onChange={handleCredentialsChange}
-          error={errors.fieldId === 'username' ? true : false}
-          helperText={errors.fieldId === 'username' ? errors.helperText : ''}
-        />
-        <TextField
-          required
-          id="password"
-          label="Password"
-          variant="outlined"
-          type="password"
-          value={credentials.password}
-          onChange={handleCredentialsChange}
-          error={errors.fieldId === 'password' ? true : false}
-          helperText={errors.fieldId === 'password' ? errors.helperText : ''}
-        />
-        <TextField
-          required
-          id="confirmPassword"
-          label="Confirm Password"
-          variant="outlined"
-          type="password"
-          value={credentials.confirmPassword}
-          onChange={handleCredentialsChange}
-          error={errors.fieldId === 'confirmPassword' ? true : false}
-          helperText={
-            errors.fieldId === 'confirmPassword' ? errors.helperText : ''
-          }
-        />
-        {errors.fieldId === 'error' ? (
-          <Typography color="error" textAlign="center">
-            {errors.helperText}
-          </Typography>
-        ) : null}
-        <Button variant="contained" type="submit">
-          Create Account
-        </Button>
-        <Box>
-          <Link href="/sign-in">
-            <Typography textAlign="center" sx={{ textDecoration: 'underline' }}>
-              Already have an account? Sign In
-            </Typography>
-          </Link>
-          <Typography textAlign="center" fontSize={14}>
-            or
-          </Typography>
-          <Typography
-            textAlign="center"
-            fontSize={14}
-            sx={{ textDecoration: 'underline' }}
-            onClick={handleDemoAccount}
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
           >
-            Use demo account
-          </Typography>
+            <Typography sx={{ pb: 1 }}>Select Profile Image:</Typography>
+            <Stack direction="row" spacing={2}>
+              {profileImageOptions.map((option, i) => {
+                return (
+                  <Avatar
+                    key={i}
+                    alt={option}
+                    src={`/profile/${option}`}
+                    onClick={() => {
+                      handleProfileImageSelection(option);
+                    }}
+                    style={{
+                      border:
+                        credentials.profileImage === option
+                          ? 'solid 3px #6fa6b6'
+                          : null,
+                      width: credentials.profileImage === option ? 70 : 50,
+                      height: credentials.profileImage === option ? 70 : 50,
+                    }}
+                  />
+                );
+              })}
+            </Stack>
+          </Box>
+          <TextField
+            required
+            id="username"
+            label="Username"
+            variant="outlined"
+            value={credentials.username}
+            onChange={handleCredentialsChange}
+            error={errors.fieldId === 'username' ? true : false}
+            helperText={errors.fieldId === 'username' ? errors.helperText : ''}
+          />
+          <TextField
+            required
+            id="password"
+            label="Password"
+            variant="outlined"
+            type="password"
+            value={credentials.password}
+            onChange={handleCredentialsChange}
+            error={errors.fieldId === 'password' ? true : false}
+            helperText={errors.fieldId === 'password' ? errors.helperText : ''}
+          />
+          <TextField
+            required
+            id="confirmPassword"
+            label="Confirm Password"
+            variant="outlined"
+            type="password"
+            value={credentials.confirmPassword}
+            onChange={handleCredentialsChange}
+            error={errors.fieldId === 'confirmPassword' ? true : false}
+            helperText={
+              errors.fieldId === 'confirmPassword' ? errors.helperText : ''
+            }
+          />
+          {errors.fieldId === 'error' ? (
+            <Typography color="error" textAlign="center">
+              {errors.helperText}
+            </Typography>
+          ) : null}
+          <Button variant="contained" type="submit">
+            Create Account
+          </Button>
+          <Box>
+            <Link href="/sign-in">
+              <Typography
+                textAlign="center"
+                sx={{ textDecoration: 'underline' }}
+              >
+                Already have an account? Sign In
+              </Typography>
+            </Link>
+            <Typography textAlign="center" fontSize={14}>
+              or
+            </Typography>
+            <Typography
+              textAlign="center"
+              fontSize={14}
+              sx={{ textDecoration: 'underline' }}
+              onClick={handleDemoAccount}
+            >
+              Use demo account
+            </Typography>
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </>
   );
 }

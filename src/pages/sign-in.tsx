@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Head from 'next/head';
 
 import { useUser } from '@/context/UserContext';
 import { useLoadingContext } from '@/context/LoadingContext';
@@ -101,70 +102,78 @@ export default function Login() {
   }, [user]);
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: availableHeight,
-        pb: 10,
-      }}
-    >
-      <Typography variant="h3">Sign In</Typography>
+    <>
+      <Head>
+        <title>SR: Sign In</title>
+      </Head>
       <Box
-        sx={{ display: 'flex', flexDirection: 'column', gap: 1, pt: 2 }}
-        component="form"
-        onSubmit={handleSignIn}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          minHeight: availableHeight,
+          pb: 10,
+        }}
       >
-        <TextField
-          required
-          id="username"
-          label="Username"
-          variant="outlined"
-          value={credentials.username}
-          onChange={handleCredentialsChange}
-          error={errors.fieldId === 'username' ? true : false}
-          helperText={errors.fieldId === 'username' ? errors.helperText : ''}
-        />
-        <TextField
-          required
-          id="password"
-          label="Password"
-          variant="outlined"
-          type="password"
-          value={credentials.password}
-          onChange={handleCredentialsChange}
-          error={errors.fieldId === 'password' ? true : false}
-          helperText={errors.fieldId === 'password' ? errors.helperText : ''}
-        />
-        {errors.fieldId === 'error' ? (
-          <Typography color="error" textAlign="center">
-            {errors.helperText}
-          </Typography>
-        ) : null}
-        <Button variant="contained" type="submit">
-          Login
-        </Button>
-        <Box>
-          <Link href="/sign-up">
-            <Typography textAlign="center" sx={{ textDecoration: 'underline' }}>
-              New? Create an account
+        <Typography variant="h3">Sign In</Typography>
+        <Box
+          sx={{ display: 'flex', flexDirection: 'column', gap: 1, pt: 2 }}
+          component="form"
+          onSubmit={handleSignIn}
+        >
+          <TextField
+            required
+            id="username"
+            label="Username"
+            variant="outlined"
+            value={credentials.username}
+            onChange={handleCredentialsChange}
+            error={errors.fieldId === 'username' ? true : false}
+            helperText={errors.fieldId === 'username' ? errors.helperText : ''}
+          />
+          <TextField
+            required
+            id="password"
+            label="Password"
+            variant="outlined"
+            type="password"
+            value={credentials.password}
+            onChange={handleCredentialsChange}
+            error={errors.fieldId === 'password' ? true : false}
+            helperText={errors.fieldId === 'password' ? errors.helperText : ''}
+          />
+          {errors.fieldId === 'error' ? (
+            <Typography color="error" textAlign="center">
+              {errors.helperText}
             </Typography>
-          </Link>
-          <Typography textAlign="center" fontSize={14}>
-            or
-          </Typography>
-          <Typography
-            textAlign="center"
-            fontSize={14}
-            sx={{ textDecoration: 'underline' }}
-            onClick={handleDemoAccount}
-          >
-            Use demo account
-          </Typography>
+          ) : null}
+          <Button variant="contained" type="submit">
+            Login
+          </Button>
+          <Box>
+            <Link href="/sign-up">
+              <Typography
+                textAlign="center"
+                sx={{ textDecoration: 'underline' }}
+              >
+                New? Create an account
+              </Typography>
+            </Link>
+            <Typography textAlign="center" fontSize={14}>
+              or
+            </Typography>
+            <Typography
+              textAlign="center"
+              fontSize={14}
+              sx={{ textDecoration: 'underline' }}
+              onClick={handleDemoAccount}
+            >
+              Use demo account
+            </Typography>
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </>
   );
 }

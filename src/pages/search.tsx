@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Head from 'next/head';
 
 import {
   Box,
@@ -122,92 +123,97 @@ export default function SearchBooksPage() {
   }, []);
 
   return (
-    <Box
-      sx={{
-        minHeight: availableHeight,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        pt: 2,
-        pb: 5,
-      }}
-    >
+    <>
+      <Head>
+        <title>SR: Search</title>
+      </Head>
       <Box
         sx={{
+          minHeight: availableHeight,
           display: 'flex',
+          flexDirection: 'column',
           alignItems: 'center',
-          justifyContent: 'center',
-          mt: 1,
+          pt: 2,
+          pb: 5,
         }}
       >
-        <Typography
-          variant="body1"
-          sx={{ pr: 1, fontFamily: 'Verdana', fontSize: 14 }}
-        >
-          I am searching for
-        </Typography>
-        <ToggleButtonGroup
-          color="primary"
-          value={search.type}
-          aria-label="search-type"
-          onChange={searchTypeChange}
-          exclusive
-          size="small"
+        <Box
           sx={{
             display: 'flex',
             alignItems: 'center',
+            justifyContent: 'center',
+            mt: 1,
           }}
         >
-          <ToggleButton value="books">books</ToggleButton>
-          <ToggleButton value="shelves">shelves</ToggleButton>
-        </ToggleButtonGroup>
-      </Box>
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          width: 'clamp(200px, 80vw, 500px)',
-          height: 50,
-          border: 'solid black 2px',
-          borderRadius: '20px',
-          px: 1,
-          mt: 1,
-        }}
-      >
-        <SearchIcon />
-        <InputBase
-          placeholder={`Search ${search.type}`}
+          <Typography
+            variant="body1"
+            sx={{ pr: 1, fontFamily: 'Verdana', fontSize: 14 }}
+          >
+            I am searching for
+          </Typography>
+          <ToggleButtonGroup
+            color="primary"
+            value={search.type}
+            aria-label="search-type"
+            onChange={searchTypeChange}
+            exclusive
+            size="small"
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <ToggleButton value="books">books</ToggleButton>
+            <ToggleButton value="shelves">shelves</ToggleButton>
+          </ToggleButtonGroup>
+        </Box>
+        <Box
           sx={{
-            flex: 1,
-            pl: 1,
-            border: 'red black 2px',
+            display: 'flex',
+            alignItems: 'center',
+            width: 'clamp(200px, 80vw, 500px)',
+            height: 50,
+            border: 'solid black 2px',
+            borderRadius: '20px',
+            px: 1,
+            mt: 1,
           }}
-          value={search.query}
-          onChange={(e) => {
-            setSearch((S) => {
-              return {
-                ...S,
-                query: e.target.value,
-              };
-            });
-          }}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              handleInputSearch();
-            }
-          }}
-        />
-        <KeyboardVoiceIcon sx={{ ml: 'auto' }} />
-      </Box>
+        >
+          <SearchIcon />
+          <InputBase
+            placeholder={`Search ${search.type}`}
+            sx={{
+              flex: 1,
+              pl: 1,
+              border: 'red black 2px',
+            }}
+            value={search.query}
+            onChange={(e) => {
+              setSearch((S) => {
+                return {
+                  ...S,
+                  query: e.target.value,
+                };
+              });
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleInputSearch();
+              }
+            }}
+          />
+          <KeyboardVoiceIcon sx={{ ml: 'auto' }} />
+        </Box>
 
-      <BookSearchResultsContainer bookSearchResults={bookSearchResults} />
-      {search.type === 'query' ? (
         <BookSearchResultsContainer bookSearchResults={bookSearchResults} />
-      ) : (
-        <ShelvesSearchResultsContainer
-          shelfSearchResults={shelvesSearchResults}
-        />
-      )}
-    </Box>
+        {search.type === 'query' ? (
+          <BookSearchResultsContainer bookSearchResults={bookSearchResults} />
+        ) : (
+          <ShelvesSearchResultsContainer
+            shelfSearchResults={shelvesSearchResults}
+          />
+        )}
+      </Box>
+    </>
   );
 }
