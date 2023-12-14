@@ -33,18 +33,18 @@ export const darkTheme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#d4af37', // Matte gold for primary actions in dark mode
+      main: '#6EA6B6',
     },
     secondary: {
-      main: '#b08d57', // A darker shade of gold for secondary actions in dark mode
+      main: '#6EA6B6',
     },
     background: {
-      default: '#121212', // Modern dark background
-      paper: '#1e1e1e', // Surface color
+      default: '#212121',
+      paper: '#282828',
     },
     text: {
-      primary: '#f4f6f8', // Light text color for contrast in dark mode
-      secondary: '#b0b0b0', // Lighter secondary text color for readability
+      primary: '#e0e0e0',
+      secondary: '#a5a5a5',
     },
   },
   typography: {
@@ -53,8 +53,6 @@ export const darkTheme = createTheme({
       '-apple-system',
       'BlinkMacSystemFont',
       '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
       'Arial',
       'sans-serif',
       '"Apple Color Emoji"',

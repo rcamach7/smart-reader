@@ -190,6 +190,14 @@ export default function PrimarySearchAppBar({ toggleTheme }: Props) {
         );
       })}
       {user ? <MenuItem onClick={handleLogout}>Logout</MenuItem> : null}
+      <MenuItem
+        onClick={() => {
+          toggleTheme();
+          handleMenuClose();
+        }}
+      >
+        ToggleTheme
+      </MenuItem>
     </Menu>
   );
 

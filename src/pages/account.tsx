@@ -16,10 +16,12 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import Head from 'next/head';
+import { useTheme } from '@mui/material';
 
 export default function Account() {
   const { user, logout, isUserLoading, setUser } = useUser();
   const router = useRouter();
+  const theme = useTheme();
 
   const [modalOpenState, setModalOpenState] = useState({
     updateProfileImageModal: false,
@@ -88,7 +90,7 @@ export default function Account() {
             flexDirection: 'column',
             alignItems: 'center',
             pb: '20px',
-            backgroundColor: '#d3e3f0',
+            backgroundColor: theme.palette.mode ? 'transparent' : '#d3e3f0',
             width: '100%',
             pt: 2,
           }}

@@ -8,7 +8,7 @@ export default function useTheme() {
   function toggleTheme() {
     setTheme(theme === 'light' ? 'dark' : 'light');
 
-    localStorage.setItem('theme', theme);
+    localStorage.setItem('theme', theme === 'light' ? 'dark' : 'light');
   }
 
   useEffect(() => {

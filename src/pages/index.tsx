@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Head from 'next/head';
+import { useTheme } from '@mui/material';
 
 import Shelf from '@/types/shelf';
 import useAvailableHeight from '@/hooks/useAvailableHeight';
@@ -14,6 +15,7 @@ export default function Home() {
   const availableHeight = useAvailableHeight();
   const { addAlertMessage } = useFeedbackContext();
   const [previewShelves, setPreviewShelves] = useState<Shelf[]>([]);
+  const theme = useTheme();
 
   const updatePreviewShelf = (shelf: Shelf) => {
     setPreviewShelves((PS) => {
@@ -113,7 +115,7 @@ export default function Home() {
           sx={{
             display: 'flex',
             justifyContent: 'center',
-            backgroundColor: '#d3e3f0',
+            backgroundColor: theme.palette.mode ? 'transparent' : '#d3e3f0',
             p: { xs: 0.5, md: 1 },
           }}
         >
