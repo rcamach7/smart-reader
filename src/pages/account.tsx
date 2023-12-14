@@ -221,6 +221,7 @@ export default function Account() {
           confirmFunc={handleDeleteAccount}
           description="Warning! This action cannot be reversed, and all associates shelves will be deleted."
           title="Confirm Account Deletion"
+          type="confirm"
         />
       </Box>
     </>
