@@ -6,6 +6,7 @@ import React, {
   useEffect,
 } from 'react';
 import axios from 'axios';
+
 import { UserType } from '@/types/index';
 
 interface UserContextType {

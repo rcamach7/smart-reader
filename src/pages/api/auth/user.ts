@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+
 import { UserSchema } from '@/schemas/index';
 import { connectToMongoDB } from '@/services/mongobd';
 import { decodeAuthToken } from '@/utils/token';

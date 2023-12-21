@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+
 import { connectToMongoDB } from '@/services/mongobd';
-import { BookSchema, ShelfSchema, UserSchema } from '@/schemas/index';
+import { BookSchema, UserSchema } from '@/schemas/index';
 import { decodeAuthToken } from '@/utils/token';
 
 export default async function handler(

@@ -1,8 +1,10 @@
 import { Box, Typography, Stack, Button } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import PasswordIcon from '@mui/icons-material/Password';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import LogoutIcon from '@mui/icons-material/Logout';
+import {
+  Delete as DeleteIcon,
+  Password as PasswordIcon,
+  AccountBox as AccountBoxIcon,
+  Logout as LogoutIcon,
+} from '@mui/icons-material';
 import Link from 'next/link';
 import { ConfirmModal } from '@/components/atoms';
 

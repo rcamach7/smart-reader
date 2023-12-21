@@ -1,7 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import * as bcrypt from 'bcrypt';
+
 import { UserSchema } from '@/schemas/index';
 import { connectToMongoDB } from '@/services/mongobd';
-import * as bcrypt from 'bcrypt';
 import { setJwtToken } from '@/utils/token';
 
 export default async function handler(

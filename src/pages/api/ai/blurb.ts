@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { decodeAuthToken } from '@/utils/token';
 import OpenAI from 'openai';
+
+import { decodeAuthToken } from '@/utils/token';
 import { connectToMongoDB } from '@/services/mongobd';
 import { UserSchema } from '@/schemas/index';
 

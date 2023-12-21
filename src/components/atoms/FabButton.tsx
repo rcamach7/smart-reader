@@ -1,6 +1,7 @@
 import React from 'react';
-import Fab from '@mui/material/Fab';
-import SmartToyIcon from '@mui/icons-material/SmartToy';
+
+import { Fab } from '@mui/material';
+import { SmartToy as SmartToyIcon } from '@mui/icons-material';
 
 export default function FabButton() {
   return (

@@ -1,4 +1,5 @@
 import { Box, Typography } from '@mui/material';
+
 import { shortenString } from '@/utils/helpers';
 
 interface Props {
