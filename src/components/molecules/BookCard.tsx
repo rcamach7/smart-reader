@@ -5,7 +5,6 @@ import {
   CardContent,
   CardActions,
   CardActionArea,
-  Button,
 } from '@mui/material';
 import {
   FavoriteBookButton,
@@ -13,7 +12,7 @@ import {
 } from '@/components/atoms';
 import { ShelfSelectionMenu } from '@/components/molecules';
 
-import { shortenString } from '@/utils/helpers';
+import { shortenString, convertToHttps } from '@/utils/helpers';
 import Book from '@/types/book';
 import { ShelfType } from '@/types/index';
 
@@ -52,7 +51,7 @@ export default function BookCard({
               paddingTop: '120%',
               backgroundSize: 'contain',
             }}
-            image={book.imageLinks?.smallThumbnail}
+            image={convertToHttps(book.imageLinks?.smallThumbnail)}
             title={book.title}
           />
         </CardActionArea>
