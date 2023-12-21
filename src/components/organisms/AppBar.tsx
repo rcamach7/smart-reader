@@ -68,11 +68,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+type ThemeOption = 'light' | 'dark';
+
 type Props = {
+  theme: ThemeOption;
   toggleTheme: () => void;
 };
 
-export default function PrimarySearchAppBar({ toggleTheme }: Props) {
+export default function PrimarySearchAppBar({ toggleTheme, theme }: Props) {
   const { user, logout } = useUser();
   const router = useRouter();
 
@@ -247,22 +250,24 @@ export default function PrimarySearchAppBar({ toggleTheme }: Props) {
           >
             <MenuIcon />
           </IconButton>
-          <Box
-            sx={{
-              display: { xs: 'none', sm: 'flex', alignItems: 'center' },
-            }}
-          >
-            <Link href="/">
-              <a style={{ display: 'flex', alignItems: 'center' }}>
-                <Image
-                  src="/logos/logo.svg"
-                  alt="Headline Hunter"
-                  width={125}
-                  height={40}
-                />
-              </a>
-            </Link>
-          </Box>
+          {theme === 'light' ? (
+            <Box
+              sx={{
+                display: { xs: 'none', sm: 'flex', alignItems: 'center' },
+              }}
+            >
+              <Link href="/">
+                <a style={{ display: 'flex', alignItems: 'center' }}>
+                  <Image
+                    src="/logos/logo.svg"
+                    alt="Headline Hunter"
+                    width={125}
+                    height={40}
+                  />
+                </a>
+              </Link>
+            </Box>
+          ) : null}
           {router.pathname !== '/search' ? (
             <Search>
               <SearchIconWrapper>

@@ -32,7 +32,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
               />
             </Head>
             <CssBaseline />
-            <AppBar toggleTheme={toggleTheme} />
+            <AppBar toggleTheme={toggleTheme} theme={theme} />
             <Component {...pageProps} />
           </ThemeProvider>
         </FeedbackProvider>
