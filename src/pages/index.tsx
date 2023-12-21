@@ -51,7 +51,13 @@ export default function Home() {
       <Head>
         <title>SmartReads</title>
       </Head>
-      <Box sx={{ minHeight: availableHeight, pb: 5 }}>
+      <Box
+        sx={{
+          [previewShelves.length ? 'minHeight' : 'maxHeight']: availableHeight,
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
         <Box
           sx={{
             display: 'flex',
@@ -137,6 +143,8 @@ export default function Home() {
             flexDirection: 'column',
             gap: 1,
             alignItems: 'center',
+            flex: '1',
+            overflow: 'hidden',
           }}
         >
           {previewShelves.length ? (
@@ -160,7 +168,7 @@ export default function Home() {
                 alignItems: 'center',
               }}
             >
-              {Array.from({ length: 2 }, (_, index) => (
+              {Array.from({ length: 3 }, (_, index) => (
                 <Box
                   key={index}
                   sx={{

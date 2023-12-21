@@ -7,3 +7,4 @@ export { default as FabButton } from './FabButton';
 export { default as FavoriteBookButton } from './FavoriteBookButton';
 export { default as SectionHeader } from './SectionHeader';
 export { default as RemoveBookFromShelfButton } from './RemoveBookFromShelfButton';
+export { default as LinkItem } from './LinkItem';

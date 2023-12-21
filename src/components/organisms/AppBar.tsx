@@ -4,7 +4,6 @@ import {
   Box,
   Toolbar,
   IconButton,
-  Typography,
   InputBase,
   MenuItem,
   Menu,
@@ -20,6 +19,7 @@ import {
   Home as HomeIcon,
   Person as PersonIcon,
 } from '@mui/icons-material';
+import { LinkItem } from '@/components/atoms';
 
 import Image from 'next/image';
 import * as React from 'react';
@@ -180,13 +180,13 @@ export default function PrimarySearchAppBar({ toggleTheme }: Props) {
           return;
         }
         return (
-          <Link
-            href={item.link}
-            style={{ textDecoration: 'none', color: 'inherit' }}
+          <LinkItem
+            link={item.link}
+            text={item.title}
+            onClickHandler={item.onClickFunction}
             key={i}
-          >
-            <MenuItem onClick={item.onClickFunction}>{item.title}</MenuItem>
-          </Link>
+            type="menuItem"
+          />
         );
       })}
       {user ? <MenuItem onClick={handleLogout}>Logout</MenuItem> : null}
@@ -196,7 +196,7 @@ export default function PrimarySearchAppBar({ toggleTheme }: Props) {
           handleMenuClose();
         }}
       >
-        ToggleTheme
+        Toggle Theme
       </MenuItem>
     </Menu>
   );
@@ -204,11 +204,11 @@ export default function PrimarySearchAppBar({ toggleTheme }: Props) {
   const hamburgerMenuId = 'primary-hamburger-menu';
   const renderHamburgerMenu = (
     <Menu
-      anchorEl={hamburgerAnchorEl}
+      transformOrigin={{ vertical: 'top', horizontal: 'left' }}
       anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+      anchorEl={hamburgerAnchorEl}
       id={hamburgerMenuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'left' }}
       open={isHamburgerMenuOpen}
       onClose={handleHamburgerMenuClose}
     >
@@ -217,18 +217,16 @@ export default function PrimarySearchAppBar({ toggleTheme }: Props) {
           return null;
         }
         if (router.asPath === '/' && menuItem.link === '/') {
-          return;
+          return null;
         }
         return (
-          <Link key={i} href={menuItem.link}>
-            <MenuItem onClick={handleHamburgerMenuClose} key={menuItem.title}>
-              <Typography textAlign="center">
-                <a style={{ textDecoration: 'none', color: 'inherit' }}>
-                  {menuItem.title}
-                </a>
-              </Typography>
-            </MenuItem>
-          </Link>
+          <LinkItem
+            key={i}
+            link={menuItem.link}
+            text={menuItem.title}
+            onClickHandler={handleHamburgerMenuClose}
+            type="menuItem"
+          />
         );
       })}
     </Menu>

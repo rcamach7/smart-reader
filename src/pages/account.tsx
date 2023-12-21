@@ -6,7 +6,7 @@ import {
   Logout as LogoutIcon,
 } from '@mui/icons-material';
 import Link from 'next/link';
-import { ConfirmModal } from '@/components/atoms';
+import { ConfirmModal, LinkItem } from '@/components/atoms';
 
 import useAvailableHeight from '@/hooks/useAvailableHeight';
 import useResponsiveSize from '@/hooks/useResponsiveSize';
@@ -57,6 +57,12 @@ export default function Account() {
     });
     setIsPageLoading(false);
   };
+
+  const linkOptions = [
+    { title: 'My Library', link: '/my-library' },
+    { title: 'Search For Books', link: '/search' },
+    { title: 'View Public Shelves', link: '/shelves' },
+  ];
 
   useEffect(() => {
     if (!user && !isUserLoading) {
@@ -139,34 +145,11 @@ export default function Account() {
           justifyContent="center"
           sx={{ py: 2 }}
         >
-          <Link href="/my-library">
-            <Button
-              size={currentScreenSize}
-              color="secondary"
-              sx={{ textDecoration: 'underline' }}
-            >
-              My Library
-            </Button>
-          </Link>
-          <Link href="/search">
-            <Button
-              size={currentScreenSize}
-              color="secondary"
-              sx={{ textDecoration: 'underline' }}
-            >
-              Search For Books
-            </Button>
-          </Link>
-          <Link href="/shelves">
-            <Button
-              size={currentScreenSize}
-              color="secondary"
-              sx={{ textDecoration: 'underline' }}
-            >
-              View Public Shelves
-            </Button>
-          </Link>
+          {linkOptions.map((option, i) => {
+            return <LinkItem text={option.title} link={option.link} key={i} />;
+          })}
         </Stack>
+
         <Stack
           spacing={{ xs: 2, sm: 2.5, lg: 3 }}
           sx={{ flex: '1', pt: { xs: 2, sm: 3, md: 4 } }}
