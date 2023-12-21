@@ -1,5 +1,7 @@
 import { Box, Typography } from '@mui/material';
 
+import { useTheme } from '@mui/material';
+
 import { shortenString } from '@/utils/helpers';
 
 interface Props {
@@ -8,6 +10,8 @@ interface Props {
 }
 
 export default function BookDetailLine({ objKey, value }: Props) {
+  const theme = useTheme();
+
   if (!value) {
     return null;
   }
@@ -30,7 +34,9 @@ export default function BookDetailLine({ objKey, value }: Props) {
         display: 'flex',
         width: 310,
         alignItems: 'center',
-        borderBottom: 'solid black 1px',
+        borderBottom: `solid ${
+          theme.palette.mode === 'dark' ? 'white' : 'black'
+        } 1px`,
       }}
     >
       <Typography

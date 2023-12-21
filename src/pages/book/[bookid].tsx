@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useTheme } from '@mui/material';
 
 import { useLoadingContext } from '@/context/LoadingContext';
 import { useFeedbackContext } from '@/context/FeedbackContext';
@@ -19,6 +20,7 @@ export default function CategoryPage() {
     show: false,
     summary: '',
   });
+  const theme = useTheme();
 
   const {
     query: { bookid: bid },
@@ -87,7 +89,8 @@ export default function CategoryPage() {
           sx={{
             textAlign: 'center',
             pb: 1.5,
-            backgroundColor: '#d3e3f0',
+            backgroundColor:
+              theme.palette.mode === 'dark' ? 'transparent' : '#d3e3f0',
             width: '100%',
             display: 'flex',
             flexDirection: 'column',
@@ -130,7 +133,7 @@ export default function CategoryPage() {
             }
           })}
         </Box>
-        {/* <FabButton /> */}
+        <FabButton />
         <ConfirmModal
           open={summaryModal.show}
           type="information"

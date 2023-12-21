@@ -5,7 +5,6 @@ import {
   AccountBox as AccountBoxIcon,
   Logout as LogoutIcon,
 } from '@mui/icons-material';
-import Link from 'next/link';
 import { ConfirmModal, LinkItem } from '@/components/atoms';
 
 import useAvailableHeight from '@/hooks/useAvailableHeight';
@@ -98,7 +97,8 @@ export default function Account() {
             flexDirection: 'column',
             alignItems: 'center',
             pb: '20px',
-            backgroundColor: theme.palette.mode ? 'transparent' : '#d3e3f0',
+            backgroundColor:
+              theme.palette.mode === 'dark' ? 'transparent' : '#d3e3f0',
             width: '100%',
             pt: 2,
           }}

@@ -1,21 +1,24 @@
 import { Box, Typography } from '@mui/material';
 import { ShelfSelectionMenu } from '@/components/molecules';
+import { FavoriteBookButton } from '@/components/atoms';
 
 import { BookType } from '@/types/index';
-import { FavoriteBookButton } from '@/components/atoms';
+import { useTheme } from '@mui/material';
 
 interface Props {
   book: BookType;
 }
 
 export default function BookPageHeader({ book }: Props) {
+  const theme = useTheme();
   return (
     <Box
       sx={{
         width: '100%',
         display: 'flex',
         p: 3,
-        backgroundColor: '#d3e3f0',
+        backgroundColor:
+          theme.palette.mode === 'dark' ? 'transparent' : '#d3e3f0',
         justifyContent: 'center',
       }}
     >

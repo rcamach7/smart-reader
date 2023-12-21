@@ -121,7 +121,8 @@ export default function Home() {
           sx={{
             display: 'flex',
             justifyContent: 'center',
-            backgroundColor: theme.palette.mode ? 'transparent' : '#d3e3f0',
+            backgroundColor:
+              theme.palette.mode === 'dark' ? 'transparent' : '#d3e3f0',
             p: { xs: 0.5, md: 1 },
           }}
         >
