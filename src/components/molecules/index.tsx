@@ -6,3 +6,4 @@ export { default as ShelfFormModal } from './ShelfFormModal';
 export { default as ShelfSelectionMenu } from './ShelfSelectionMenu';
 export { default as BookSearchResultsContainer } from './BookSearchResultsContainer';
 export { default as ShelvesSearchResultsContainer } from './ShelvesSearchResultsContainer';
+export { default as Chat } from './Chat/Chat';
