@@ -9,8 +9,8 @@ import Book from '@/types/book';
 import useAvailableHeight from '@/hooks/useAvailableHeight';
 
 import { PageLoading, BookDetailLine } from '@/components/atoms';
-import { BookPageHeader } from '@/components/molecules';
-import { FabButton, ConfirmModal } from '@/components/atoms';
+import { BookPageHeader, Chat } from '@/components/molecules';
+import { ConfirmModal } from '@/components/atoms';
 import { Box, Typography, Button } from '@mui/material';
 
 export default function CategoryPage() {
@@ -133,7 +133,7 @@ export default function CategoryPage() {
             }
           })}
         </Box>
-        <FabButton />
+        <Chat />
         <ConfirmModal
           open={summaryModal.show}
           type="information"

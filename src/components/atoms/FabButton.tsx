@@ -3,7 +3,11 @@ import React from 'react';
 import { Fab } from '@mui/material';
 import { SmartToy as SmartToyIcon } from '@mui/icons-material';
 
-export default function FabButton() {
+interface Props {
+  onClick: () => void;
+}
+
+export default function FabButton({ onClick }: Props) {
   return (
     <Fab
       color="primary"
@@ -14,6 +18,7 @@ export default function FabButton() {
         right: 20,
         zIndex: 1000,
       }}
+      onClick={onClick}
     >
       <SmartToyIcon />
     </Fab>
