@@ -6,6 +6,7 @@ import { FabButton } from '@/components/atoms';
 interface Props {}
 
 export default function Chat({}: Props) {
+  const [input, setInput] = useState('');
   const [chat, setChat] = useState({
     open: false,
     messages: [
@@ -37,6 +38,24 @@ export default function Chat({}: Props) {
     });
   };
 
+  const addMessage = (message: string) => {
+    setChat((C) => {
+      return {
+        ...C,
+        messages: [...C.messages, { role: 'user', content: message }],
+      };
+    });
+  };
+
+  const handleSendMessage = () => {
+    if (input.length) {
+      addMessage(input);
+      setInput('');
+    } else {
+      alert('No message entered');
+    }
+  };
+
   return (
     <>
       <FabButton onClick={() => toggleChat()} />
@@ -55,10 +74,11 @@ export default function Chat({}: Props) {
               top: '50%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
-              width: 'clamp(300px, 90vw, 600px)',
-              height: 'clamp(300px, 90vh, 700px)',
+              width: 'clamp(300px, 90vw, 500px)',
+              height: 'clamp(300px, 80vh, 700px)',
               bgcolor: 'background.paper',
               boxShadow: 24,
+              borderRadius: 1,
               p: 2,
             }}
           >
@@ -80,8 +100,8 @@ export default function Chat({}: Props) {
                   '::-webkit-scrollbar': {
                     display: 'none',
                   },
-                  backgroundColor: 'red',
                   flexDirection: 'column-reverse',
+                  pb: 1,
                 }}
               >
                 {messages.reverse().map((message, i) => {
@@ -113,7 +133,24 @@ export default function Chat({}: Props) {
                   );
                 })}
               </Box>
-              <InputBase sx={{ backgroundColor: 'yellow' }} />
+              <InputBase
+                onChange={(e) => {
+                  setInput(e.target.value);
+                }}
+                value={input}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleSendMessage();
+                  }
+                }}
+                placeholder="Enter Message"
+                inputProps={{ 'aria-label': 'send-message' }}
+                sx={{
+                  border: 'solid #343541 2px',
+                  p: 0.5,
+                  borderRadius: '5px',
+                }}
+              />
             </Box>
           </Box>
         </Modal>
