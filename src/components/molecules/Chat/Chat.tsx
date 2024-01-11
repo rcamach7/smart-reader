@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Box, Modal, InputBase, Typography, Button } from '@mui/material';
 import StartingMessagePrompt from './StartingMessagePrompt';
 import { FabButton } from '@/components/atoms';
+import axios from 'axios';
 
 interface Props {}
 
@@ -12,23 +13,11 @@ export default function Chat({}: Props) {
     open: false,
     messages: [
       { role: 'system', content: 'First Message(AI)' },
-      { role: 'system', content: 'First Message(AI)' },
-      { role: 'user', content: 'I am a person.(ME)' },
-      { role: 'system', content: 'You are a helpful assistant.(AI)' },
-      { role: 'system', content: 'You are a helpful assistant.(AI)' },
-      { role: 'user', content: 'I am a person.(ME)' },
-      { role: 'system', content: 'You are a helpful assistant.(AI)' },
-      { role: 'system', content: 'You are a helpful assistant.(AI)' },
-      { role: 'user', content: 'I am a person.(ME)' },
-      { role: 'system', content: 'You are a helpful assistant.(AI)' },
-      { role: 'system', content: 'You are a helpful assistant.(AI)' },
-      { role: 'user', content: 'I am a person.(ME)' },
-      { role: 'system', content: 'You are a helpful assistant.(AI)' },
-      { role: 'system', content: 'You are a helpful assistant.(AI)' },
-      { role: 'user', content: 'I am a person.(ME)' },
-      { role: 'system', content: 'You are a helpful assistant.(AI)' },
-      { role: 'system', content: 'You are a helpful assistant.(AI)' },
-      { role: 'user', content: 'Newest Message (ME)' },
+      {
+        role: 'system',
+        content:
+          "Excited about your next book adventure? I'm here to make it even better. Just ask me about the book's vibe, its story sneak-peek, how easy it is to read, or get tips on similar reads. ",
+      },
     ],
     showStartingMessagePrompt: true,
   });
@@ -36,6 +25,13 @@ export default function Chat({}: Props) {
 
   const handleSelectStartingMessage = (startingMessage: string) => {
     if (startingMessage) {
+      setChat((C) => {
+        return {
+          ...C,
+          messages: [...C.messages, { role: 'user', content: startingMessage }],
+          showStartingMessagePrompt: false,
+        };
+      });
     } else {
       setChat((C) => {
         return {
@@ -52,22 +48,33 @@ export default function Chat({}: Props) {
     });
   };
 
-  const addMessage = (message: string) => {
+  const handleSendMessage = async () => {
+    if (input.length < 5) {
+      alert('Message must be 5 or more characters');
+    }
+
+    const messages = [...chat.messages, { role: 'user', content: input }];
     setChat((C) => {
       return {
         ...C,
-        messages: [...C.messages, { role: 'user', content: message }],
+        messages: messages,
       };
     });
-  };
+    setInput('');
 
-  const handleSendMessage = () => {
-    if (input.length) {
-      addMessage(input);
-      setInput('');
-    } else {
-      alert('No message entered');
-    }
+    // Once Backend Is Implemented
+    // try {
+    //   const res = await axios.post('api/', messages);
+    //   const updatedMessages = res.data.messages;
+    //   setChat((C) => {
+    //     return {
+    //       ...C,
+    //       messages: updatedMessages,
+    //     };
+    //   });
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   return (
@@ -117,7 +124,7 @@ export default function Chat({}: Props) {
                   sx={{
                     display: 'flex',
                     flex: 1,
-                    gap: 1,
+                    gap: 0.5,
                     overflow: 'scroll',
                     '::-webkit-scrollbar': {
                       display: 'none',
