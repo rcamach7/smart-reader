@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
-import { Box, Modal, InputBase, Typography } from '@mui/material';
+import { Box, Modal, InputBase, Typography, Button } from '@mui/material';
+import StartingMessagePrompt from './StartingMessagePrompt';
 import { FabButton } from '@/components/atoms';
 
 interface Props {}
@@ -29,8 +30,21 @@ export default function Chat({}: Props) {
       { role: 'system', content: 'You are a helpful assistant.(AI)' },
       { role: 'user', content: 'Newest Message (ME)' },
     ],
+    showStartingMessagePrompt: true,
   });
   const messages = chat.messages.slice(1);
+
+  const handleSelectStartingMessage = (startingMessage: string) => {
+    if (startingMessage) {
+    } else {
+      setChat((C) => {
+        return {
+          ...C,
+          showStartingMessagePrompt: false,
+        };
+      });
+    }
+  };
 
   const toggleChat = () => {
     setChat((C) => {
@@ -67,7 +81,6 @@ export default function Chat({}: Props) {
           aria-labelledby="modal-modal-confirm"
           aria-describedby="modal-modal-description"
         >
-          {/* Modal Index Container */}
           <Box
             sx={{
               position: 'absolute' as 'absolute',
@@ -79,78 +92,87 @@ export default function Chat({}: Props) {
               bgcolor: 'background.paper',
               boxShadow: 24,
               borderRadius: 1,
-              p: 2,
             }}
           >
-            {/* Contains The Message, and Input  */}
             <Box
               sx={{
-                display: 'flex',
-                flexDirection: 'column',
+                position: 'relative',
                 height: '100%',
+                p: 2,
               }}
             >
-              {/* Message Container */}
+              {chat.showStartingMessagePrompt && (
+                <StartingMessagePrompt
+                  handleSelectStartingMessage={handleSelectStartingMessage}
+                />
+              )}
               <Box
                 sx={{
                   display: 'flex',
-                  flex: 1,
-                  gap: 1,
-                  overflow: 'scroll',
-                  '::-webkit-scrollbar': {
-                    display: 'none',
-                  },
-                  flexDirection: 'column-reverse',
-                  pb: 1,
+                  flexDirection: 'column',
+                  height: '100%',
                 }}
               >
-                {messages.reverse().map((message, i) => {
-                  return (
-                    // Message Component
-                    <Box
-                      sx={{
-                        textAlign: `${
-                          message.role === 'user' ? 'right' : 'left'
-                        }`,
-                        p: 0.5,
-                      }}
-                      key={i}
-                    >
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flex: 1,
+                    gap: 1,
+                    overflow: 'scroll',
+                    '::-webkit-scrollbar': {
+                      display: 'none',
+                    },
+                    flexDirection: 'column-reverse',
+                    pb: 1,
+                  }}
+                >
+                  {messages.reverse().map((message, i) => {
+                    return (
                       <Box
                         sx={{
-                          display: 'inline-block',
-                          backgroundColor: `${
-                            message.role === 'user' ? 'blue' : 'grey'
+                          textAlign: `${
+                            message.role === 'user' ? 'right' : 'left'
                           }`,
-                          color: 'white',
-                          borderRadius: 2,
                           p: 0.5,
                         }}
+                        key={i}
                       >
-                        <Typography>{message.content}</Typography>
+                        <Box
+                          sx={{
+                            display: 'inline-block',
+                            backgroundColor: `${
+                              message.role === 'user' ? 'blue' : 'grey'
+                            }`,
+                            color: 'white',
+                            borderRadius: 2,
+                            p: 0.5,
+                          }}
+                        >
+                          <Typography>{message.content}</Typography>
+                        </Box>
                       </Box>
-                    </Box>
-                  );
-                })}
+                    );
+                  })}
+                </Box>
+                <InputBase
+                  onChange={(e) => {
+                    setInput(e.target.value);
+                  }}
+                  value={input}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      handleSendMessage();
+                    }
+                  }}
+                  placeholder="Enter Message"
+                  inputProps={{ 'aria-label': 'send-message' }}
+                  sx={{
+                    border: 'solid #343541 2px',
+                    p: 0.5,
+                    borderRadius: '5px',
+                  }}
+                />
               </Box>
-              <InputBase
-                onChange={(e) => {
-                  setInput(e.target.value);
-                }}
-                value={input}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    handleSendMessage();
-                  }
-                }}
-                placeholder="Enter Message"
-                inputProps={{ 'aria-label': 'send-message' }}
-                sx={{
-                  border: 'solid #343541 2px',
-                  p: 0.5,
-                  borderRadius: '5px',
-                }}
-              />
             </Box>
           </Box>
         </Modal>
