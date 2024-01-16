@@ -133,7 +133,7 @@ export default function CategoryPage() {
             }
           })}
         </Box>
-        <Chat />
+        <Chat book={book} />
         <ConfirmModal
           open={summaryModal.show}
           type="information"

@@ -9,9 +9,13 @@ import SendIcon from '@mui/icons-material/Send';
 import { useLoadingContext } from '@/context/LoadingContext';
 import { useFeedbackContext } from '@/context/FeedbackContext';
 
-interface Props {}
+import Book from '@/types/book';
 
-export default function Chat({}: Props) {
+interface Props {
+  book: Book;
+}
+
+export default function Chat({ book }: Props) {
   const { addAlertMessage } = useFeedbackContext();
   const { setIsPageLoading } = useLoadingContext();
 
@@ -19,7 +23,13 @@ export default function Chat({}: Props) {
   const [chat, setChat] = useState({
     open: false,
     messages: [
-      { role: 'system', content: 'First Message(AI)' },
+      { role: 'system', content: 'You are a helpful assistant.' },
+      {
+        role: 'user',
+        content: `You will assist me in answering questions about the book ${
+          book.title
+        } by ${book.authors.join(', ')}. The ISBN is ${book.isbn}.`,
+      },
       {
         role: 'system',
         content:
@@ -28,7 +38,7 @@ export default function Chat({}: Props) {
     ],
     showStartingMessagePrompt: true,
   });
-  const messages = chat.messages.slice(1);
+  const messages = chat.messages.slice(2);
 
   const handleSelectStartingMessage = (startingMessage: string) => {
     if (startingMessage) {
