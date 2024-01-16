@@ -49,7 +49,6 @@ export default async function handler(
           messages: messages,
           model: 'gpt-3.5-turbo',
         });
-        console.log(completion.choices[0]);
 
         return res.status(200).json({
           messages: [
