@@ -1,21 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import axios from 'axios';
 
-import {
-  Box,
-  Modal,
-  InputBase,
-  Typography,
-  Button,
-  IconButton,
-} from '@mui/material';
+import { Box, Modal, InputBase, Typography, IconButton } from '@mui/material';
 import StartingMessagePrompt from './StartingMessagePrompt';
 import { FabButton } from '@/components/atoms';
 import SendIcon from '@mui/icons-material/Send';
-import axios from 'axios';
+
+import { useLoadingContext } from '@/context/LoadingContext';
+import { useFeedbackContext } from '@/context/FeedbackContext';
 
 interface Props {}
 
 export default function Chat({}: Props) {
+  const { addAlertMessage } = useFeedbackContext();
+  const { setIsPageLoading } = useLoadingContext();
+
   const [input, setInput] = useState('');
   const [chat, setChat] = useState({
     open: false,
@@ -58,8 +57,19 @@ export default function Chat({}: Props) {
 
   const handleSendMessage = async () => {
     if (input.length < 5) {
-      alert('Message must be 5 or more characters');
+      addAlertMessage({
+        text: 'Message must be 5 or more characters',
+        severity: 'warning',
+      });
       return;
+    }
+    if (chat.showStartingMessagePrompt) {
+      setChat((C) => {
+        return {
+          ...C,
+          showStartingMessagePrompt: false,
+        };
+      });
     }
 
     const messages = [...chat.messages, { role: 'user', content: input }];
