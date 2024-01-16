@@ -16,7 +16,16 @@ export default async function handler(
     return res.status(400).json({ message: 'User not authenticated', error });
   }
 
-  const { book, messageHistory } = req.body;
+  const { book, messages } = req.body;
+  console.log(book);
+  console.log(messages);
+
+  return res
+    .status(200)
+    .json({
+      messages: [...messages, { role: 'system', content: 'hello world' }],
+    });
+  return;
 
   switch (req.method) {
     case 'POST':
@@ -46,17 +55,17 @@ export default async function handler(
         await user.save();
 
         const openaiApi = new OpenAI({ apiKey: process.env.OPEN_AI_KEY });
-        const completion = await openaiApi.chat.completions.create({
-          messages: [
-            { role: 'system', content: 'You are a helpful assistant.' },
-            { role: 'user', content: prompt },
-          ],
-          model: 'gpt-3.5-turbo',
-        });
+        // const completion = await openaiApi.chat.completions.create({
+        //   messages: [
+        //     { role: 'system', content: 'You are a helpful assistant.' },
+        //     { role: 'user', content: prompt },
+        //   ],
+        //   model: 'gpt-3.5-turbo',
+        // });
 
-        return res
-          .status(200)
-          .json({ summary: completion.choices[0].message.content });
+        // return res
+        //   .status(200)
+        //   .json({ summary: completion.choices[0].message.content });
       } catch (error) {
         console.log(error);
         return res

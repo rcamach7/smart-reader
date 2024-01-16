@@ -8,6 +8,7 @@ import SendIcon from '@mui/icons-material/Send';
 
 import { useLoadingContext } from '@/context/LoadingContext';
 import { useFeedbackContext } from '@/context/FeedbackContext';
+import { useUser } from '@/context/UserContext';
 
 import Book from '@/types/book';
 
@@ -18,6 +19,7 @@ interface Props {
 export default function Chat({ book }: Props) {
   const { addAlertMessage } = useFeedbackContext();
   const { setIsPageLoading } = useLoadingContext();
+  const { user } = useUser();
 
   const [input, setInput] = useState('');
   const [chat, setChat] = useState({
@@ -40,38 +42,41 @@ export default function Chat({ book }: Props) {
   });
   const messages = chat.messages.slice(2);
 
-  const handleSelectStartingMessage = (startingMessage: string) => {
-    if (startingMessage) {
+  const toggleChat = () => {
+    if (user) {
       setChat((C) => {
-        return {
-          ...C,
-          messages: [...C.messages, { role: 'user', content: startingMessage }],
-          showStartingMessagePrompt: false,
-        };
+        return { ...C, open: !C.open };
       });
     } else {
-      setChat((C) => {
-        return {
-          ...C,
-          showStartingMessagePrompt: false,
-        };
+      addAlertMessage({
+        severity: 'error',
+        text: 'Please sign in to use this feature',
       });
     }
   };
 
-  const toggleChat = () => {
+  const noDefaultStartingMessages = () => {
     setChat((C) => {
-      return { ...C, open: !C.open };
+      return {
+        ...C,
+        showStartingMessagePrompt: false,
+      };
     });
   };
 
-  const handleSendMessage = async () => {
-    if (input.length < 5) {
-      addAlertMessage({
-        text: 'Message must be 5 or more characters',
-        severity: 'warning',
-      });
-      return;
+  const handleSendMessage = async (message?: string) => {
+    const messages = [...chat.messages];
+    if (message) {
+      messages.push({ role: 'user', content: message });
+    } else {
+      if (input.length < 5 && !message) {
+        addAlertMessage({
+          text: 'Message must be 5 or more characters',
+          severity: 'warning',
+        });
+        return;
+      }
+      messages.push({ role: 'user', content: input });
     }
     if (chat.showStartingMessagePrompt) {
       setChat((C) => {
@@ -82,28 +87,26 @@ export default function Chat({ book }: Props) {
       });
     }
 
-    const messages = [...chat.messages, { role: 'user', content: input }];
-    setChat((C) => {
-      return {
-        ...C,
-        messages: messages,
-      };
-    });
-    setInput('');
+    try {
+      setIsPageLoading(true);
 
-    // Once Backend Is Implemented
-    // try {
-    //   const res = await axios.post('api/', messages);
-    //   const updatedMessages = res.data.messages;
-    //   setChat((C) => {
-    //     return {
-    //       ...C,
-    //       messages: updatedMessages,
-    //     };
-    //   });
-    // } catch (error) {
-    //   console.log(error);
-    // }
+      const res = await axios.post('/api/ai/conversation', { book, messages });
+      const updatedMessages = res.data.messages;
+      setChat((C) => {
+        return {
+          ...C,
+          messages: updatedMessages,
+        };
+      });
+      setInput('');
+    } catch (error) {
+      console.log(error);
+      addAlertMessage({
+        severity: 'error',
+        text: error?.response?.data?.message,
+      });
+    }
+    setIsPageLoading(false);
   };
 
   return (
@@ -140,7 +143,8 @@ export default function Chat({ book }: Props) {
             >
               {chat.showStartingMessagePrompt && (
                 <StartingMessagePrompt
-                  handleSelectStartingMessage={handleSelectStartingMessage}
+                  handleSendMessage={handleSendMessage}
+                  noDefaultStartingMessages={noDefaultStartingMessages}
                 />
               )}
               <Box
@@ -219,7 +223,9 @@ export default function Chat({ book }: Props) {
                     size="small"
                     aria-label="send"
                     sx={{ px: 0.5, color: 'white' }}
-                    onClick={handleSendMessage}
+                    onClick={() => {
+                      handleSendMessage();
+                    }}
                   >
                     <SendIcon />
                   </IconButton>

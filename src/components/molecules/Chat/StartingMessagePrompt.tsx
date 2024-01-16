@@ -1,11 +1,13 @@
 import { Box, Typography, Button } from '@mui/material';
 
 interface Props {
-  handleSelectStartingMessage: (string) => void;
+  handleSendMessage: (string?: string) => void;
+  noDefaultStartingMessages: () => void;
 }
 
 export default function StartingMessagePrompt({
-  handleSelectStartingMessage,
+  handleSendMessage,
+  noDefaultStartingMessages,
 }: Props) {
   const options = [
     "Can you provide a summary of the book's plot without giving away major spoilers?",
@@ -54,7 +56,7 @@ export default function StartingMessagePrompt({
               key={option}
               variant="contained"
               onClick={() => {
-                handleSelectStartingMessage(option);
+                handleSendMessage(option);
               }}
             >
               {option}
@@ -64,7 +66,7 @@ export default function StartingMessagePrompt({
         <Button
           variant="text"
           onClick={() => {
-            handleSelectStartingMessage('');
+            noDefaultStartingMessages();
           }}
         >
           Ask Your Own Question Instead
