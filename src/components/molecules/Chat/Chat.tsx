@@ -1,8 +1,16 @@
 import { useEffect, useState } from 'react';
 
-import { Box, Modal, InputBase, Typography, Button } from '@mui/material';
+import {
+  Box,
+  Modal,
+  InputBase,
+  Typography,
+  Button,
+  IconButton,
+} from '@mui/material';
 import StartingMessagePrompt from './StartingMessagePrompt';
 import { FabButton } from '@/components/atoms';
+import SendIcon from '@mui/icons-material/Send';
 import axios from 'axios';
 
 interface Props {}
@@ -51,6 +59,7 @@ export default function Chat({}: Props) {
   const handleSendMessage = async () => {
     if (input.length < 5) {
       alert('Message must be 5 or more characters');
+      return;
     }
 
     const messages = [...chat.messages, { role: 'user', content: input }];
@@ -106,6 +115,7 @@ export default function Chat({}: Props) {
                 position: 'relative',
                 height: '100%',
                 p: 2,
+                backgroundColor: '#1e1e1e',
               }}
             >
               {chat.showStartingMessagePrompt && (
@@ -120,6 +130,9 @@ export default function Chat({}: Props) {
                   height: '100%',
                 }}
               >
+                <Box sx={{ color: 'white', textAlign: 'center', pb: 1 }}>
+                  Conversation With Smart Helper
+                </Box>
                 <Box
                   sx={{
                     display: 'flex',
@@ -148,7 +161,7 @@ export default function Chat({}: Props) {
                           sx={{
                             display: 'inline-block',
                             backgroundColor: `${
-                              message.role === 'user' ? 'blue' : 'grey'
+                              message.role === 'user' ? '#0e85ff' : '#3b3b3d'
                             }`,
                             color: 'white',
                             borderRadius: 2,
@@ -161,24 +174,36 @@ export default function Chat({}: Props) {
                     );
                   })}
                 </Box>
-                <InputBase
-                  onChange={(e) => {
-                    setInput(e.target.value);
-                  }}
-                  value={input}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      handleSendMessage();
-                    }
-                  }}
-                  placeholder="Enter Message"
-                  inputProps={{ 'aria-label': 'send-message' }}
-                  sx={{
-                    border: 'solid #343541 2px',
-                    p: 0.5,
-                    borderRadius: '5px',
-                  }}
-                />
+                <Box sx={{ display: 'flex' }}>
+                  <InputBase
+                    onChange={(e) => {
+                      setInput(e.target.value);
+                    }}
+                    value={input}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        handleSendMessage();
+                      }
+                    }}
+                    placeholder="Enter Message"
+                    inputProps={{ 'aria-label': 'send-message' }}
+                    sx={{
+                      border: 'solid #343541 2px',
+                      p: 0.5,
+                      borderRadius: '5px',
+                      color: 'white',
+                      flex: 1,
+                    }}
+                  />
+                  <IconButton
+                    size="small"
+                    aria-label="send"
+                    sx={{ px: 0.5, color: 'white' }}
+                    onClick={handleSendMessage}
+                  >
+                    <SendIcon />
+                  </IconButton>
+                </Box>
               </Box>
             </Box>
           </Box>
