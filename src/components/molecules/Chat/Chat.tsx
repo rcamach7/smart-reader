@@ -192,7 +192,9 @@ export default function Chat({ book }: Props) {
                             p: 0.5,
                           }}
                         >
-                          <Typography>{message.content}</Typography>
+                          <Typography sx={{ whiteSpace: 'pre-wrap' }}>
+                            {message.content}
+                          </Typography>
                         </Box>
                       </Box>
                     );

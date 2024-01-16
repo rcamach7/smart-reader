@@ -17,16 +17,6 @@ export default async function handler(
   }
 
   const { book, messages } = req.body;
-  console.log(book);
-  console.log(messages);
-
-  return res
-    .status(200)
-    .json({
-      messages: [...messages, { role: 'system', content: 'hello world' }],
-    });
-  return;
-
   switch (req.method) {
     case 'POST':
       try {
@@ -46,7 +36,7 @@ export default async function handler(
           user.apiUsage.dateLastUsed = today;
           user.apiUsage.dayUsage = 1;
         } else if (lastUsed.getTime() === today.getTime()) {
-          if (user.apiUsage.dayUsage >= 10) {
+          if (user.apiUsage.dayUsage >= 15) {
             return res.status(400).json({ message: 'Daily limit exceeded' });
           } else {
             user.apiUsage.dayUsage += 1;
@@ -55,22 +45,23 @@ export default async function handler(
         await user.save();
 
         const openaiApi = new OpenAI({ apiKey: process.env.OPEN_AI_KEY });
-        // const completion = await openaiApi.chat.completions.create({
-        //   messages: [
-        //     { role: 'system', content: 'You are a helpful assistant.' },
-        //     { role: 'user', content: prompt },
-        //   ],
-        //   model: 'gpt-3.5-turbo',
-        // });
+        const completion = await openaiApi.chat.completions.create({
+          messages: messages,
+          model: 'gpt-3.5-turbo',
+        });
+        console.log(completion.choices[0]);
 
-        // return res
-        //   .status(200)
-        //   .json({ summary: completion.choices[0].message.content });
+        return res.status(200).json({
+          messages: [
+            ...messages,
+            { role: 'system', content: completion.choices[0].message.content },
+          ],
+        });
       } catch (error) {
         console.log(error);
         return res
           .status(500)
-          .json({ message: 'Error retrieving shelf', error });
+          .json({ message: 'Error sending message', error });
       }
 
     default:
