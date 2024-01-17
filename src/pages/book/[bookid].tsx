@@ -9,8 +9,9 @@ import Book from '@/types/book';
 import useAvailableHeight from '@/hooks/useAvailableHeight';
 
 import { PageLoading, BookDetailLine } from '@/components/atoms';
-import { BookPageHeader, Chat } from '@/components/molecules';
+import { BookPageHeader } from '@/components/molecules';
 import { ConfirmModal } from '@/components/atoms';
+import { Chat } from '@/components/organisms';
 import { Box, Typography, Button } from '@mui/material';
 
 export default function CategoryPage() {
