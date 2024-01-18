@@ -19,13 +19,15 @@ export default function BookDetailLine({ objKey, value }: Props) {
     objKey = 'Date Published';
   } else if (objKey === 'printType') {
     objKey = 'Print Type';
+  } else if (objKey === 'categories') {
+    objKey = 'Category(ies)';
   } else {
     if (objKey !== 'isbn' && objKey !== 'isbn13') {
       objKey = objKey.substring(0, 1).toUpperCase().concat(objKey.substring(1));
     }
   }
   const dynamicFontSize = {
-    fontSize: { xs: '1rem', sm: '1.1rem' },
+    fontSize: { xs: '.9rem', sm: '1rem' },
   };
 
   return (
@@ -34,9 +36,11 @@ export default function BookDetailLine({ objKey, value }: Props) {
         display: 'flex',
         width: 310,
         alignItems: 'center',
-        borderBottom: `solid ${
-          theme.palette.mode === 'dark' ? 'white' : 'black'
-        } 1px`,
+        borderRadius: 2,
+        p: 0.5,
+        backgroundColor: `${
+          theme.palette.mode === 'dark' ? 'transparent' : '#D3E3F0'
+        }`,
       }}
     >
       <Typography
@@ -46,7 +50,7 @@ export default function BookDetailLine({ objKey, value }: Props) {
           ...dynamicFontSize,
         }}
       >
-        {objKey}
+        {objKey}:
       </Typography>
       <Typography sx={{ flex: 2, ...dynamicFontSize }}>
         {shortenString(value, 30)}
