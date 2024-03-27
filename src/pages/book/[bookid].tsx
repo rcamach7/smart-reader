@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useTheme } from '@mui/material';
+import Head from 'next/head';
 
 import { useLoadingContext } from '@/context/LoadingContext';
 import { useFeedbackContext } from '@/context/FeedbackContext';
@@ -77,78 +78,86 @@ export default function CategoryPage() {
 
   if (book) {
     return (
-      <Box
-        sx={{
-          height: useAvailableHeight,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <BookPageHeader book={book} />
+      <>
+        <Head>
+          <title>{book.title}</title>
+        </Head>
         <Box
           sx={{
-            textAlign: 'center',
-            pb: 1.5,
-            backgroundColor:
-              theme.palette.mode === 'dark' ? 'transparent' : '#d3e3f0',
-            width: '100%',
+            height: useAvailableHeight,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
           }}
         >
-          <Typography
+          <BookPageHeader book={book} />
+          <Box
             sx={{
-              fontSize: { xs: '.9rem', sm: '1rem', md: '1.1rem' },
-              px: 1,
-              pb: 1,
-              maxWidth: 600,
+              textAlign: 'center',
+              pb: 1.5,
+              backgroundColor:
+                theme.palette.mode === 'dark' ? 'transparent' : '#d3e3f0',
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
             }}
           >
-            Discover your next favorite read with our AI-powered book insights!
-            We analyze your favorite books to identify any similarities and
-            offer a tailored overview and recommendation.
-          </Typography>
-          <Button variant="outlined" onClick={getBookSummary}>
-            Get My Personalized Book Insight
-          </Button>
+            <Typography
+              sx={{
+                fontSize: { xs: '.9rem', sm: '1rem', md: '1.1rem' },
+                px: 1,
+                pb: 1,
+                maxWidth: 600,
+              }}
+            >
+              Discover your next favorite read with our AI-powered book
+              insights! We analyze your favorite books to identify any
+              similarities and offer a tailored overview and recommendation.
+            </Typography>
+            <Button variant="outlined" onClick={getBookSummary}>
+              Get My Personalized Book Insight
+            </Button>
+          </Box>
+          <Box
+            sx={{
+              p: 1,
+              width: 'clamp(350px, 95vw, 700px)',
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: 0.5,
+              justifyContent: 'center',
+            }}
+          >
+            {bookMetaDataKeys.map((key, i) => {
+              if (!book[key]) {
+                return null;
+              } else {
+                const val =
+                  key === 'categories' ? book[key].join(', ') : book[key];
+                return <BookDetailLine key={i} objKey={key} value={val} />;
+              }
+            })}
+          </Box>
+          <Chat book={book} />
+          <ConfirmModal
+            open={summaryModal.show}
+            type="information"
+            description={summaryModal.summary}
+            title="Your Recommendation"
+            toggle={toggleShowSummaryModal}
+          />
         </Box>
-        <Box
-          sx={{
-            p: 1,
-            width: 'clamp(350px, 95vw, 700px)',
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: 0.5,
-            justifyContent: 'center',
-          }}
-        >
-          {bookMetaDataKeys.map((key, i) => {
-            if (!book[key]) {
-              return null;
-            } else {
-              const val =
-                key === 'categories' ? book[key].join(', ') : book[key];
-              return <BookDetailLine key={i} objKey={key} value={val} />;
-            }
-          })}
-        </Box>
-        <Chat book={book} />
-        <ConfirmModal
-          open={summaryModal.show}
-          type="information"
-          description={summaryModal.summary}
-          title="Your Recommendation"
-          toggle={toggleShowSummaryModal}
-        />
-      </Box>
+      </>
     );
   } else if (error) {
     return <>An unexpected error occurred</>;
   } else {
     return (
       <>
+        <Head>
+          <title>...</title>
+        </Head>
         <PageLoading />
       </>
     );
