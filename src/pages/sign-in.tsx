@@ -155,7 +155,7 @@ export default function Login() {
             <Link href="/sign-up">
               <Typography
                 textAlign="center"
-                sx={{ textDecoration: 'underline' }}
+                sx={{ textDecoration: 'underline', cursor: 'pointer' }}
               >
                 New? Create an account
               </Typography>
@@ -166,7 +166,7 @@ export default function Login() {
             <Typography
               textAlign="center"
               fontSize={14}
-              sx={{ textDecoration: 'underline' }}
+              sx={{ textDecoration: 'underline', cursor: 'pointer' }}
               onClick={handleDemoAccount}
             >
               Use demo account
