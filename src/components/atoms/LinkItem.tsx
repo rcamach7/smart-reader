@@ -19,7 +19,7 @@ export default function LinkItem({ link, onClickHandler, text, type }: Props) {
     return (
       <Link href={link}>
         <MenuItem onClick={onClickHandler}>
-          <Typography textAlign="center">
+          <Typography textAlign="center" sx={{ textDecoration: 'underline' }}>
             <a style={linkStyle}>{text}</a>
           </Typography>
         </MenuItem>
@@ -28,7 +28,7 @@ export default function LinkItem({ link, onClickHandler, text, type }: Props) {
   } else {
     return (
       <Link href={link}>
-        <Typography textAlign="center">
+        <Typography textAlign="center" sx={{ textDecoration: 'underline' }}>
           <a style={linkStyle}>{text}</a>
         </Typography>
       </Link>

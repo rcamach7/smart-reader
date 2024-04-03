@@ -132,7 +132,7 @@ export default function Account() {
             variant="body1"
             sx={{ fontSize: 12, fontFamily: 'Verdana' }}
           >
-            {user.type} user
+            ({user.type} user)
           </Typography>
         </Box>
 
