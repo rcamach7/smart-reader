@@ -12,7 +12,7 @@ export default function FavoriteBooksContainer({ user }: Props) {
   return (
     <Box>
       <SectionHeader
-        title="My Favorited Books"
+        title="My Favorite Books"
         buttonText="Search For More"
         buttonType="link"
         link="/search"

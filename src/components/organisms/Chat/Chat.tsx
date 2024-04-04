@@ -127,10 +127,10 @@ export default function Chat({ book }: Props) {
               left: '50%',
               transform: 'translate(-50%, -50%)',
               width: 'clamp(300px, 90vw, 500px)',
-              height: 'clamp(300px, 80vh, 700px)',
+              height: 'clamp(300px, 80vh, 600px)',
               bgcolor: 'background.paper',
               boxShadow: 24,
-              borderRadius: 1,
+              borderRadius: 4,
             }}
           >
             <Box
@@ -138,7 +138,8 @@ export default function Chat({ book }: Props) {
                 position: 'relative',
                 height: '100%',
                 p: 2,
-                backgroundColor: '#1e1e1e',
+                backgroundColor: '#dce8f4',
+                borderRadius: 4,
               }}
             >
               {chat.showStartingMessagePrompt && (
@@ -154,8 +155,14 @@ export default function Chat({ book }: Props) {
                   height: '100%',
                 }}
               >
-                <Box sx={{ color: 'white', textAlign: 'center', pb: 1 }}>
-                  Conversation With Smart Helper
+                <Box
+                  sx={{
+                    textAlign: 'center',
+                    pb: 1,
+                    textDecoration: 'underline',
+                  }}
+                >
+                  Your Conversation With Our Smart Helper
                 </Box>
                 <Box
                   sx={{
@@ -200,38 +207,39 @@ export default function Chat({ book }: Props) {
                     );
                   })}
                 </Box>
-                <Box sx={{ display: 'flex' }}>
-                  <InputBase
-                    onChange={(e) => {
-                      setInput(e.target.value);
-                    }}
-                    value={input}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
+                {!chat.showStartingMessagePrompt && (
+                  <Box sx={{ display: 'flex' }}>
+                    <InputBase
+                      onChange={(e) => {
+                        setInput(e.target.value);
+                      }}
+                      value={input}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          handleSendMessage();
+                        }
+                      }}
+                      placeholder="Enter Message"
+                      inputProps={{ 'aria-label': 'send-message' }}
+                      sx={{
+                        border: 'solid #343541 2px',
+                        p: 0.5,
+                        borderRadius: '5px',
+                        flex: 1,
+                      }}
+                    />
+                    <IconButton
+                      size="small"
+                      aria-label="send"
+                      sx={{ px: 0.5 }}
+                      onClick={() => {
                         handleSendMessage();
-                      }
-                    }}
-                    placeholder="Enter Message"
-                    inputProps={{ 'aria-label': 'send-message' }}
-                    sx={{
-                      border: 'solid #343541 2px',
-                      p: 0.5,
-                      borderRadius: '5px',
-                      color: 'white',
-                      flex: 1,
-                    }}
-                  />
-                  <IconButton
-                    size="small"
-                    aria-label="send"
-                    sx={{ px: 0.5, color: 'white' }}
-                    onClick={() => {
-                      handleSendMessage();
-                    }}
-                  >
-                    <SendIcon />
-                  </IconButton>
-                </Box>
+                      }}
+                    >
+                      <SendIcon />
+                    </IconButton>
+                  </Box>
+                )}
               </Box>
             </Box>
           </Box>

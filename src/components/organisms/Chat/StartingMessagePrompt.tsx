@@ -22,21 +22,23 @@ export default function StartingMessagePrompt({
         position: 'absolute',
         width: '100%',
         height: '100%',
-        backgroundColor: 'rgba(0, 0, 0, 0.89);',
+        backgroundColor: '#dce8f4',
         top: 0,
         left: 0,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 1,
-        color: 'white',
+        borderRadius: 4,
       }}
     >
       <Typography
         textAlign="center"
         variant="h2"
-        sx={{ fontSize: '1.2rem', fontWeight: 'bold' }}
+        sx={{
+          fontSize: '1.2rem',
+          fontWeight: 'bold',
+        }}
       >
         Begin Your Conversation With Our AI Helper
       </Typography>
