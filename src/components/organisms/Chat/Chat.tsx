@@ -103,7 +103,7 @@ export default function Chat({ book }: Props) {
       console.log(error);
       addAlertMessage({
         severity: 'error',
-        text: error?.response?.data?.message,
+        text: 'Error sending message',
       });
     }
     setIsPageLoading(false);
@@ -193,6 +193,12 @@ export default function Chat({ book }: Props) {
                             display: 'inline-block',
                             backgroundColor: `${
                               message.role === 'user' ? '#0e85ff' : '#3b3b3d'
+                            }`,
+                            marginLeft: `${
+                              message.role === 'user' ? '1rem' : '0px'
+                            }`,
+                            marginRight: `${
+                              message.role === 'user' ? '0px' : '1rem'
                             }`,
                             color: 'white',
                             borderRadius: 2,
