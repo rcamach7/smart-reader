@@ -306,7 +306,6 @@ export default function PrimarySearchAppBar({ toggleTheme, theme }: Props) {
                 <ToggleButton
                   value="books"
                   sx={{
-                    borderColor: '#6fa6b6',
                     '&.Mui-selected': {
                       color: 'white',
                       fontWeight: 'bold',
@@ -324,7 +323,6 @@ export default function PrimarySearchAppBar({ toggleTheme, theme }: Props) {
                 <ToggleButton
                   value="shelves"
                   sx={{
-                    borderColor: '#6fa6b6',
                     '&.Mui-selected': {
                       color: 'white',
                       fontWeight: 'bold',

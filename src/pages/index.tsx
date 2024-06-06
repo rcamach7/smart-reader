@@ -70,17 +70,15 @@ export default function Home() {
             position: 'relative',
           }}
         >
-          {true && (
-            <img
-              src="/home/pattern.jpg"
-              alt="library image"
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-              }}
-            />
-          )}
+          <img
+            src="/home/pattern.jpg"
+            alt="library image"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+            }}
+          />
           <Box
             sx={{
               display: 'flex',
@@ -133,6 +131,19 @@ export default function Home() {
               </Link>
             </Box>
           </Box>
+
+          {/* Gradient transition to next section */}
+          <Box
+            sx={{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              width: '100%',
+              height: '100px',
+              background:
+                'linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #0B0D10 100%)',
+            }}
+          />
         </Box>
 
         <Box

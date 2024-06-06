@@ -75,9 +75,9 @@ export default function FavoriteBookButton({ book, type }: Props) {
         onClick={handleFavoriteToggle}
       >
         {isFavorited() ? (
-          <FavoriteIcon sx={{ fontSize: 14 }} />
+          <FavoriteIcon sx={{ fontSize: 14, color: '#C5C6C8' }} />
         ) : (
-          <FavoriteBorderIcon sx={{ fontSize: 14 }} />
+          <FavoriteBorderIcon sx={{ fontSize: 14, color: '#C5C6C8' }} />
         )}
       </IconButton>
     );

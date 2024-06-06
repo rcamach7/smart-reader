@@ -8,10 +8,33 @@ export const lightTheme = createTheme({
       default: '#0B0D10',
     },
     primary: {
-      main: '#202833',
+      main: '#46A29F',
     },
     text: {
       primary: '#C5C6C8',
+    },
+  },
+  components: {
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          fontSize: `${baseFontSize}px`,
+        },
+      },
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#202833',
+        },
+      },
+    },
+    MuiMenu: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: '#202833',
+        },
+      },
     },
   },
   typography: {
@@ -35,22 +58,6 @@ export const lightTheme = createTheme({
     },
     h2: {
       fontSize: '1.5rem',
-    },
-  },
-  components: {
-    MuiTypography: {
-      styleOverrides: {
-        root: {
-          fontSize: `${baseFontSize}px`,
-        },
-      },
-    },
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          // color: '#000000',
-        },
-      },
     },
   },
 });
