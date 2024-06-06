@@ -152,7 +152,7 @@ export default function Login() {
   return (
     <>
       <Head>
-        <title>SR: Sign Up</title>
+        <title>Sign Up</title>
       </Head>
       <Box
         sx={{

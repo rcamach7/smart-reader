@@ -38,7 +38,7 @@ export default function Shelves() {
   return (
     <>
       <Head>
-        <title>SR: Shelves</title>
+        <title>Shelves</title>
       </Head>
       <Box
         sx={{

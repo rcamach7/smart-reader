@@ -125,7 +125,7 @@ export default function SearchBooksPage() {
   return (
     <>
       <Head>
-        <title>SR: Search</title>
+        <title>Search</title>
       </Head>
       <Box
         sx={{

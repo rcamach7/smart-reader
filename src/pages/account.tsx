@@ -81,7 +81,7 @@ export default function Account() {
   return (
     <>
       <Head>
-        <title>SR: My Account</title>
+        <title>My Account</title>
       </Head>
       <Box
         sx={{

@@ -57,7 +57,7 @@ export default function MyLibrary() {
   return (
     <>
       <Head>
-        <title>SR: My Library</title>
+        <title>My Library</title>
       </Head>
       <Box
         sx={{

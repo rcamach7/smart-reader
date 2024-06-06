@@ -104,7 +104,7 @@ export default function Login() {
   return (
     <>
       <Head>
-        <title>SR: Sign In</title>
+        <title>Sign In</title>
       </Head>
       <Box
         sx={{
