@@ -53,7 +53,7 @@ export default function SearchBooksPage() {
 
   const handleSearchShelves = async () => {
     if (search.query.length <= 3) {
-      addAlertMessage({ text: 'Query too short', severity: 'warning' });
+      addAlertMessage({ text: 'Query too short.', severity: 'warning' });
       return;
     }
 
@@ -68,7 +68,7 @@ export default function SearchBooksPage() {
       addAlertMessage({
         text: error.response.data.message
           ? error.response.data.message
-          : 'Error searching for shelves',
+          : 'Error searching for shelves.',
         severity: 'error',
       });
       console.log(error);
@@ -78,7 +78,7 @@ export default function SearchBooksPage() {
 
   const handleSearchBooks = async () => {
     if (search.query.length <= 3) {
-      addAlertMessage({ text: 'Query too short', severity: 'warning' });
+      addAlertMessage({ text: 'Query too short.', severity: 'warning' });
       return;
     }
 
@@ -93,7 +93,7 @@ export default function SearchBooksPage() {
       addAlertMessage({
         text: error.response.data.message
           ? error.response.data.message
-          : 'Error searching for books',
+          : 'Error searching for books.',
         severity: 'error',
       });
       console.log(error);

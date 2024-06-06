@@ -37,7 +37,7 @@ export default function Home() {
       } catch (error) {
         console.log(error);
         addAlertMessage({
-          text: 'Error fetching public shelves',
+          text: 'Error fetching public shelves.',
           severity: 'error',
         });
       }
@@ -56,6 +56,7 @@ export default function Home() {
           [previewShelves.length ? 'minHeight' : 'maxHeight']: availableHeight,
           display: 'flex',
           flexDirection: 'column',
+          paddingBottom: '1rem',
         }}
       >
         <Box

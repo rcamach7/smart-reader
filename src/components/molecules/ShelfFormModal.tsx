@@ -69,12 +69,12 @@ export default function ShelfFormModal({
         };
       });
       addAlertMessage({
-        text: 'Shelf created successfully',
+        text: 'Shelf created successfully.',
         severity: 'success',
       });
     } catch (error) {
       console.log(error);
-      addAlertMessage({ text: 'Error creating shelf', severity: 'error' });
+      addAlertMessage({ text: 'Error creating shelf.', severity: 'error' });
     }
     setIsPageLoading(false);
     toggle();
@@ -99,12 +99,12 @@ export default function ShelfFormModal({
         };
       });
       addAlertMessage({
-        text: 'Shelf edited successfully',
+        text: 'Shelf edited successfully.',
         severity: 'success',
       });
     } catch (error) {
       console.log(error);
-      addAlertMessage({ text: 'Error editing shelf', severity: 'error' });
+      addAlertMessage({ text: 'Error editing shelf.', severity: 'error' });
     }
     setIsPageLoading(false);
     toggle();

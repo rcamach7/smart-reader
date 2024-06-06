@@ -50,7 +50,7 @@ export default function Chat({ book }: Props) {
     } else {
       addAlertMessage({
         severity: 'error',
-        text: 'Please sign in to use this feature',
+        text: 'Please sign in to use this feature.',
       });
     }
   };
@@ -71,7 +71,7 @@ export default function Chat({ book }: Props) {
     } else {
       if (input.length < 5 && !message) {
         addAlertMessage({
-          text: 'Message must be 5 or more characters',
+          text: 'Message must be 5 or more characters.',
           severity: 'warning',
         });
         return;
@@ -103,7 +103,7 @@ export default function Chat({ book }: Props) {
       console.log(error);
       addAlertMessage({
         severity: 'error',
-        text: 'Error sending message',
+        text: 'Error sending message.',
       });
     }
     setIsPageLoading(false);

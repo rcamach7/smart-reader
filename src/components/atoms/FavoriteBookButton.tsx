@@ -42,13 +42,16 @@ export default function FavoriteBookButton({ book, type }: Props) {
       });
       addAlertMessage({
         text: !isFavorited()
-          ? 'Added book to favorites'
-          : 'Removed book from favorites',
+          ? 'Added book to favorites.'
+          : 'Removed book from favorites.',
         severity: 'success',
       });
     } catch (error) {
       console.log(error);
-      addAlertMessage({ text: 'Error adding to favorites', severity: 'error' });
+      addAlertMessage({
+        text: 'Error adding to favorites.',
+        severity: 'error',
+      });
     }
     setIsPageLoading(false);
   };

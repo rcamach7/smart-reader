@@ -43,12 +43,15 @@ export default function RemoveBookFromShelfButton({ book, shelf }: Props) {
         };
       });
       addAlertMessage({
-        text: 'Successfully removed book from shelf',
+        text: 'Successfully removed book from shelf.',
         severity: 'success',
       });
     } catch (error) {
       console.log(error);
-      addAlertMessage({ text: 'Error removing from shelf', severity: 'error' });
+      addAlertMessage({
+        text: 'Error removing from shelf.',
+        severity: 'error',
+      });
     }
     setIsPageLoading(false);
   };

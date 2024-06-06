@@ -25,7 +25,7 @@ export default function Shelves() {
       } catch (error) {
         console.log(error);
         addAlertMessage({
-          text: 'Error retrieving shelves',
+          text: 'Error retrieving shelves.',
           severity: 'error',
         });
       }

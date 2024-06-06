@@ -35,7 +35,7 @@ export default function ActionButtons({ shelf, type, updateShelfFunc }: Props) {
   const handleSaveShelfToggle = async () => {
     if (!user) {
       addAlertMessage({
-        text: 'Please sign in to save a shelf',
+        text: 'Please sign in to save a shelf.',
         severity: 'error',
       });
       return;
@@ -47,13 +47,13 @@ export default function ActionButtons({ shelf, type, updateShelfFunc }: Props) {
       setUser((U) => ({ ...U, shelves: res.data.shelves }));
       addAlertMessage({
         text: !hasUserSaved()
-          ? 'Saved shelf successfully'
-          : 'Shelf has been unsaved',
+          ? 'Saved shelf successfully.'
+          : 'Shelf has been unsaved.',
         severity: 'success',
       });
     } catch (error) {
       addAlertMessage({
-        text: 'Error toggling save on shelf',
+        text: 'Error toggling save on shelf.',
         severity: 'error',
       });
     }
@@ -63,7 +63,7 @@ export default function ActionButtons({ shelf, type, updateShelfFunc }: Props) {
   const handleLikeShelf = async () => {
     if (!user) {
       addAlertMessage({
-        text: 'Please sign in to like this shelf',
+        text: 'Please sign in to like this shelf.',
         severity: 'error',
       });
       return;
@@ -90,13 +90,13 @@ export default function ActionButtons({ shelf, type, updateShelfFunc }: Props) {
 
       addAlertMessage({
         text: !hasUserLiked()
-          ? 'Shelf has been liked'
-          : 'Removed like from shelf',
+          ? 'Shelf has been liked.'
+          : 'Removed like from shelf.',
         severity: 'success',
       });
     } catch (error) {
       console.log(error);
-      addAlertMessage({ text: 'Error toggling like', severity: 'error' });
+      addAlertMessage({ text: 'Error toggling like.', severity: 'error' });
     }
     setIsPageLoading(false);
   };
@@ -115,12 +115,12 @@ export default function ActionButtons({ shelf, type, updateShelfFunc }: Props) {
       }));
 
       addAlertMessage({
-        text: 'Successfully deleted shelf',
+        text: 'Successfully deleted shelf.',
         severity: 'success',
       });
     } catch (error) {
       console.log(error);
-      addAlertMessage({ text: 'Error deleting shelf', severity: 'error' });
+      addAlertMessage({ text: 'Error deleting shelf.', severity: 'error' });
     }
     setIsPageLoading(false);
   };
