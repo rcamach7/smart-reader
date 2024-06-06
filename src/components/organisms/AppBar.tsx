@@ -250,7 +250,7 @@ export default function PrimarySearchAppBar({ toggleTheme, theme }: Props) {
           >
             <MenuIcon />
           </IconButton>
-          {theme === 'light' ? (
+          {false ? (
             <Box
               sx={{
                 display: { xs: 'none', sm: 'flex', alignItems: 'center' },
@@ -309,9 +309,11 @@ export default function PrimarySearchAppBar({ toggleTheme, theme }: Props) {
                     borderColor: '#6fa6b6',
                     '&.Mui-selected': {
                       color: 'white',
+                      fontWeight: 'bold',
                     },
                     '&:not(.Mui-selected)': {
                       color: 'grey',
+                      fontWeight: 'bold',
                     },
                     fontSize: 10,
                     padding: 0.5,
@@ -325,9 +327,11 @@ export default function PrimarySearchAppBar({ toggleTheme, theme }: Props) {
                     borderColor: '#6fa6b6',
                     '&.Mui-selected': {
                       color: 'white',
+                      fontWeight: 'bold',
                     },
                     '&:not(.Mui-selected)': {
                       color: 'grey',
+                      fontWeight: 'bold',
                     },
                     fontSize: 10,
                     padding: 0.5,

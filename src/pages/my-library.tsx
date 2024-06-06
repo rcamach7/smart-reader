@@ -90,10 +90,10 @@ export default function MyLibrary() {
               aria-label="view-mode-selection"
             >
               <ToggleButton size="small" value="favorites">
-                Favorites
+                Favorited Books
               </ToggleButton>
               <ToggleButton size="small" value="shelves">
-                Shelves
+                My Shelves
               </ToggleButton>
             </ToggleButtonGroup>
           </Box>

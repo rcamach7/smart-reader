@@ -1,18 +1,21 @@
 import { createTheme } from '@mui/material/styles';
 
+const baseFontSize = 16; // Base font size in pixels
+
 export const lightTheme = createTheme({
   palette: {
     background: {
-      default: '#dce8f4',
+      default: '#0B0D10',
     },
     primary: {
-      main: '#6fa6b6',
+      main: '#202833',
     },
-    secondary: {
-      main: '#505050',
+    text: {
+      primary: '#C5C6C8',
     },
   },
   typography: {
+    fontSize: baseFontSize,
     fontFamily: [
       'Georgia',
       '-apple-system',
@@ -26,6 +29,29 @@ export const lightTheme = createTheme({
       '"Segoe UI Emoji"',
       '"Segoe UI Symbol"',
     ].join(','),
+    h1: {
+      fontSize: '1rem',
+      color: '#66FCF2',
+    },
+    h2: {
+      fontSize: '1.5rem',
+    },
+  },
+  components: {
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          fontSize: `${baseFontSize}px`,
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          // color: '#000000',
+        },
+      },
+    },
   },
 });
 

@@ -70,7 +70,7 @@ export default function ShelfGallery({ shelf, type, updateShelfFunc }: Props) {
       elevation={3}
     >
       <Box sx={{ width: '100%', maxWidth: 900, px: { xs: 1, sm: 2, md: 3 } }}>
-        <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+        <Typography variant="h1" sx={{ fontWeight: 'bold' }}>
           {shelf.name}
         </Typography>
         <Typography component="span" sx={{ fontSize: 14 }}>

@@ -49,7 +49,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>SmartReads</title>
+        <title>Smart Reads</title>
       </Head>
       <Box
         sx={{
@@ -70,39 +70,41 @@ export default function Home() {
             position: 'relative',
           }}
         >
-          <img
-            src="/home/library.png"
-            alt="library image"
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-            }}
-          />
+          {true && (
+            <img
+              src="/home/pattern.jpg"
+              alt="library image"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+              }}
+            />
+          )}
           <Box
             sx={{
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
+              alignItems: 'center',
               position: 'absolute',
               bottom: '20%',
-              maxWidth: 250,
+              maxWidth: 600,
             }}
           >
             <Typography
               textAlign="center"
-              variant="h5"
+              variant="h1"
               sx={{
-                color: 'white',
                 fontFamily: 'Verdana',
                 textShadow: '2px 2px 4px rgba(0, 0, 0, 0.6)',
                 fontSize: { sm: 24, md: 30 },
+                maxWidth: 250,
               }}
             >
               <span
                 style={{
                   padding: 3,
-                  color: '#6fa6b6',
                   fontWeight: 'bold',
                 }}
               >
@@ -110,31 +112,27 @@ export default function Home() {
               </span>{' '}
               Share, Chat, Explore.
             </Typography>
-            <Box sx={{ mt: 1, display: 'flex', justifyContent: 'center' }}>
+            <Box
+              sx={{
+                mt: 1,
+                display: 'flex',
+                justifyContent: 'center',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+              <Typography
+                textAlign="center"
+                sx={{ fontSize: { sm: 16, md: 19 }, maxWidth: 600 }}
+              >
+                Save books, create shelves, share with friends, and get
+                AI-powered book answers!
+              </Typography>
               <Link href="/shelves">
-                <Button variant="contained">Browse Collections</Button>
+                <Button variant="contained">Browse Public Shelves</Button>
               </Link>
             </Box>
           </Box>
-        </Box>
-
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            backgroundColor:
-              theme.palette.mode === 'dark' ? 'transparent' : '#d3e3f0',
-            p: { xs: 0.5, md: 1 },
-          }}
-        >
-          <Typography
-            textAlign="center"
-            sx={{ fontSize: { sm: 16, md: 19 }, maxWidth: 600 }}
-          >
-            Discover SmartReads: Bookmark books, create shelves, and share with
-            friends. Plus, get AI-powered answers to all your book-related
-            questions!
-          </Typography>
         </Box>
 
         <Box
