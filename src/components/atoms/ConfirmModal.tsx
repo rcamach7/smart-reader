@@ -6,7 +6,7 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 'clamp(300px, 90vw, 900px)',
-  bgcolor: 'background.paper',
+  backgroundColor: '#202833',
   boxShadow: 24,
   p: 2,
 };

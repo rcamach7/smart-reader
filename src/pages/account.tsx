@@ -147,11 +147,7 @@ export default function Account() {
           {linkOptions.map((option, i) => {
             return (
               <Button key={i} sx={{ textDecoration: 'underline' }}>
-                <LinkItem
-                  text={option.title}
-                  link={option.link}
-                  underline={true}
-                />
+                <LinkItem text={option.title} link={option.link} />
               </Button>
             );
           })}

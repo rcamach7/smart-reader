@@ -116,12 +116,21 @@ export default function Login() {
           pb: 10,
         }}
       >
-        <Typography variant="h3">Sign In</Typography>
         <Box
-          sx={{ display: 'flex', flexDirection: 'column', gap: 1, pt: 2 }}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 1,
+            borderRadius: 1,
+            backgroundColor: '#202833',
+            p: 2,
+          }}
           component="form"
           onSubmit={handleSignIn}
         >
+          <Typography variant="h2" textAlign="center">
+            Sign In
+          </Typography>
           <TextField
             required
             id="username"
@@ -131,6 +140,11 @@ export default function Login() {
             onChange={handleCredentialsChange}
             error={errors.fieldId === 'username' ? true : false}
             helperText={errors.fieldId === 'username' ? errors.helperText : ''}
+            InputLabelProps={{
+              sx: {
+                color: '#a5a5a5',
+              },
+            }}
           />
           <TextField
             required
@@ -142,6 +156,11 @@ export default function Login() {
             onChange={handleCredentialsChange}
             error={errors.fieldId === 'password' ? true : false}
             helperText={errors.fieldId === 'password' ? errors.helperText : ''}
+            InputLabelProps={{
+              sx: {
+                color: '#a5a5a5',
+              },
+            }}
           />
           {errors.fieldId === 'error' ? (
             <Typography color="error" textAlign="center">
