@@ -6,11 +6,18 @@ interface Props {
   onClickHandler?: () => void;
   text: string;
   type?: 'menuItem' | 'text';
+  underline?: boolean;
 }
 
-export default function LinkItem({ link, onClickHandler, text, type }: Props) {
+export default function LinkItem({
+  link,
+  onClickHandler,
+  text,
+  type,
+  underline,
+}: Props) {
   const linkStyle = {
-    textDecoration: 'none',
+    textDecoration: underline ? 'initial' : 'underline',
     color: 'inherit',
     cursor: 'pointer',
   };

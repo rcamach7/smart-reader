@@ -378,7 +378,7 @@ export default function PrimarySearchAppBar({ toggleTheme, theme }: Props) {
                 router.push('/');
               }}
             >
-              <HomeIcon fontSize="inherit" />
+              <HomeIcon fontSize="inherit" sx={{ color: '#C5C6C8' }} />
             </IconButton>
           )}
         </Toolbar>

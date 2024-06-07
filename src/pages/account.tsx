@@ -97,10 +97,9 @@ export default function Account() {
             flexDirection: 'column',
             alignItems: 'center',
             pb: '20px',
-            backgroundColor:
-              theme.palette.mode === 'dark' ? 'transparent' : '#d3e3f0',
             width: '100%',
             pt: 2,
+            backgroundColor: '#202833',
           }}
         >
           <Box
@@ -132,7 +131,7 @@ export default function Account() {
             variant="body1"
             sx={{ fontSize: 12, fontFamily: 'Verdana' }}
           >
-            ({user.type} user)
+            {user.type} user
           </Typography>
         </Box>
 
@@ -146,7 +145,15 @@ export default function Account() {
           sx={{ py: 2 }}
         >
           {linkOptions.map((option, i) => {
-            return <LinkItem text={option.title} link={option.link} key={i} />;
+            return (
+              <Button key={i} sx={{ textDecoration: 'underline' }}>
+                <LinkItem
+                  text={option.title}
+                  link={option.link}
+                  underline={true}
+                />
+              </Button>
+            );
           })}
         </Stack>
 
@@ -154,22 +161,6 @@ export default function Account() {
           spacing={{ xs: 2, sm: 2.5, lg: 3 }}
           sx={{ flex: '1', pt: { xs: 2, sm: 3, md: 4 } }}
         >
-          <Button
-            size={currentScreenSize}
-            variant="outlined"
-            startIcon={<AccountBoxIcon />}
-            disabled
-          >
-            Edit Profile Picture
-          </Button>
-          <Button
-            size={currentScreenSize}
-            variant="outlined"
-            startIcon={<PasswordIcon />}
-            disabled
-          >
-            Edit Password
-          </Button>
           <Button
             startIcon={<LogoutIcon />}
             size={currentScreenSize}

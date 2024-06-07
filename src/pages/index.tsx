@@ -96,18 +96,14 @@ export default function Home() {
               sx={{
                 fontFamily: 'Verdana',
                 textShadow: '2px 2px 4px rgba(0, 0, 0, 0.6)',
-                fontSize: { sm: 24, md: 30 },
+                fontSize: '2rem',
                 maxWidth: 250,
+                fontWeight: 'bold',
               }}
             >
-              <span
-                style={{
-                  padding: 3,
-                  fontWeight: 'bold',
-                }}
-              >
-                SmartReads
-              </span>{' '}
+              SmartReads
+            </Typography>
+            <Typography sx={{ fontSize: { sm: '1.2rem', md: '1.7rem' } }}>
               Share, Chat, Explore.
             </Typography>
             <Box
@@ -121,7 +117,7 @@ export default function Home() {
             >
               <Typography
                 textAlign="center"
-                sx={{ fontSize: { sm: 16, md: 19 }, maxWidth: 600 }}
+                sx={{ fontSize: { sm: 16, md: 19 }, maxWidth: 330, pb: 1 }}
               >
                 Save books, create shelves, share with friends, and get
                 AI-powered book answers!
@@ -139,7 +135,7 @@ export default function Home() {
               bottom: 0,
               left: 0,
               width: '100%',
-              height: '100px',
+              height: '50px',
               background:
                 'linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #0B0D10 100%)',
             }}
