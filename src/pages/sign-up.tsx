@@ -164,105 +164,137 @@ export default function Login() {
           pb: 10,
         }}
       >
-        <Typography variant="h3">Sign Up</Typography>
         <Box
-          sx={{ display: 'flex', flexDirection: 'column', gap: 1, pt: 2 }}
-          component="form"
-          onSubmit={handleCreateAccount}
+          sx={{
+            backgroundColor: '#202833',
+            p: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 1,
+            borderRadius: 2,
+          }}
         >
+          <Typography variant="h1" textAlign="center">
+            Sign Up
+          </Typography>
           <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
+            sx={{ display: 'flex', flexDirection: 'column', gap: 1, pt: 2 }}
+            component="form"
+            onSubmit={handleCreateAccount}
           >
-            <Typography sx={{ pb: 1 }}>Select Profile Image:</Typography>
-            <Stack direction="row" spacing={2}>
-              {profileImageOptions.map((option, i) => {
-                return (
-                  <Avatar
-                    key={i}
-                    alt={option}
-                    src={`/profile/${option}`}
-                    onClick={() => {
-                      handleProfileImageSelection(option);
-                    }}
-                    style={{
-                      border:
-                        credentials.profileImage === option
-                          ? 'solid 3px #6fa6b6'
-                          : null,
-                      width: credentials.profileImage === option ? 70 : 50,
-                      height: credentials.profileImage === option ? 70 : 50,
-                    }}
-                  />
-                );
-              })}
-            </Stack>
-          </Box>
-          <TextField
-            required
-            id="username"
-            label="Username"
-            variant="outlined"
-            value={credentials.username}
-            onChange={handleCredentialsChange}
-            error={errors.fieldId === 'username' ? true : false}
-            helperText={errors.fieldId === 'username' ? errors.helperText : ''}
-          />
-          <TextField
-            required
-            id="password"
-            label="Password"
-            variant="outlined"
-            type="password"
-            value={credentials.password}
-            onChange={handleCredentialsChange}
-            error={errors.fieldId === 'password' ? true : false}
-            helperText={errors.fieldId === 'password' ? errors.helperText : ''}
-          />
-          <TextField
-            required
-            id="confirmPassword"
-            label="Confirm Password"
-            variant="outlined"
-            type="password"
-            value={credentials.confirmPassword}
-            onChange={handleCredentialsChange}
-            error={errors.fieldId === 'confirmPassword' ? true : false}
-            helperText={
-              errors.fieldId === 'confirmPassword' ? errors.helperText : ''
-            }
-          />
-          {errors.fieldId === 'error' ? (
-            <Typography color="error" textAlign="center">
-              {errors.helperText}
-            </Typography>
-          ) : null}
-          <Button variant="contained" type="submit">
-            Create Account
-          </Button>
-          <Box>
-            <Link href="/sign-in">
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+              <Typography sx={{ pb: 1 }}>Select Profile Image</Typography>
+              <Stack direction="row" spacing={2}>
+                {profileImageOptions.map((option, i) => {
+                  return (
+                    <Avatar
+                      key={i}
+                      alt={option}
+                      src={`/profile/${option}`}
+                      onClick={() => {
+                        handleProfileImageSelection(option);
+                      }}
+                      style={{
+                        border:
+                          credentials.profileImage === option
+                            ? 'solid 3px #6fa6b6'
+                            : null,
+                        width: credentials.profileImage === option ? 70 : 50,
+                        height: credentials.profileImage === option ? 70 : 50,
+                      }}
+                    />
+                  );
+                })}
+              </Stack>
+            </Box>
+            <TextField
+              required
+              id="username"
+              label="Username"
+              variant="outlined"
+              value={credentials.username}
+              onChange={handleCredentialsChange}
+              error={errors.fieldId === 'username' ? true : false}
+              helperText={
+                errors.fieldId === 'username' ? errors.helperText : ''
+              }
+              InputLabelProps={{
+                sx: {
+                  color: '#a5a5a5',
+                },
+              }}
+            />
+            <TextField
+              required
+              id="password"
+              label="Password"
+              variant="outlined"
+              type="password"
+              value={credentials.password}
+              onChange={handleCredentialsChange}
+              error={errors.fieldId === 'password' ? true : false}
+              helperText={
+                errors.fieldId === 'password' ? errors.helperText : ''
+              }
+              InputLabelProps={{
+                sx: {
+                  color: '#a5a5a5',
+                },
+              }}
+            />
+            <TextField
+              required
+              id="confirmPassword"
+              label="Confirm Password"
+              variant="outlined"
+              type="password"
+              value={credentials.confirmPassword}
+              onChange={handleCredentialsChange}
+              error={errors.fieldId === 'confirmPassword' ? true : false}
+              helperText={
+                errors.fieldId === 'confirmPassword' ? errors.helperText : ''
+              }
+              InputLabelProps={{
+                sx: {
+                  color: '#a5a5a5',
+                },
+              }}
+            />
+            {errors.fieldId === 'error' ? (
+              <Typography color="error" textAlign="center">
+                {errors.helperText}
+              </Typography>
+            ) : null}
+            <Button variant="contained" type="submit">
+              Create Account
+            </Button>
+            <Box>
+              <Link href="/sign-in">
+                <Typography
+                  textAlign="center"
+                  sx={{ textDecoration: 'underline', cursor: 'pointer' }}
+                >
+                  Already have an account? Sign In
+                </Typography>
+              </Link>
+              <Typography textAlign="center" fontSize={14}>
+                or
+              </Typography>
               <Typography
                 textAlign="center"
+                fontSize={14}
                 sx={{ textDecoration: 'underline', cursor: 'pointer' }}
+                onClick={handleDemoAccount}
               >
-                Already have an account? Sign In
+                Use demo account
               </Typography>
-            </Link>
-            <Typography textAlign="center" fontSize={14}>
-              or
-            </Typography>
-            <Typography
-              textAlign="center"
-              fontSize={14}
-              sx={{ textDecoration: 'underline', cursor: 'pointer' }}
-              onClick={handleDemoAccount}
-            >
-              Use demo account
-            </Typography>
+            </Box>
           </Box>
         </Box>
       </Box>

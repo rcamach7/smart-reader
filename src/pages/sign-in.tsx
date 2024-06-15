@@ -128,7 +128,7 @@ export default function Login() {
           component="form"
           onSubmit={handleSignIn}
         >
-          <Typography variant="h2" textAlign="center">
+          <Typography variant="h1" textAlign="center">
             Sign In
           </Typography>
           <TextField
