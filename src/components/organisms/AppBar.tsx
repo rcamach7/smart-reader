@@ -71,11 +71,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 type ThemeOption = 'light' | 'dark';
 
 type Props = {
-  theme: ThemeOption;
-  toggleTheme: () => void;
+  theme?: ThemeOption;
+  toggleTheme?: () => void;
 };
 
-export default function PrimarySearchAppBar({ toggleTheme, theme }: Props) {
+export default function PrimarySearchAppBar() {
   const { user, logout } = useUser();
   const router = useRouter();
 
@@ -193,14 +193,6 @@ export default function PrimarySearchAppBar({ toggleTheme, theme }: Props) {
         );
       })}
       {user ? <MenuItem onClick={handleLogout}>Logout</MenuItem> : null}
-      <MenuItem
-        onClick={() => {
-          toggleTheme();
-          handleMenuClose();
-        }}
-      >
-        Toggle Theme
-      </MenuItem>
     </Menu>
   );
 

@@ -1,8 +1,8 @@
 import { createTheme } from '@mui/material/styles';
 
-const baseFontSize = 16; // Base font size in pixels
+const baseFontSize = 16;
 
-export const lightTheme = createTheme({
+export const primaryTheme = createTheme({
   palette: {
     background: {
       default: '#0B0D10',
@@ -62,7 +62,7 @@ export const lightTheme = createTheme({
   },
 });
 
-export const darkTheme = createTheme({
+export const secondaryTheme = createTheme({
   palette: {
     mode: 'dark',
     primary: {

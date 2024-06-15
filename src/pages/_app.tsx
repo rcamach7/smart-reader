@@ -5,19 +5,16 @@ import Head from 'next/head';
 import { UserProvider } from '@/context/UserContext';
 import { LoadingProvider } from '@/context/LoadingContext';
 import { FeedbackProvider } from '@/context/FeedbackContext';
-import useTheme from '@/hooks/useTheme';
 
 import { AppBar } from '@/components/organisms';
-import { lightTheme, darkTheme } from '../theme/theme';
+import { primaryTheme } from '../theme/theme';
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
-  const { theme, toggleTheme } = useTheme();
-
   return (
     <UserProvider>
       <LoadingProvider>
         <FeedbackProvider>
-          <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+          <ThemeProvider theme={primaryTheme}>
             <Head>
               <link rel="icon" href="/favicons/favicon.ico" />
               <link
@@ -32,7 +29,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
               />
             </Head>
             <CssBaseline />
-            <AppBar toggleTheme={toggleTheme} theme={theme} />
+            <AppBar />
             <Component {...pageProps} />
           </ThemeProvider>
         </FeedbackProvider>
