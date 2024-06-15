@@ -133,6 +133,11 @@ export default function ShelfFormModal({
             name="name"
             onChange={handleInputChange}
             value={formDetails.name}
+            InputLabelProps={{
+              sx: {
+                color: '#a5a5a5',
+              },
+            }}
           />
           <TextField
             id="standard-helperText"
@@ -143,6 +148,11 @@ export default function ShelfFormModal({
             name="description"
             onChange={handleInputChange}
             value={formDetails.description}
+            InputLabelProps={{
+              sx: {
+                color: '#a5a5a5',
+              },
+            }}
           />
           <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
             <InputLabel id="demo-simple-select-standard-label">
@@ -186,4 +196,5 @@ const style = {
   p: 2,
   display: 'flex',
   flexDirection: 'column',
+  backgroundColor: '#202833',
 };

@@ -77,7 +77,7 @@ export default function RemoveBookFromShelfButton({ book, shelf }: Props) {
       aria-expanded={open ? 'true' : undefined}
       onClick={handleClick}
       size="small"
-      sx={{ px: 0.5, ml: '0px !important' }}
+      sx={{ px: 0.5, ml: '0px !important', fontSize: '.8rem' }}
     >
       Remove Book
     </Button>

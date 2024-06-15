@@ -89,10 +89,32 @@ export default function MyLibrary() {
               onChange={handleViewModeChange}
               aria-label="view-mode-selection"
             >
-              <ToggleButton size="small" value="favorites">
-                Favorited Books
+              <ToggleButton
+                size="small"
+                value="favorites"
+                sx={{
+                  '&.Mui-selected': {
+                    color: 'white',
+                  },
+                  '&:not(.Mui-selected)': {
+                    color: 'grey',
+                  },
+                }}
+              >
+                My Favorited Books
               </ToggleButton>
-              <ToggleButton size="small" value="shelves">
+              <ToggleButton
+                size="small"
+                value="shelves"
+                sx={{
+                  '&.Mui-selected': {
+                    color: 'white',
+                  },
+                  '&:not(.Mui-selected)': {
+                    color: 'grey',
+                  },
+                }}
+              >
                 My Shelves
               </ToggleButton>
             </ToggleButtonGroup>
