@@ -40,7 +40,7 @@ export default function BookCard({
         pt: 0.5,
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: type === 'transparent' ? 'transparent' : 'default',
+        backgroundColor: type === 'transparent' ? 'transparent' : '#202833',
       }}
       elevation={elevation ? elevation : 0}
     >

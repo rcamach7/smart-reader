@@ -147,7 +147,12 @@ export default function SearchBooksPage() {
         >
           <Typography
             variant="body1"
-            sx={{ pr: 1, fontFamily: 'Verdana', fontSize: 14 }}
+            sx={{
+              pr: 1,
+              fontFamily: 'Verdana',
+              fontSize: 14,
+              fontWeight: 'bold',
+            }}
           >
             I am searching for
           </Typography>
@@ -163,8 +168,34 @@ export default function SearchBooksPage() {
               alignItems: 'center',
             }}
           >
-            <ToggleButton value="books">books</ToggleButton>
-            <ToggleButton value="shelves">shelves</ToggleButton>
+            <ToggleButton
+              value="books"
+              sx={{
+                '&.Mui-selected': {
+                  color: 'white',
+                  fontWeight: 'bold',
+                },
+                '&:not(.Mui-selected)': {
+                  color: 'grey',
+                  fontWeight: 'bold',
+                },
+              }}
+            >
+              books
+            </ToggleButton>
+            <ToggleButton
+              value="shelves"
+              sx={{
+                '&.Mui-selected': {
+                  color: 'white',
+                },
+                '&:not(.Mui-selected)': {
+                  color: 'grey',
+                },
+              }}
+            >
+              shelves
+            </ToggleButton>
           </ToggleButtonGroup>
         </Box>
         <Box
@@ -173,7 +204,7 @@ export default function SearchBooksPage() {
             alignItems: 'center',
             width: 'clamp(200px, 80vw, 500px)',
             height: 50,
-            border: 'solid black 2px',
+            border: 'solid #46A29F 2px',
             borderRadius: '20px',
             px: 1,
             mt: 1,
@@ -185,7 +216,6 @@ export default function SearchBooksPage() {
             sx={{
               flex: 1,
               pl: 1,
-              border: 'red black 2px',
             }}
             value={search.query}
             onChange={(e) => {
@@ -205,8 +235,7 @@ export default function SearchBooksPage() {
           <KeyboardVoiceIcon sx={{ ml: 'auto' }} />
         </Box>
 
-        <BookSearchResultsContainer bookSearchResults={bookSearchResults} />
-        {search.type === 'query' ? (
+        {search.type === 'books' ? (
           <BookSearchResultsContainer bookSearchResults={bookSearchResults} />
         ) : (
           <ShelvesSearchResultsContainer
