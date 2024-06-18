@@ -37,7 +37,12 @@ export default function ConfirmModal({
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-confirm" variant="h6" component="h2">
+          <Typography
+            id="modal-modal-confirm"
+            variant="h1"
+            component="h2"
+            textAlign="center"
+          >
             {title}
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
@@ -52,7 +57,13 @@ export default function ConfirmModal({
                 Cancel
               </Button>
             </Box>
-          ) : null}
+          ) : (
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <Button onClick={toggle} variant="outlined">
+                Close
+              </Button>
+            </Box>
+          )}
         </Box>
       </Modal>
     </div>

@@ -22,7 +22,7 @@ export default function StartingMessagePrompt({
         position: 'absolute',
         width: '100%',
         height: '100%',
-        backgroundColor: '#dce8f4',
+        backgroundColor: '#202833',
         top: 0,
         left: 0,
         display: 'flex',
@@ -40,7 +40,7 @@ export default function StartingMessagePrompt({
           fontWeight: 'bold',
         }}
       >
-        Begin Your Conversation With Our AI Helper
+        Begin your conversation...
       </Typography>
       <Box
         sx={{

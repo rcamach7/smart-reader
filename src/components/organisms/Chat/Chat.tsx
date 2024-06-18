@@ -25,7 +25,7 @@ export default function Chat({ book }: Props) {
   const [chat, setChat] = useState({
     open: false,
     messages: [
-      { role: 'system', content: 'You are a helpful assistant.' },
+      { role: 'system', content: 'You are a helpful book assistant.' },
       {
         role: 'user',
         content: `You will assist me in answering questions about the book ${
@@ -35,7 +35,7 @@ export default function Chat({ book }: Props) {
       {
         role: 'system',
         content:
-          "Excited about your next book adventure? I'm here to make it even better. Just ask me about the book's vibe, its story sneak-peek, how easy it is to read, or get tips on similar reads. ",
+          'Ask me for a quick story preview, reading ease, or similar book recommendations.',
       },
     ],
     showStartingMessagePrompt: true,
@@ -138,7 +138,7 @@ export default function Chat({ book }: Props) {
                 position: 'relative',
                 height: '100%',
                 p: 2,
-                backgroundColor: '#dce8f4',
+                backgroundColor: '#202833',
                 borderRadius: 4,
               }}
             >
@@ -159,10 +159,11 @@ export default function Chat({ book }: Props) {
                   sx={{
                     textAlign: 'center',
                     pb: 1,
-                    textDecoration: 'underline',
                   }}
                 >
-                  Your Conversation With Our Smart Helper
+                  <Typography variant="h1">
+                    Smart Helper Conversation...
+                  </Typography>
                 </Box>
                 <Box
                   sx={{
@@ -192,7 +193,7 @@ export default function Chat({ book }: Props) {
                           sx={{
                             display: 'inline-block',
                             backgroundColor: `${
-                              message.role === 'user' ? '#0e85ff' : '#3b3b3d'
+                              message.role === 'user' ? '#0e85ff' : '#46A29F'
                             }`,
                             marginLeft: `${
                               message.role === 'user' ? '1rem' : '0px'
@@ -225,10 +226,10 @@ export default function Chat({ book }: Props) {
                           handleSendMessage();
                         }
                       }}
-                      placeholder="Enter Message"
+                      placeholder="Enter message..."
                       inputProps={{ 'aria-label': 'send-message' }}
                       sx={{
-                        border: 'solid #343541 2px',
+                        border: 'solid #46A29F 2px',
                         p: 0.5,
                         borderRadius: '5px',
                         flex: 1,
@@ -242,7 +243,7 @@ export default function Chat({ book }: Props) {
                         handleSendMessage();
                       }}
                     >
-                      <SendIcon />
+                      <SendIcon sx={{ color: '#46A29F' }} />
                     </IconButton>
                   </Box>
                 )}

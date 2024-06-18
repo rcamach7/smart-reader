@@ -16,7 +16,7 @@ import { Chat } from '@/components/organisms';
 import { Box, Typography, Button } from '@mui/material';
 
 export default function CategoryPage() {
-  const { setIsPageLoading, isPageLoading } = useLoadingContext();
+  const { setIsPageLoading } = useLoadingContext();
   const { addAlertMessage } = useFeedbackContext();
   const [summaryModal, setSummaryModal] = useState({
     show: false,
@@ -111,9 +111,9 @@ export default function CategoryPage() {
                 maxWidth: 600,
               }}
             >
-              Discover your next favorite read with our AI-powered book
-              insights! We analyze your favorite books to identify any
-              similarities and offer a tailored overview and recommendation.
+              Discover your next favorite book with our AI insights! We analyze
+              your favorites to find similar reads and offer personalized
+              recommendations.
             </Typography>
             <Button variant="outlined" onClick={getBookSummary}>
               Get My Personalized Book Insight
@@ -144,7 +144,7 @@ export default function CategoryPage() {
             open={summaryModal.show}
             type="information"
             description={summaryModal.summary}
-            title="Your Recommendation"
+            title="Your personal book insight..."
             toggle={toggleShowSummaryModal}
           />
         </Box>
