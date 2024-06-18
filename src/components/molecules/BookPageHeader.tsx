@@ -18,7 +18,7 @@ export default function BookPageHeader({ book }: Props) {
         display: 'flex',
         p: 3,
         backgroundColor:
-          theme.palette.mode === 'dark' ? 'transparent' : '#d3e3f0',
+          theme.palette.mode === 'dark' ? 'transparent' : '#202833',
         justifyContent: 'center',
       }}
     >

@@ -34,12 +34,12 @@ export default function BookDetailLine({ objKey, value }: Props) {
     <Box
       sx={{
         display: 'flex',
-        width: 310,
+        width: 325,
         alignItems: 'center',
         borderRadius: 2,
         p: 0.5,
         backgroundColor: `${
-          theme.palette.mode === 'dark' ? 'transparent' : '#D3E3F0'
+          theme.palette.mode === 'dark' ? 'transparent' : '#202833'
         }`,
       }}
     >

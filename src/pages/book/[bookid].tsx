@@ -96,7 +96,7 @@ export default function CategoryPage() {
               textAlign: 'center',
               pb: 1.5,
               backgroundColor:
-                theme.palette.mode === 'dark' ? 'transparent' : '#d3e3f0',
+                theme.palette.mode === 'dark' ? 'transparent' : '#202833',
               width: '100%',
               display: 'flex',
               flexDirection: 'column',
@@ -125,7 +125,7 @@ export default function CategoryPage() {
               width: 'clamp(350px, 95vw, 700px)',
               display: 'flex',
               flexWrap: 'wrap',
-              gap: 0.5,
+              gap: 1,
               justifyContent: 'center',
             }}
           >

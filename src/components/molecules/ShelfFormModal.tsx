@@ -123,7 +123,7 @@ export default function ShelfFormModal({
           component="form"
           onSubmit={type === 'create' ? handleCreateSubmit : handleEditSubmit}
         >
-          <Typography textAlign="center">
+          <Typography textAlign="center" variant="h1">
             {type === 'create' ? 'Create New Shelf' : 'Edit Shelf'}
           </Typography>
           <TextField
@@ -156,7 +156,7 @@ export default function ShelfFormModal({
           />
           <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
             <InputLabel id="demo-simple-select-standard-label">
-              Visibility
+              <Typography sx={{ color: '#a5a5a5' }}>Visibility</Typography>
             </InputLabel>
             <Select
               labelId="demo-simple-select-standard-label"
