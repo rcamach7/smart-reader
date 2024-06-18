@@ -94,13 +94,14 @@ export default function CategoryPage() {
           <Box
             sx={{
               textAlign: 'center',
-              pb: 1.5,
+              pb: 5,
               backgroundColor:
                 theme.palette.mode === 'dark' ? 'transparent' : '#202833',
               width: '100%',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
+              position: 'relative',
             }}
           >
             <Typography
@@ -118,6 +119,18 @@ export default function CategoryPage() {
             <Button variant="outlined" onClick={getBookSummary}>
               Get My Personalized Book Insight
             </Button>
+
+            <Box
+              sx={{
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                width: '100%',
+                height: '35px',
+                background:
+                  'linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #0B0D10 100%)',
+              }}
+            />
           </Box>
           <Box
             sx={{

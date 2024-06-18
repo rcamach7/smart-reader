@@ -96,10 +96,11 @@ export default function Account() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            pb: '20px',
+            pb: '35px',
             width: '100%',
             pt: 2,
             backgroundColor: '#202833',
+            position: 'relative',
           }}
         >
           <Box
@@ -133,6 +134,17 @@ export default function Account() {
           >
             {user.type} user
           </Typography>
+          <Box
+            sx={{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              width: '100%',
+              height: '20px',
+              background:
+                'linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #0B0D10 100%)',
+            }}
+          />
         </Box>
 
         <Stack
