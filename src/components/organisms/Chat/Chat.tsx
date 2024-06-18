@@ -193,7 +193,7 @@ export default function Chat({ book }: Props) {
                           sx={{
                             display: 'inline-block',
                             backgroundColor: `${
-                              message.role === 'user' ? '#0e85ff' : '#46A29F'
+                              message.role === 'user' ? '#0e85ff' : '#3b6975'
                             }`,
                             marginLeft: `${
                               message.role === 'user' ? '1rem' : '0px'

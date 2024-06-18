@@ -53,7 +53,7 @@ export default async function handler(
           book.title
         }' (author: ${book.authors.join(', ')}, genre: ${book.categories?.join(
           ', '
-        )}). Provide a concise blurb that captures the essence of the book.`;
+        )}). Provide a concise blurb that captures the essence of the book. Do not ask follow up questions, as it's not a conversation.`;
 
         const userFavBooks = getRandomSubset(
           user.savedBooks,
@@ -65,7 +65,7 @@ export default async function handler(
         const comparison =
           user.savedBooks.length > 0
             ? `If you find any clear similarities between '${book.title}' and these titles: ${userFavBooks}, highlight them, focusing on themes, writing style, or other relevant aspects. If you don't find string similarities, exclude any and all mention of them. And don't mention on your response that no similarities were found.`
-            : `If no clear similarities are found, or if no favorited books are available, offer an independent assessment on whether '${book.title}' aligns with general reader interests based on its genre, themes, and author's style.`;
+            : `Offer an independent assessment on whether '${book.title}' aligns with general reader interests based on its genre, themes, and author's style. Do mention no that since no other favorited books were provided, this is a general insight.`;
 
         const prompt = `${bookDetails} ${comparison}`;
 
