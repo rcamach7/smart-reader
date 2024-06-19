@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { UserSchema } from '@/schemas/index';
+import { ShelfSchema, UserSchema } from '@/schemas/index';
 import { connectToMongoDB } from '@/services/mongobd';
 import { decodeAuthToken } from '@/utils/token';
 
@@ -55,16 +55,25 @@ export default async function handler(
         const user = await UserSchema.findById(decodedAuthToken._id).populate(
           'shelves'
         );
+        // Don't allow users to delete demo account.
         if (user.type === 'demo') {
           return res
             .status(400)
             .json({ message: 'Demo accounts may not be deleted' });
         }
 
+        // Get all the shelves that the user has created, and delete them.
         const myShelves = user.shelves.filter(
           (shelf) =>
             shelf.creator.toString() === decodedAuthToken._id.toString()
         );
+        await Promise.all(
+          myShelves.map(async (myShelf) => {
+            await ShelfSchema.findByIdAndDelete(myShelf._id);
+          })
+        );
+
+        // Get all users that have my shelf saved, and delete it from their saved shelves.
         const usersWithMyShelves = await UserSchema.find({
           shelves: { $in: myShelves.map((shelf) => shelf._id) },
         });
@@ -78,14 +87,11 @@ export default async function handler(
           })
         );
 
-        await Promise.all(myShelves.map((shelf) => shelf.remove()));
-        await user.remove();
-
+        await UserSchema.findByIdAndDelete(decodedAuthToken._id);
         res.setHeader(
           'Set-Cookie',
           'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; httpOnly;'
         );
-        res.status(200).json({ message: 'Logged out successfully' });
         return res
           .status(200)
           .json({ message: 'User and shelves successfully deleted' });
