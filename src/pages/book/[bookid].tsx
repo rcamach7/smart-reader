@@ -102,23 +102,46 @@ export default function CategoryPage() {
               flexDirection: 'column',
               alignItems: 'center',
               position: 'relative',
+              gap: 1,
             }}
           >
-            <Typography
-              sx={{
-                fontSize: { xs: '.9rem', sm: '1rem', md: '1.1rem' },
-                px: 1,
-                pb: 1,
-                maxWidth: 600,
+            <Box>
+              <Typography
+                sx={{
+                  fontSize: { xs: '.9rem', sm: '1rem', md: '1.1rem' },
+                  px: 1,
+                  maxWidth: 600,
+                  pb: 0.5,
+                }}
+              >
+                Discover your next favorite book with our AI insights! We
+                analyze your favorites to find similar reads and offer
+                personalized recommendations.
+              </Typography>
+              <Button variant="outlined" onClick={getBookSummary}>
+                Get My Personalized Book Insight
+              </Button>
+            </Box>
+            <Button
+              variant="outlined"
+              size="small"
+              onClick={() => {
+                window.open(book.infoLink, '_blank');
               }}
             >
-              Discover your next favorite book with our AI insights! We analyze
-              your favorites to find similar reads and offer personalized
-              recommendations.
-            </Typography>
-            <Button variant="outlined" onClick={getBookSummary}>
-              Get My Personalized Book Insight
+              Check Out On Google Books
             </Button>
+            {book.previewLink && (
+              <Button
+                variant="outlined"
+                size="small"
+                onClick={() => {
+                  window.open(book.previewLink, '_blank');
+                }}
+              >
+                Book Preview
+              </Button>
+            )}
 
             <Box
               sx={{

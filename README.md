@@ -51,4 +51,7 @@ SmartReads lets you search and favorite books, create and share personalized boo
 - **[Google Books API](https://developers.google.com/books)**: We use this to find books quickly and easily.
 - **[OpenAI's GPT Model](https://openai.com/gpt/)**: We use this to create interesting and fun descriptions for books on our site.
 
-Crafted with ❤️ and the latest in tech innovation.
+#### Resource Management
+
+- Books Creation: Only when a user favorites, or adds a book onto a shelf, will it get added onto our database.
+- Users's shelf object property contains all their created shelves, plus those that they "save". Deletion of user traverses other user's who have saved their shelved, to avoid error on population attempt.

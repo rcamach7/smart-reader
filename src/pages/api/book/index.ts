@@ -22,6 +22,7 @@ interface ApiResponse {
   genre?: string[];
 }
 
+// Currently is not being hit by frontend
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
