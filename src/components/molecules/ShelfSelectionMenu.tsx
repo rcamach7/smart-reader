@@ -75,7 +75,6 @@ export default function ShelfSelectionMenu({ type, book }: Props) {
     <div>
       {type === 'card' ? (
         <Button
-          id="basic-button"
           aria-controls={open ? 'shelf-selection-menu' : undefined}
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
@@ -88,7 +87,6 @@ export default function ShelfSelectionMenu({ type, book }: Props) {
       ) : (
         <Button
           variant="outlined"
-          id="basic-button"
           aria-controls={open ? 'shelf-selection-menu' : undefined}
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}

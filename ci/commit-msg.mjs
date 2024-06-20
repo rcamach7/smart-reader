@@ -20,25 +20,29 @@ const msgFilePath = process.argv[2];
 const msgFileContents = readFileSync(msgFilePath, 'utf-8');
 const commitTitle = msgFileContents.split(/\r?\n/)[0];
 
-// Simplified regex without emojis
+// Enhanced regex to also match emojis at the start
 const commitRE =
-  /^(revert: )?(feat|fix|refactor|test|perf|style|asset|doc|ci|chore|wip)(\(.+\))?: [A-Z].{1,98}[^.]$/;
+  /^(✨|🐛|♻️|✅|🚀|🎨|🔧|📖|💚|🔨|🚧)? ?(revert: )?(feat|fix|refactor|test|perf|style|asset|doc|ci|chore|wip)(\(.+\))?: [A-Z].{1,98}[^.]$/;
 
 const match = commitRE.exec(commitTitle);
 
 if (match) {
-  // Extract the prefix and determine the emoji
-  const prefix = match[2];
-  const emoji = prefixToEmoji[prefix];
+  const emoji = match[1]; // The emoji, if present
+  const prefix = match[3]; // The actual prefix (feat, fix, etc.)
 
-  // Add the emoji to the commit message
-  const updatedMessage = commitTitle.replace(prefix, `${emoji} ${prefix}`);
-  writeFileSync(
-    msgFilePath,
-    msgFileContents.replace(commitTitle, updatedMessage)
-  );
+  if (!emoji) {
+    // Only add emoji if not already present
+    // Extract the prefix and determine the emoji
+    const newEmoji = prefixToEmoji[prefix];
+
+    // Add the emoji to the commit message
+    const updatedMessage = commitTitle.replace(prefix, `${newEmoji} ${prefix}`);
+    writeFileSync(
+      msgFilePath,
+      msgFileContents.replace(commitTitle, updatedMessage)
+    );
+  }
 } else {
-  console.log();
   console.error(
     `${colors.bgRed(colors.white(' ERROR '))} ${colors.white(
       `Invalid commit title format or length.`
