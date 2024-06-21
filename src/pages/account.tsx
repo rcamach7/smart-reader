@@ -1,8 +1,6 @@
 import { Box, Typography, Stack, Button } from '@mui/material';
 import {
   Delete as DeleteIcon,
-  Password as PasswordIcon,
-  AccountBox as AccountBoxIcon,
   Logout as LogoutIcon,
 } from '@mui/icons-material';
 import { ConfirmModal, LinkItem } from '@/components/atoms';
@@ -205,7 +203,7 @@ export default function Account() {
             });
           }}
           confirmFunc={handleDeleteAccount}
-          description="Warning! This action cannot be reversed, and all associates shelves will be deleted."
+          description="Warning! All data will be lost. This action cannot be reversed."
           title="Confirm Account Deletion"
           type="confirm"
         />

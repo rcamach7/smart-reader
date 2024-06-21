@@ -57,7 +57,7 @@ export default function Login() {
 
     setIsPageLoading(true);
     try {
-      const res = await axios.post('/api/auth/login', credentials);
+      const res = await axios.post('/api/auth/sign-in', credentials);
       setUser(res.data.user);
     } catch (error) {
       const { fieldId, helperText } = error.response.data;
@@ -82,7 +82,7 @@ export default function Login() {
 
     setIsPageLoading(true);
     try {
-      const res = await axios.post('/api/auth/login', demoCredentials);
+      const res = await axios.post('/api/auth/sign-in', demoCredentials);
       setUser(res.data.user);
     } catch (error) {
       const { fieldId, helperText } = error.response.data;

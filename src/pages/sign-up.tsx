@@ -97,7 +97,7 @@ export default function Login() {
 
     setIsPageLoading(true);
     try {
-      const response = await axios.post('/api/auth/register', credentials);
+      const response = await axios.post('/api/auth/sign-up', credentials);
       setUser(response.data.user);
     } catch (error) {
       const { fieldId, helperText } = error.response.data;
@@ -127,7 +127,7 @@ export default function Login() {
 
     setIsPageLoading(true);
     try {
-      const res = await axios.post('/api/auth/login', demoCredentials);
+      const res = await axios.post('/api/auth/sign-in', demoCredentials);
       setUser(res.data.user);
     } catch (error) {
       const { fieldId, helperText } = error.response.data;
