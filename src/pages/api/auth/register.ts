@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import * as bcrypt from 'bcrypt';
+import validator from 'validator';
 
 import { UserSchema } from '@/schemas/index';
 import { connectToMongoDB } from '@/services/mongobd';
@@ -13,6 +14,11 @@ export default async function handler(
     case 'POST':
       await connectToMongoDB();
 
+      const profileImageOptions = [
+        'profile_img_1.png',
+        'profile_img_2.png',
+        'profile_img_3.png',
+      ];
       const credentials = {
         username: req.body.username,
         password: req.body.password,
@@ -20,6 +26,23 @@ export default async function handler(
           ? req.body.profileImage
           : 'profile_img_1.png',
       };
+      // Validation
+      if (
+        !validator.isLength(credentials.username, { min: 4, max: 15 }) ||
+        !validator.isLength(credentials.password, { min: 4, max: 20 })
+      ) {
+        return res.status(400).json({
+          fieldId: 'username',
+          helperText: 'Username or password did not meet length requirement',
+          message: 'Username or password did not meet length requirement',
+        });
+      } else if (!profileImageOptions.includes(credentials.profileImage)) {
+        return res.status(400).json({
+          fieldId: 'username',
+          helperText: 'Profile image option invalid',
+          message: 'Profile image option invalid',
+        });
+      }
 
       const existingUser = await UserSchema.findOne({
         username: credentials.username,

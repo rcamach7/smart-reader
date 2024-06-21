@@ -38,16 +38,19 @@ export default function Login() {
       e.preventDefault();
     }
 
-    if (credentials.username.length < 4) {
+    if (credentials.username.length < 4 || credentials.username.length > 15) {
       setErrors({
         fieldId: 'username',
-        helperText: 'Must 4 characters or longer',
+        helperText: 'Must between 4 to 15 characters',
       });
       return;
-    } else if (credentials.password.length < 4) {
+    } else if (
+      credentials.password.length < 4 ||
+      credentials.password.length > 20
+    ) {
       setErrors({
         fieldId: 'password',
-        helperText: 'Must 4 characters or longer',
+        helperText: 'Must between 4 to 20 characters',
       });
       return;
     }

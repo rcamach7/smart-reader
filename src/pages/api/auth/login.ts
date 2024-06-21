@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import * as bcrypt from 'bcrypt';
+import validator from 'validator';
 
 import { UserSchema } from '@/schemas/index';
 import { connectToMongoDB } from '@/services/mongobd';
@@ -15,8 +16,18 @@ export default async function handler(
         username: req.body.username,
         password: req.body.password,
       };
+
+      // Validation check
       if (!credentials.password || !credentials.username) {
         return res.status(400).json({ message: 'Missing fields' });
+      } else if (
+        !validator.isLength(credentials.username, { min: 4, max: 15 }) ||
+        !validator.isLength(credentials.password, { min: 4, max: 20 })
+      ) {
+        return res.status(400).json({
+          fieldId: 'username',
+          helperText: 'Username or password did not meet length requirement',
+        });
       }
 
       await connectToMongoDB();
@@ -37,6 +48,7 @@ export default async function handler(
           path: 'savedBooks',
         },
       ]);
+      // Before confirming password, we will check to see if user exists.
       if (!user) {
         return res
           .status(400)

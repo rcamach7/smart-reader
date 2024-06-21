@@ -57,3 +57,6 @@ SmartReads lets you search and favorite books, create and share personalized boo
 - Users's shelf object property contains all their created shelves, plus those that they "save". Deletion of user traverses other user's who have saved their shelved, to avoid error on population attempt.
 
 Validation Requirements
+
+- Username 4 to 15 characters
+- Password 4 to 20 characters
