@@ -16,18 +16,17 @@ export default async function handler(
   try {
     switch (req.method) {
       case 'GET':
-        const googleBooksApi = new GoogleBooksAPI(
-          process.env.GOOGLE_BOOKS_API_KEY
-        );
         try {
           let book = await BookSchema.findOne({ googleId });
           if (!book) {
+            const googleBooksApi = new GoogleBooksAPI(
+              process.env.GOOGLE_BOOKS_API_KEY
+            );
             book = await googleBooksApi.findBookById(googleId);
           }
 
           return res.status(200).json({ book });
         } catch (error) {
-          console.log(error);
           return res.status(500).json({
             message: 'Error retrieving book',
             error,
