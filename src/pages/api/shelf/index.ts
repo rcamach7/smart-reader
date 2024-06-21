@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import validator from 'validator';
 
 import { ShelfSchema, UserSchema } from '@/schemas/index';
 import { connectToMongoDB } from '@/services/mongobd';
@@ -27,7 +28,7 @@ export default async function handler(
         return res.status(200).json({ shelves: publicShelves });
       } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: 'Error retrieving shelves' });
+        return res.status(500).json({ message: 'Error retrieving shelves.' });
       }
 
     case 'POST':
@@ -37,12 +38,16 @@ export default async function handler(
       } catch (error) {
         return res
           .status(400)
-          .json({ message: 'User not authenticated', error });
+          .json({ message: 'User not authenticated.', error });
       }
 
-      const { name, description, isPublic } = req.body;
-      if (!name || !description) {
-        return res.status(400).json({ message: 'Missing Required Fields' });
+      let { name, description, isPublic } = req.body;
+      isPublic = isPublic ? isPublic : false;
+
+      if (!validator.isLength(name, { min: 4, max: 20 })) {
+        return res.status(400).json({
+          message: 'Name of shelf must be between 4 to 20 characters!',
+        });
       }
 
       try {
@@ -51,7 +56,7 @@ export default async function handler(
         const newShelf = new ShelfSchema({
           name,
           description,
-          public: isPublic ? isPublic : false,
+          public: isPublic,
           creator: decodedAuthToken._id,
           books: [],
           likes: [],
@@ -72,24 +77,24 @@ export default async function handler(
           );
         } catch (userUpdateError) {
           return res.status(500).json({
-            message: 'Error occurred while updating user',
+            message: 'Error occurred while updating user.',
             error: userUpdateError,
           });
         }
 
         return res.status(201).json({
-          message: 'Shelf created successfully',
+          message: 'Shelf created successfully.',
           shelf: shelfObject,
         });
       } catch (error) {
         console.log(error);
         return res
           .status(500)
-          .json({ message: 'Error occurred while creating shelf', error });
+          .json({ message: 'Error occurred while creating shelf.', error });
       }
 
     default:
       res.setHeader('Allow', ['GET', 'POST']);
-      res.status(405).end(`Method ${req.method} Not Allowed`);
+      res.status(405).end(`Method ${req.method} Not Allowed.`);
   }
 }

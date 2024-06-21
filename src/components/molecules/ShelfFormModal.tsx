@@ -51,13 +51,29 @@ export default function ShelfFormModal({
     isPublic: isPublic ? isPublic : true,
   });
 
+  const [formErrors, setFormErrors] = useState({ shelfName: false });
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormDetails({ ...formDetails, [name]: value });
   };
 
+  const nameMeetsValidation = () => {
+    if (formDetails.name.length < 4 || formDetails.name.length > 20) {
+      setFormErrors((FE) => ({ ...FE, shelfName: true }));
+      return false;
+    } else {
+      setFormErrors((FE) => ({ ...FE, shelfName: false }));
+      return true;
+    }
+  };
+
   const handleCreateSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!nameMeetsValidation()) {
+      return;
+    }
 
     setIsPageLoading(true);
     try {
@@ -74,7 +90,12 @@ export default function ShelfFormModal({
       });
     } catch (error) {
       console.log(error);
-      addAlertMessage({ text: 'Error creating shelf.', severity: 'error' });
+
+      const errMessage = error?.response?.data?.message;
+      addAlertMessage({
+        text: errMessage ? errMessage : 'Error creating shelf',
+        severity: 'error',
+      });
     }
     setIsPageLoading(false);
     toggle();
@@ -104,7 +125,12 @@ export default function ShelfFormModal({
       });
     } catch (error) {
       console.log(error);
-      addAlertMessage({ text: 'Error editing shelf.', severity: 'error' });
+
+      const errMessage = error?.response?.data?.message;
+      addAlertMessage({
+        text: errMessage ? errMessage : 'Error editing shelf.',
+        severity: 'error',
+      });
     }
     setIsPageLoading(false);
     toggle();
@@ -127,6 +153,10 @@ export default function ShelfFormModal({
             {type === 'create' ? 'Create New Shelf' : 'Edit Shelf'}
           </Typography>
           <TextField
+            error={formErrors.shelfName}
+            helperText={
+              formErrors.shelfName ? 'Must be between 4 to 20 characters' : ''
+            }
             id="standard-helperText"
             label="Shelf Name"
             variant="standard"

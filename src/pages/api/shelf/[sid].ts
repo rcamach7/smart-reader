@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import validator from 'validator';
 
 import { ShelfSchema, UserSchema } from '@/schemas/index';
 import { connectToMongoDB } from '@/services/mongobd';
@@ -15,13 +16,13 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const { sid } = req.query;
-  if (!sid) return res.status(400).json({ message: 'Missing shelf id' });
+  if (!sid) return res.status(400).json({ message: 'Missing shelf id.' });
 
   let decodedAuthToken;
   try {
     decodedAuthToken = await decodeAuthToken(req);
   } catch (error) {
-    return res.status(400).json({ message: 'User not authenticated', error });
+    return res.status(400).json({ message: 'User not authenticated.', error });
   }
 
   switch (req.method) {
@@ -35,26 +36,37 @@ export default async function handler(
           'creator',
         ]);
         if (!shelf)
-          return res.status(400).json({ message: 'Unable to find shelf' });
+          return res.status(400).json({ message: 'Unable to find shelf.' });
 
         return res.status(200).json({ shelf: shelf.toObject() });
       } catch (error) {
         console.log(error);
         return res
           .status(500)
-          .json({ message: 'Error retrieving shelf', error });
+          .json({ message: 'Error retrieving shelf.', error });
       }
 
     case 'PUT':
       const { name, description, isPublic } = req.body;
 
       const updateFields: UpdateFields = {};
-      if (name !== undefined) updateFields.name = name;
+      if (name !== undefined) {
+        if (!validator.isLength(name, { min: 4, max: 20 })) {
+          return res.status(400).json({
+            message: 'Name must be between 4 to 20 characters.',
+          });
+        }
+
+        updateFields.name = name;
+      }
       if (description !== undefined) updateFields.description = description;
-      if (isPublic !== undefined) updateFields.isPublic = isPublic;
+      if (typeof isPublic === 'boolean' && isPublic) {
+        updateFields.isPublic = isPublic;
+      }
+
       if (Object.keys(updateFields).length === 0) {
         return res.status(400).json({
-          message: 'Please provide fields to update',
+          message: 'Please provide fields to update.',
         });
       }
 
