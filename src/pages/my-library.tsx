@@ -88,6 +88,7 @@ export default function MyLibrary() {
               exclusive
               onChange={handleViewModeChange}
               aria-label="view-mode-selection"
+              sx={{ border: 'solid #202833 1px' }}
             >
               <ToggleButton
                 size="small"

@@ -4,6 +4,7 @@ import { FavoriteBookButton } from '@/components/atoms';
 
 import { BookType } from '@/types/index';
 import { useTheme } from '@mui/material';
+import Link from 'next/link';
 
 interface Props {
   book: BookType;
@@ -11,6 +12,7 @@ interface Props {
 
 export default function BookPageHeader({ book }: Props) {
   const theme = useTheme();
+  const bookAuthors = book.authors ? book.authors.join(', ') : 'Unknown';
   return (
     <Box
       sx={{
@@ -63,7 +65,14 @@ export default function BookPageHeader({ book }: Props) {
             textAlign="center"
             sx={{ fontSize: { xs: '1rem', sm: '1.1rem', md: '1.2rem' } }}
           >
-            by {book.authors}
+            by{' '}
+            <Link
+              href={`/search?query=${encodeURIComponent(
+                bookAuthors
+              )}$type=books`}
+            >
+              <a style={{ color: 'inherit' }}>{bookAuthors}</a>
+            </Link>
           </Typography>
           <Box
             sx={{

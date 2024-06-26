@@ -30,7 +30,9 @@ export default function Chat({ book }: Props) {
         role: 'user',
         content: `You will assist me in answering questions about the book ${
           book.title
-        } by ${book.authors.join(', ')}. The ISBN is ${book.isbn}.`,
+        } by ${
+          book.authors ? book.authors.join(', ') : 'unknown author'
+        }. The ISBN is ${book.isbn}.`,
       },
       {
         role: 'system',
