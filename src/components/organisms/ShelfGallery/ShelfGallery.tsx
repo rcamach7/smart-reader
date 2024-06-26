@@ -100,7 +100,14 @@ export default function ShelfGallery({ shelf, type, updateShelfFunc }: Props) {
         }}
       >
         <IconButton onClick={handleBack} disabled={currentIndex === 0}>
-          <ArrowBackIos />
+          <ArrowBackIos
+            sx={{
+              color: '#C5C6C8',
+              ...(currentIndex === 0 && {
+                opacity: 0.5,
+              }),
+            }}
+          />
         </IconButton>
         <IconButton
           onClick={handleNext}
@@ -109,7 +116,15 @@ export default function ShelfGallery({ shelf, type, updateShelfFunc }: Props) {
             shelf.books.length - calculateNumberOfItemsToDisplay()
           }
         >
-          <ArrowForwardIos />
+          <ArrowForwardIos
+            sx={{
+              color: '#C5C6C8',
+              ...(currentIndex >=
+                shelf.books.length - calculateNumberOfItemsToDisplay() && {
+                opacity: 0.5,
+              }),
+            }}
+          />
         </IconButton>
 
         <ShelfActionButtons
